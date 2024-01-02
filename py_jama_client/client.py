@@ -146,7 +146,7 @@ class BaseClient:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
-        return response
+        return BaseClient.parse_response(response)
 
     @staticmethod
     def parse_response(response: Response) -> ClientResponse:

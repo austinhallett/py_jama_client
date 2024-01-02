@@ -62,7 +62,6 @@ class Core:
     def delete(self, resource, **kwargs):
         """This method will perform a delete operation on the specified resource"""
         url = self.__host_name + resource
-        kwargs["verify"] = self.__verify
 
         if self.__oauth:
             self.__check_oauth_token()
@@ -74,7 +73,6 @@ class Core:
     def get(self, resource, params=None, **kwargs):
         """This method will perform a get operation on the specified resource"""
         url = self.__host_name + resource
-        kwargs["verify"] = self.__verify
 
         if self.__oauth:
             self.__check_oauth_token()
@@ -86,7 +84,6 @@ class Core:
     def patch(self, resource, params=None, data=None, json=None, **kwargs):
         """This method will perform a patch operation to the specified resource"""
         url = self.__host_name + resource
-        kwargs["verify"] = self.__verify
 
         if self.__oauth:
             self.__check_oauth_token()
@@ -102,7 +99,6 @@ class Core:
     def post(self, resource, params=None, data=None, json=None, **kwargs):
         """This method will perform a post operation to the specified resource."""
         url = self.__host_name + resource
-        kwargs["verify"] = self.__verify
 
         if self.__oauth:
             self.__check_oauth_token()
@@ -118,7 +114,6 @@ class Core:
     def put(self, resource, params=None, data=None, json=None, **kwargs):
         """This method will perform a put operation to the specified resource"""
         url = self.__host_name + resource
-        kwargs["verify"] = self.__verify
 
         if self.__oauth:
             self.__check_oauth_token()

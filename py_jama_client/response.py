@@ -1,3 +1,9 @@
-# TODO: add ClientResponse object for handling links and meta data
+from dataclasses import dataclass
+
+
+@dataclass
 class ClientResponse:
-    pass
+    meta: dict
+    links: dict
+    linked: dict
+    data: list

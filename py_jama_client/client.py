@@ -302,7 +302,7 @@ class JamaClient(BaseClient):
     def get_baselines_versioneditems(
         self,
         baseline_id: int,
-        params: dict,
+        params: dict = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     ):
         """
@@ -321,7 +321,8 @@ class JamaClient(BaseClient):
 
     def get_projects(
         self,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        params: dict = None,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     ):
         """
         This method will return all projects as JSON object
@@ -332,12 +333,11 @@ class JamaClient(BaseClient):
         """
         resource_path = "projects"
 
-        project_data = self.__get_all(
-            resource_path, allowed_results_per_page=allowed_results_per_page
+        return self.get_all(
+            resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
-        return project_data
 
-    def get_project_by_id(self, project_id):
+    def get_project_by_id(self, project_id: int):
         """
         This method will return a single project as JSON object
         Args:

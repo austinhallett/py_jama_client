@@ -105,20 +105,18 @@ class BaseClient:
         data, meta, links, linked = [], {}, {}, {}
 
         while len(data) < total_results:
-            page_response = self.get_page(
-                resource, start_index, params=params, **kwargs
-            )
-            page_json = page_response.json()
+            page = self.get_page(resource, start_index, params=params, **kwargs)
 
-            meta.update(page_json.get("meta", {}))
-            links.update(page_json.get("links", {}))
-            linked.update(page_json.get("linked", {}))
+            meta.update(page.meta)
+            links.update(page.links)
+            linked.update(page.linked)
 
-            page_info = page_json["meta"]["pageInfo"]
-            start_index = page_info["startIndex"] + allowed_results_per_page
+            page_info = page.meta.get("pageInfo")
+            start_index = page_info.get("startIndex") + allowed_results_per_page
             total_results = page_info.get("totalResults")
-            page_data = page_json.get("data")
-            data.extend(page_data)
+            data.extend(page.data)
+
+        return ClientResponse(meta, links, linked, data)
 
     def get_page(
         self,
@@ -146,18 +144,7 @@ class BaseClient:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
-        return BaseClient.parse_response(response)
-
-    @staticmethod
-    def parse_response(response: Response) -> ClientResponse:
-        response_json = response.json()
-
-        return ClientResponse(
-            response_json.get("meta", {}),
-            response_json.get("links", {}),
-            response_json.get("linked", {}),
-            response_json.get("data", {}),
-        )
+        return ClientResponse.parse(response)
 
     @staticmethod
     def handle_response_status(response: Response):
@@ -313,7 +300,10 @@ class JamaClient(BaseClient):
         return BaseClient.parse_response(response)
 
     def get_baselines_versioneditems(
-        self, baseline_id, allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE
+        self,
+        baseline_id: int,
+        params: dict,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     ):
         """
         Get all baseline items in a baseline with the specified ID
@@ -323,10 +313,11 @@ class JamaClient(BaseClient):
         Returns: A list of versioned items belonging to the baseline
         """
         resource_path = "baselines/" + str(baseline_id) + "/versioneditems"
-        baseline_items = self.__get_all(
-            resource_path, allowed_results_per_page=allowed_results_per_page
+        return self.get_all(
+            resource_path,
+            params=params,
+            allowed_results_per_page=allowed_results_per_page,
         )
-        return baseline_items
 
     def get_projects(
         self,

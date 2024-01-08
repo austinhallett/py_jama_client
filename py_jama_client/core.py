@@ -67,18 +67,18 @@ class AbstractCore(ABC):
         ...
 
     @abstractmethod
-    def __check_oauth_token(self):
+    def _check_oauth_token(self):
         ...
 
     @abstractmethod
-    def __get_fresh_token(self):
+    def _get_fresh_token(self):
         """
         This method will fetch a new oauth bearer token from the oauth token server.
         """
         ...
 
     @abstractmethod
-    def __add_auth_header(self, **kwargs):
+    def _add_auth_header(self, **kwargs):
         ...
 
 
@@ -121,7 +121,7 @@ class Core(AbstractCore):
         if self.__oauth:
             self.__token_host = host + "/rest/oauth/token"
             self.__token = None
-            self.__get_fresh_token()
+            self._get_fresh_token()
 
     def close(self) -> None:
         """Method to close underlying session"""
@@ -195,9 +195,9 @@ class Core(AbstractCore):
             url, auth=self.__credentials, data=data, params=params, json=json, **kwargs
         )
 
-    def __check_oauth_token(self):
+    def _check_oauth_token(self):
         if self.__token is None:
-            self.__get_fresh_token()
+            self._get_fresh_token()
 
         else:
             time_elapsed = time.time() - self.__token_acquired_at
@@ -206,7 +206,7 @@ class Core(AbstractCore):
                 # if less than a minute remains, just get another token.
                 self.__get_fresh_token()
 
-    def __get_fresh_token(self):
+    def _get_fresh_token(self):
         """This method will fetch a new oauth bearer token from the oauth token server."""
         data = {"grant_type": "client_credentials"}
 
@@ -235,7 +235,7 @@ class Core(AbstractCore):
         else:
             py_jama_rest_client_logger.error("Failed to retrieve OAuth Token")
 
-    def __add_auth_header(self, **kwargs):
+    def _add_auth_header(self, **kwargs):
         headers = kwargs.get("headers")
         if headers is None:
             headers = {}

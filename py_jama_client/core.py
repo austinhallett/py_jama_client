@@ -14,6 +14,73 @@ import httpx
 import time
 import logging
 from py_jama_client.exceptions import UnauthorizedTokenException
+from typing import Tuple
+from abc import ABC, abstractmethod
+
+
+class AbstractCore(ABC):
+    """
+    Abstract core class
+    This class defines the interface required to satisfy the base requirements of the client core class
+    """
+
+    @abstractmethod
+    def close(self) -> None:
+        """
+        Method to close underlying session
+        """
+        ...
+
+    @abstractmethod
+    def delete(self, resource: str, **kwargs):
+        """
+        This method will perform a delete operation on the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def get(self, resource: str, params: dict = None, **kwargs):
+        """
+        This method will perform a get operation on the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """
+        This method will perform a patch operation to the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """
+        This method will perform a post operation to the specified resource.
+        """
+        ...
+
+    @abstractmethod
+    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """
+        This method will perform a put operation to the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def __check_oauth_token(self):
+        ...
+
+    @abstractmethod
+    def __get_fresh_token(self):
+        """
+        This method will fetch a new oauth bearer token from the oauth token server.
+        """
+        ...
+
+    @abstractmethod
+    def __add_auth_header(self, **kwargs):
+        ...
+
 
 __DEBUG__ = False
 
@@ -23,11 +90,12 @@ py_jama_rest_client_logger = logging.getLogger("py_jama_client.core")
 urllib3.disable_warnings()
 
 
-class Core:
+class Core(AbstractCore):
     """
-    This Class will contain a collection of methods that interact directly with the Jama API and return A Requests
-    Response Object.  This class will give the user more fine grained access to the JAMA API.  For more information
-    on the Requests library visit: http://docs.python-requests.org/en/master/
+    Synchronous Core API client class
+
+    This class provides the basic http abstractions, including oauth related mechanisms.
+    Use an instance of this class as an argument in the JamaClient constructor.
     """
 
     session_class = httpx.Client
@@ -35,7 +103,7 @@ class Core:
     def __init__(
         self,
         host: str,
-        credentials: tuple[str, str] = ("username|client_id", "password|client_secret"),
+        credentials: Tuple[str, str] = ("username|client_id", "password|client_secret"),
         api_version: str = "/rest/v1/",
         oauth: bool = False,
         verify: bool = True,
@@ -59,7 +127,10 @@ class Core:
         """Method to close underlying session"""
         self._session.close()
 
-    def delete(self, resource, **kwargs):
+    async def close(self) -> None:
+        raise RuntimeError("await syntax not supported on sync core client class")
+
+    def delete(self, resource: str, **kwargs):
         """This method will perform a delete operation on the specified resource"""
         url = self.__host_name + resource
 
@@ -70,7 +141,7 @@ class Core:
 
         return self._session.delete(url, auth=self.__credentials, **kwargs)
 
-    def get(self, resource, params=None, **kwargs):
+    def get(self, resource: str, params: dict = None, **kwargs):
         """This method will perform a get operation on the specified resource"""
         url = self.__host_name + resource
 
@@ -81,7 +152,7 @@ class Core:
 
         return self._session.get(url, auth=self.__credentials, params=params, **kwargs)
 
-    def patch(self, resource, params=None, data=None, json=None, **kwargs):
+    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
         """This method will perform a patch operation to the specified resource"""
         url = self.__host_name + resource
 
@@ -96,7 +167,7 @@ class Core:
             url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
         )
 
-    def post(self, resource, params=None, data=None, json=None, **kwargs):
+    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
         """This method will perform a post operation to the specified resource."""
         url = self.__host_name + resource
 
@@ -111,7 +182,7 @@ class Core:
             url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
         )
 
-    def put(self, resource, params=None, data=None, json=None, **kwargs):
+    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
         """This method will perform a put operation to the specified resource"""
         url = self.__host_name + resource
 

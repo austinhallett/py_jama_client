@@ -35,46 +35,23 @@ class BaseClient:
     Base client class
     """
 
-    _core: Core
-
     def __init__(
         self,
-        host_domain: str,
-        credentials: tuple[str, str] = ("username|clientID", "password|clientSecret"),
-        api_version: str = "/rest/v1/",
-        oauth: bool = False,
-        verify: bool = True,
+        core: Core,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     ):
         """
         Jama Client constructor
 
         Args:
+            core: Core class instance
             host_domain: String The domain associated with the Jama Connect host
             credentials: the user name and password as a tuple or client id and client secret if using Oauth.
             api_version: valid args are '/rest/[v1|latest|labs]/'
             verify: Defaults to True, Setting this to False will skip SSL Certificate verification
         """
-        self.__credentials = credentials
         self.__allowed_results_per_page = allowed_results_per_page
-        try:
-            self._core = self.core_class(
-                host_domain,
-                credentials,
-                api_version=api_version,
-                oauth=oauth,
-                verify=verify,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-
-        # Log client creation
-        py_jama_rest_client_logger.info(
-            f"""Created a new JamaClient instance. Domain: {host_domain}
-            Connecting via Oauth: {oauth}
-            """
-        )
+        self._core = core
 
     def __enter__(self):
         return self
@@ -241,8 +218,6 @@ class JamaClient(BaseClient):
     A class to abstract communication with the Jama Connect API
     """
 
-    core_class = Core
-
     def get_available_endpoints(self):
         try:
             response = self._core.get("")
@@ -297,7 +272,7 @@ class JamaClient(BaseClient):
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
-        return BaseClient.parse_response(response)
+        return ClientResponse.parse(response)
 
     def get_baselines_versioneditems(
         self,
@@ -329,7 +304,8 @@ class JamaClient(BaseClient):
         optional: if project_id is specified, it will return a single project
         Args:
             allowed_results_per_page: number of results per page
-        :Returns: JSON Array of Item Objects.
+        Returns:
+            JSON Array of Item Objects.
         """
         resource_path = "projects"
 
@@ -1802,3 +1778,13 @@ class JamaClient(BaseClient):
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
         return self.handle_response_status(response)
+
+
+def get_jama_client(*args, **kwargs) -> JamaClient:
+    """
+    Returns the global JamaClient instance.
+
+    Returns:
+        JamaClient: The global JamaClient instance.
+    """
+    return JamaClient(Core(*args, **kwargs))

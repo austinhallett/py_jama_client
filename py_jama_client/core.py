@@ -135,8 +135,8 @@ class Core(AbstractCore):
         url = self.__host_name + resource
 
         if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
             return self._session.delete(url, **kwargs)
 
         return self._session.delete(url, auth=self.__credentials, **kwargs)
@@ -146,8 +146,8 @@ class Core(AbstractCore):
         url = self.__host_name + resource
 
         if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
             return self._session.get(url, params=params, **kwargs)
 
         return self._session.get(url, auth=self.__credentials, params=params, **kwargs)
@@ -157,8 +157,8 @@ class Core(AbstractCore):
         url = self.__host_name + resource
 
         if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
             return self._session.patch(
                 url, params=params, data=data, json=json, **kwargs
             )
@@ -172,8 +172,8 @@ class Core(AbstractCore):
         url = self.__host_name + resource
 
         if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
             return self._session.post(
                 url, params=params, data=data, json=json, **kwargs
             )
@@ -187,8 +187,8 @@ class Core(AbstractCore):
         url = self.__host_name + resource
 
         if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
             return self._session.put(url, data=data, params=params, json=json, **kwargs)
 
         return self._session.put(

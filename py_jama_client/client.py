@@ -44,10 +44,6 @@ class BaseClient:
 
         Args:
             core: Core class instance
-            host_domain: String The domain associated with the Jama Connect host
-            credentials: the user name and password as a tuple or client id and client secret if using Oauth.
-            api_version: valid args are '/rest/[v1|latest|labs]/'
-            verify: Defaults to True, Setting this to False will skip SSL Certificate verification
         """
         self._core = core
 

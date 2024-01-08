@@ -14,8 +14,8 @@ class ClientResponse:
         response_json: dict = response.json()
 
         return ClientResponse(
-            response_json.get("meta", {}),
-            response_json.get("links", {}),
-            response_json.get("linked", {}),
-            response_json.get("data", {}),
+            meta=response_json.get("meta", {}),
+            links=response_json.get("links", {}),
+            linked=response_json.get("linked", {}),
+            data=response_json.get("data", {}),
         )

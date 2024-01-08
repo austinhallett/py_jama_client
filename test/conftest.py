@@ -1,5 +1,6 @@
 import os
 import pytest
+from py_jama_client import Core, JamaClient
 
 
 @pytest.fixture(autouse=True)
@@ -11,3 +12,16 @@ def env_vars():
                 to run tests properly.
             """
         )
+
+
+@pytest.fixture(scope="session")
+def get_test_jama_client():
+    client = JamaClient(
+        core=Core(
+            host=os.getenv("HOST"),
+            credentials=(os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")),
+            verify=False,
+            oauth=True,
+        )
+    )
+    yield client

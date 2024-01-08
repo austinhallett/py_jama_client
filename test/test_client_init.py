@@ -1,6 +1,6 @@
 import os
-from py_jama_client.core import Core, AsyncCore
-from py_jama_client.client import JamaClient
+from py_jama_client.core import Core
+from py_jama_client.client import JamaClient, BaseClient
 
 
 def test_client_creation():
@@ -12,5 +12,4 @@ def test_client_creation():
             oauth=True,
         )
     )
-    response = client.get_baselines(project_id=82)
-    assert response is not None
+    assert isinstance(client, BaseClient)

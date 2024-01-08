@@ -38,7 +38,6 @@ class BaseClient:
     def __init__(
         self,
         core: Core,
-        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     ):
         """
         Jama Client constructor
@@ -50,7 +49,6 @@ class BaseClient:
             api_version: valid args are '/rest/[v1|latest|labs]/'
             verify: Defaults to True, Setting this to False will skip SSL Certificate verification
         """
-        self.__allowed_results_per_page = allowed_results_per_page
         self._core = core
 
     def __enter__(self):

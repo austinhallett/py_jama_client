@@ -16,7 +16,6 @@ from py_jama_client.core import Core
 from httpx import Response
 
 
-# This is the py_jama_rest_client logger.
 py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
 
 DEFAULT_ALLOWED_RESULTS_PER_PAGE = 20  # Default is 20, Max is 50. if set to greater than 50, only 50 will items return.

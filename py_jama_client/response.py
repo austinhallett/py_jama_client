@@ -10,7 +10,7 @@ class ClientResponse:
     data: list
 
     @classmethod
-    def parse(cls, response: Response):
+    def from_response(cls, response: Response):
         response_json: dict = response.json()
 
         return ClientResponse(

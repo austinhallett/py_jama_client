@@ -5,8 +5,8 @@ Example usage:
 
     >>> from py_jama_rest_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
-    >>> user_api = UserAPI(client)
-    >>> users = user_api.get_users()    
+    >>> users_api = UsersAPI(client)
+    >>> users = users_api.get_users()    
 """
 
 import json
@@ -19,7 +19,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
 
 
-class UserAPI:
+class UsersAPI:
     client: BaseClient
 
     resource_path = "users/"

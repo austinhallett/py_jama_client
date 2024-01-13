@@ -5,8 +5,8 @@ Example usage:
 
     >>> from py_jama_rest_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
-    >>> project_api = ProjectAPI(client)
-    >>> projects = projects.get_projects()
+    >>> projects_api = ProjectsAPI(client)
+    >>> projects = projects_api.get_projects()
 """
 
 import json
@@ -24,7 +24,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
 
 
-class ProjectAPI:
+class ProjectsAPI:
     client: BaseClient
 
     resource_path = "projects/"

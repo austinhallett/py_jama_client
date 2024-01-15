@@ -475,52 +475,6 @@ class JamaClient(BaseClient):
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_pick_list_options(
-        self,
-        pick_list_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Gets all all the picklist options for a single picklist
-        Args:
-            pick_list_id: the api id of the picklist to fetch options for.
-            allowed_results_per_page: number of results per page
-
-        Returns: an array of dictionary objects that represent the picklist options.
-
-        """
-        resource_path = f"picklists/{pick_list_id}/options"
-        return self.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
-        )
-
-    def get_pick_list_option(
-        self,
-        pick_list_option_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Fetches a single picklist option from the API
-        Args:
-            pick_list_option_id: The API ID of the picklist option to fetch
-
-        Returns: A dictonary object representing the picklist option.
-
-        """
-        resource_path = f"picklistoptions/{pick_list_option_id}"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
     def get_abstract_items(
         self,
         project: list[int] = None,

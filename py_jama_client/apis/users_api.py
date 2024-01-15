@@ -13,7 +13,8 @@ import json
 import logging
 from typing import Optional
 from py_jama_client.exceptions import APIException, CoreException
-from py_jama_client.client import BaseClient, ClientResponse
+from py_jama_client.client import BaseClient
+from py_jama_client.response import ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
 py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
@@ -22,7 +23,7 @@ py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
 class UsersAPI:
     client: BaseClient
 
-    resource_path = "users/"
+    resource_path = "users"
 
     def __init__(self, client: BaseClient):
         self.client = client
@@ -69,7 +70,7 @@ class UsersAPI:
         """
         resource_path = f"{self.resource_path}/{user_id}"
         try:
-            response = self._core.get(
+            response = self.client.get(
                 resource_path,
                 params,
                 **kwargs,
@@ -93,7 +94,7 @@ class UsersAPI:
         """
         resource_path = f"{self.resource_path}/current"
         try:
-            response = self._core.get(resource_path, params, **kwargs)
+            response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
@@ -143,11 +144,10 @@ class UsersAPI:
             "location": location,
             "licenseType": license_type,
         }
-        resource_path = self.resource_path
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.post(
-                resource_path,
+            response = self.client.post(
+                self.resource_path,
                 params,
                 data=json.dumps(body),
                 headers=headers,
@@ -204,7 +204,7 @@ class UsersAPI:
         resource_path = f"{self.resource_path}/{user_id}"
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.put(
+            response = self.client.put(
                 resource_path,
                 params,
                 data=json.dumps(body),
@@ -238,7 +238,7 @@ class UsersAPI:
         resource_path = f"{self.resource_path}/{user_id}/active"
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.put(
+            response = self.client.put(
                 resource_path,
                 params,
                 data=json.dumps(body),

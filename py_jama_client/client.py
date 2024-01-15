@@ -479,36 +479,6 @@ class JamaClient(BaseClient):
             **kwargs,
         )
 
-    def get_tags(
-        self,
-        project_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Get all tags for the project with the specified id
-        Args:
-            project: The API ID of the project to fetch tags for.
-            allowed_results_per_page: Number of results per page
-
-        Returns: A Json Array that contains all the tag data for the specified project.
-
-        """
-        resource_path = "tags"
-        project_param = {"project": project_id}
-        if params is None:
-            params = project_param
-        else:
-            params.update(project_param)
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-            **kwargs,
-        )
-
     def get_test_cycle(
         self,
         test_cycle_id: int,
@@ -528,39 +498,6 @@ class JamaClient(BaseClient):
         resource_path = f"testcycles/{test_cycle_id}"
         try:
             response = self._core.get(resource_path)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def post_tag(
-        self,
-        name: str,
-        project: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Create a new tag in the project with the specified ID
-        Args:
-            name: The display name for the tag
-            project: The project to create the new tag in
-
-        Returns: the newly created Tag
-        """
-        resource_path = "tags"
-        body = {"name": name, "project": project}
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.post(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs,
-            )
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))

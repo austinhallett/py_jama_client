@@ -1,5 +1,21 @@
+"""
+Core Jama Connect API class
+
+This module contains core classes for interacting with the Jama Connect API
+
+Classes:
+    Core: This is the base class
+    AsyncCore: This class inherits the Core class using the httpx.AsyncClient class
+"""
 import json
+import math
+import urllib3
+import httpx
+import time
 import logging
+from py_jama_client.exceptions import UnauthorizedTokenException
+from typing import Tuple
+from abc import ABC, abstractmethod
 from py_jama_client.exceptions import (
     APIException,
     CoreException,
@@ -12,11 +28,87 @@ from py_jama_client.exceptions import (
 )
 from py_jama_client.response import ClientResponse
 from typing import Optional
-from py_jama_client.core import Core
 from httpx import Response
 
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+class AbstractClient(ABC):
+    """
+    Abstract core class
+    This class defines the interface required to satisfy the base requirements of the client core class
+    """
+
+    @abstractmethod
+    def close(self) -> None:
+        """
+        Method to close underlying session
+        """
+        ...
+
+    @abstractmethod
+    def delete(self, resource: str, **kwargs):
+        """
+        This method will perform a delete operation on the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def get(self, resource: str, params: dict = None, **kwargs):
+        """
+        This method will perform a get operation on the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """
+        This method will perform a patch operation to the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """
+        This method will perform a post operation to the specified resource.
+        """
+        ...
+
+    @abstractmethod
+    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """
+        This method will perform a put operation to the specified resource
+        """
+        ...
+
+    @abstractmethod
+    def _check_oauth_token(self):
+        ...
+
+    @abstractmethod
+    def _get_fresh_token(self):
+        """
+        This method will fetch a new oauth bearer token from the oauth token server.
+        """
+        ...
+
+    @abstractmethod
+    def _add_auth_header(self, **kwargs):
+        ...
+
+
+__DEBUG__ = False
+
+# disable warnings for ssl verification
+urllib3.disable_warnings()
+
+
+# class AsyncCore(Core):
+#     session_class = httpx.AsyncClient
+
+#     async def close(self):
+#         return await self.__session.aclose()
+
+
+py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 
 DEFAULT_ALLOWED_RESULTS_PER_PAGE = 20  # Default is 20, Max is 50. if set to greater than 50, only 50 will items return.
 
@@ -26,23 +118,157 @@ class BaseClient:
     Base client class
     """
 
+    session_class = httpx.Client
+
     def __init__(
         self,
-        core: Core,
+        host: str,
+        credentials: Tuple[str, str] = ("username|client_id", "password|client_secret"),
+        api_version: str = "/rest/v1/",
+        oauth: bool = False,
+        verify: bool = True,
+        timeout: int = 30,
     ):
-        """
-        Jama Client constructor
+        # Instance variables
+        self.__api_version = api_version
+        self.__host_name = host + self.__api_version
+        self.__credentials = credentials
+        self.__oauth = oauth
+        self.__verify = verify
+        self.__session = self.session_class(verify=verify, timeout=timeout)
 
-        Args:
-            core: Core class instance
-        """
-        self._core = core
+        # Setup OAuth if needed.
+        if self.__oauth:
+            self.__token_host = host + "/rest/oauth/token"
+            self.__token = None
+            self.__get_fresh_token()
+
+    def close(self) -> None:
+        """Method to close underlying session"""
+        self.__session.close()
+
+    async def close(self) -> None:
+        raise RuntimeError("await syntax not supported on sync core client class")
+
+    def delete(self, resource: str, **kwargs):
+        """This method will perform a delete operation on the specified resource"""
+        url = self.__host_name + resource
+
+        if self.__oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self.__session.delete(url, **kwargs)
+
+        return self.__session.delete(url, auth=self.__credentials, **kwargs)
+
+    def get(self, resource: str, params: dict = None, **kwargs):
+        """This method will perform a get operation on the specified resource"""
+        url = self.__host_name + resource
+
+        if self.__oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self.__session.get(url, params=params, **kwargs)
+
+        return self.__session.get(url, auth=self.__credentials, params=params, **kwargs)
+
+    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """This method will perform a patch operation to the specified resource"""
+        url = self.__host_name + resource
+
+        if self.__oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self.__session.patch(
+                url, params=params, data=data, json=json, **kwargs
+            )
+
+        return self.__session.patch(
+            url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
+        )
+
+    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """This method will perform a post operation to the specified resource."""
+        url = self.__host_name + resource
+
+        if self.__oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self.__session.post(
+                url, params=params, data=data, json=json, **kwargs
+            )
+
+        return self.__session.post(
+            url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
+        )
+
+    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+        """This method will perform a put operation to the specified resource"""
+        url = self.__host_name + resource
+
+        if self.__oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self.__session.put(
+                url, data=data, params=params, json=json, **kwargs
+            )
+
+        return self.__session.put(
+            url, auth=self.__credentials, data=data, params=params, json=json, **kwargs
+        )
+
+    def _check_oauth_token(self):
+        if self.__token is None:
+            self._get_fresh_token()
+
+        else:
+            time_elapsed = time.time() - self.__token_acquired_at
+            time_remaining = self.__token_expires_in - time_elapsed
+            if time_remaining < 60:
+                # if less than a minute remains, just get another token.
+                self.__get_fresh_token()
+
+    def __get_fresh_token(self):
+        """This method will fetch a new oauth bearer token from the oauth token server."""
+        data = {"grant_type": "client_credentials"}
+
+        # By getting the system time before we get the token we avoid a potential bug where the token may be expired.
+        time_before_request = time.time()
+
+        # Post to the token server, check if authorized
+        try:
+            response = httpx.post(
+                self.__token_host,
+                auth=self.__credentials,
+                data=data,
+                verify=self.__verify,
+            )
+            response.raise_for_status()
+        except httpx.HTTPError as err:
+            raise UnauthorizedTokenException(f"Unable to fetch token: {err}")
+
+        # If success get relevant data
+        if response.status_code in [200, 201]:
+            response_json = response.json()
+            self.__token = response_json["access_token"]
+            self.__token_expires_in = response_json["expires_in"]
+            self.__token_acquired_at = math.floor(time_before_request)
+
+        else:
+            py_jama_rest_client_logger.error("Failed to retrieve OAuth Token")
+
+    def __add_auth_header(self, **kwargs):
+        headers = kwargs.get("headers")
+        if headers is None:
+            headers = {}
+        headers["Authorization"] = "Bearer " + self.__token
+        return headers
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc, tb):
-        self._core.close()
+        self.__session.close()
 
     def get_all(
         self,
@@ -101,7 +327,7 @@ class BaseClient:
             params.update(pagination)
 
         try:
-            response = self._core.get(resource, params=params, **kwargs)
+            response = self.__session.get(resource, params=params, **kwargs)
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
@@ -205,7 +431,7 @@ class JamaClient(BaseClient):
 
     def get_available_endpoints(self):
         try:
-            response = self._core.get("")
+            response = self.__session.get("")
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
@@ -302,132 +528,16 @@ class JamaClient(BaseClient):
         """
         resource_path = f"filters/{filter_id}/results"
 
-        if params is not None:
-            params.update({"project": project_id})
-        else:
-            params = {"project": project_id}
+        req_params = {"project": project_id}
 
-        return self.get_all(
-            resource_path,
-            params=params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
-
-    def get_items(
-        self,
-        project_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwags,
-    ):
-        """
-        This method will return all items in the specified project.
-        Args:
-            project_id: the project ID
-            allowed_results_per_page: number of results per page
-
-        Returns: a Json array of item objects
-
-        """
-        resource_path = "items"
         if params is None:
-            params = {"project": project_id}
+            params = req_params
         else:
-            params.update({"project": project_id})
+            params.update(req_params)
 
         return self.get_all(
             resource_path,
             params=params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
-
-    def get_item(self, item_id: int, params: Optional[dict] = None):
-        """
-        This method will return a singular item of a specified item id
-        Args:
-            item_id: the item id of the item to fetch
-
-        Returns: a dictonary object representing the item
-
-        """
-        resource_path = f"items/{item_id}"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_item_lock(self, item_id: int, params: Optional[dict] = None):
-        """
-        Get the locked state, last locked date, and last locked by user for the item with the specified ID
-        Args:
-            item_id: The API ID of the item to get the lock info for.
-
-        Returns:
-            A JSON object with the lock information for the item with the specified ID.
-
-        """
-        resource_path = f"items/{item_id}/lock"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def put_item_lock(self, item_id: int, locked: bool) -> int:
-        """
-        Update the locked state of the item with the specified ID
-        Args:
-            item_id: the API id of the item to be updated
-            locked: boolean lock state to apply to this item
-
-        Returns:
-            response status 200
-
-        """
-        body = {
-            "locked": locked,
-        }
-        resource_path = f"items/{item_id}/lock"
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.put(
-                resource_path,
-                data=json.dumps(body),
-                headers=headers,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        return self.handle_response_status(response)
-
-    def get_item_tags(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Return all tags for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-            allowed_results_per_page: number of results
-
-        Returns: a dictionary object representing the item's tags
-
-        """
-        resource_path = f"items/{item_id}/tags"
-        return self.get_all(
-            resource_path,
-            params,
             allowed_results_per_page=allowed_results_per_page,
         )
 
@@ -558,193 +668,6 @@ class JamaClient(BaseClient):
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_items_synceditems(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Get all synchronized items for the item with the specified ID
-
-        Args:
-            item_id: The API id of the item being
-            allowed_results_per_page: Number of results per page
-
-        Returns: A list of JSON Objects representing the items that are in the same synchronization group as the
-        specified item.
-
-        """
-        resource_path = f"items/{item_id}/synceditems"
-        return self.get_all(
-            resource_path, allowed_results_per_page=allowed_results_per_page
-        )
-
-    def get_items_synceditems_status(
-        self,
-        item_id: int,
-        synced_item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get the sync status for the synced item with the specified ID
-
-        Args:
-            item_id: The id of the item to compare against
-            synced_item_id: the id of the item to check if it is in sync
-
-        Returns: The response JSON from the API which contains a single field 'inSync' with a boolean value.
-
-        """
-        resource_path = f"items/{item_id}/synceditems/{synced_item_id}/syncstatus"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_item_versions(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get all versions for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-
-        Returns: JSON array with all versions for the item
-        """
-        resource_path = f"items/{item_id}/versions"
-        return self.get_all(resource_path, params)
-
-    def get_item_version(
-        self,
-        item_id: int,
-        version_num: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get the numbered version for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-            version_num: the version number for the item
-
-        Returns: a dictionary object representing the numbered version
-        """
-        resource_path = f"items/{item_id}/versions/{version_num}"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_versioned_item(
-        self,
-        item_id: int,
-        version_num: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get the snapshot of the item at the specified version
-
-        Args:
-            item_id: the item id of the item to fetch
-            version_num: the version number for the item
-
-        Returns: a dictionary object representing the versioned item
-        """
-        resource_path = f"items/{item_id}/versions/{version_num}/versioneditem"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_item_versions(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Get all versions for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-            allowed_results_per_page: number of results per page
-
-        Returns: JSON array with all versions for the item
-        """
-        resource_path = f"items/{item_id}/versions"
-        return self.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
-        )
-
-    def get_item_version(
-        self,
-        item_id: int,
-        version_num: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get the numbered version for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-            version_num: the version number for the item
-
-        Returns: a dictionary object representing the numbered version
-        """
-        resource_path = f"items/{item_id}/versions/{version_num}"
-        response = self._core.get(resource_path, params)
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_versioned_item(
-        self,
-        item_id: int,
-        version_num: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get the snapshot of the item at the specified version
-
-        Args:
-            item_id: the item id of the item to fetch
-            version_num: the version number for the item
-
-        Returns: a dictionary object representing the versioned item
-        """
-        resource_path = f"items/{item_id}/versions/{version_num}/versioneditem"
-        response = self._core.get(resource_path, params)
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
@@ -1052,30 +975,6 @@ class JamaClient(BaseClient):
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_item_children(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        This method will return list of the child items of the item passed to the function.
-        Args:
-            item_id: (int) The id of the item for which children items should be fetched
-            allowed_results_per_page: Number of results per page
-
-        Returns: a List of Objects that represent the children of the item passed in.
-        """
-        resource_path = f"items/{item_id}/children"
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-            **kwargs,
-        )
-
     def get_testruns(
         self,
         test_cycle_id: int,
@@ -1097,114 +996,6 @@ class JamaClient(BaseClient):
             allowed_results_per_page=allowed_results_per_page,
             **kwargs,
         )
-
-    def get_items_upstream_relationships(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Returns a list of all the upstream relationships for the item with the specified ID.
-        Args:
-            item_id: the api id of the item
-            allowed_results_per_page: number of results per page
-
-        Returns: an array of dictionary objects that represent the upstream relationships for the item.
-
-        """
-        resource_path = "items/" + str(item_id) + "/upstreamrelationships"
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-            **kwargs,
-        )
-
-    def get_items_downstream_related(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Returns a list of all the downstream related items for the item with the specified ID.
-
-        Args:
-            item_id: the api id of the item to fetch downstream items for
-            allowed_results_per_page: number of results per page
-
-        Returns: an array of dictionary objects that represent the downstream related items for the specified item.
-
-        """
-        resource_path = f"items/{item_id}/downstreamrelated"
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-            **kwargs,
-        )
-
-    def get_items_downstream_relationships(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Returns a list of all the downstream relationships for the item with the specified ID.
-
-        Args:
-            item_id: the api id of the item
-
-        Returns: an array of dictionary objects that represent the downstream relationships for the item.
-
-        """
-        resource_path = f"items/{item_id}/downstreamrelationships"
-        return self.get_all(
-            resource_path, allowed_results_per_page=allowed_results_per_page
-        )
-
-    def get_items_upstream_related(
-        self, item_id: int, *args, params: Optional[dict] = None, **kwargs
-    ):
-        """
-        Returns a list of all the upstream related items for the item with the specified ID.
-
-        Args:
-            item_id: the api id of the item to fetch upstream items for
-
-        Returns: an array of dictionary objects that represent the upstream related items for the specified item.
-
-        """
-        resource_path = f"items/{item_id}/upstreamrelated"
-        return self.get_all(resource_path, params, **kwargs)
-
-    def get_item_workflow_transitions(
-        self,
-        item_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Get all valid workflow transitions that can be made with the specified id
-
-        Args:
-            item_id: the api id of the item
-            allowed_results_per_page: number of results per page
-
-        Returns: an array of dictionary objects that represent the workflow transitions for the item.
-
-        """
-        resource_path = f"items/{item_id}/workflowtransitionoptions"
-        return self.get_all(resource_path, params, **kwargs)
 
     def get_tags(
         self,
@@ -1229,33 +1020,6 @@ class JamaClient(BaseClient):
             params = project_param
         else:
             params.update(project_param)
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-            **kwargs,
-        )
-
-    def get_tagged_items(
-        self,
-        tag_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Get all items tagged with the specified ID
-
-        Args:
-            tag_id: The ID of the tag to fetch the results for.
-            allowed_results_per_page: Number of results per page
-
-        Returns:
-            A List of items that match the tag.
-
-        """
-        resource_path = f"tags/{tag_id}/items"
         return self.get_all(
             resource_path,
             params,
@@ -1288,29 +1052,6 @@ class JamaClient(BaseClient):
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def delete_item(
-        self,
-        item_id: int,
-        *args,
-        **kwargs,
-    ) -> int:
-        """
-        This method will delete an item in Jama Connect.
-
-        Args:
-            item_id: The jama connect API ID of the item to be deleted
-
-        Returns: The success status code.
-        """
-        resource_path = f"items/{item_id}"
-        try:
-            response = self._core.delete(resource_path)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return response.status_code
-
     def delete_relationships(self, relationship_id: int) -> int:
         """
         Deletes a relationship with the specified relationship ID
@@ -1327,48 +1068,6 @@ class JamaClient(BaseClient):
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return response.status_code
-
-    def patch_item(
-        self,
-        item_id: int,
-        patches: list[dict],
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ) -> int:
-        """
-        This method will patch an item.
-        Args:
-            item_id: the API ID of the item that is to be patched
-            patches: An array of dicts, that represent patch operations each dict should have the following entries
-             [
-                {
-                    "op": string,
-                    "path": string,
-                    "value": {}
-                }
-            ]
-
-        Returns: The response status code
-
-        """
-        resource_path = f"items/{item_id}"
-        headers = {"Content-Type": "application/json", "Accept": "application/json"}
-
-        try:
-            response = self._core.patch(
-                resource_path,
-                params,
-                data=json.dums(patches),
-                headers=headers,
-                **kwargs,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-
         BaseClient.handle_response_status(response)
         return response.status_code
 
@@ -1460,131 +1159,6 @@ class JamaClient(BaseClient):
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def post_item(
-        self,
-        project_id: int,
-        item_type_id: int,
-        child_item_type_id: int,
-        location: dict,
-        fields: dict,
-        global_id: int = None,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        This method will post a new item to Jama Connect.
-
-        Args:
-            project_id: (int) id of project
-            item_type_id: (int) ID of an Item Type.
-            child_item_type_id: (int) integer ID of an Item Type.
-            location: (dict) containing key "parent"
-            fields: (dict) dictionary item field data.
-        Returns:
-            newly created item
-
-        "location": {
-            "parent": {
-            "item": 0,
-                "project": 0
-            }
-        }
-        """
-
-        body = {
-            "project": project_id,
-            "itemType": item_type_id,
-            "childItemType": child_item_type_id,
-            "location": {"parent": location},
-            "fields": fields,
-        }
-        resource_path = "items/"
-
-        # we setting a global ID?
-        if global_id is not None:
-            body["globalId"] = global_id
-            params["setGlobalIdManually"] = True
-
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.post(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def post_item_tag(
-        self,
-        item_id: int,
-        tag_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ) -> int:
-        """
-        Add an existing tag to the item with the specified ID
-        Args:
-            item_id: The API ID of the item to add a tag.
-            tag_id: The API ID of the tag to add to the item.
-
-        Returns: 201 if successful
-
-        """
-        body = {"tag": tag_id}
-        resource_path = f"items/{item_id}/tags"
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.post(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return response.status_code
-
-    def post_item_sync(
-        self,
-        source_item: int,
-        pool_item: int,
-        *args,
-        params: Optional[dict],
-        **kwargs,
-    ):
-        """
-        add an item to an existing pool of global ids
-        Args:
-            source_item: integer API ID of the source item, this item will adopt the global id of the
-                         pool_item.
-            pool_item: integer API ID of the item in the target global ID pool.
-
-        Returns: the integer ID of the modified source item.
-        """
-        body = {"item": source_item}
-
-        resource_path = f"items/{pool_item}/synceditems"
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.post(
-                resource_path,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
     def post_relationship(
         self,
         from_item: int,
@@ -1656,83 +1230,6 @@ class JamaClient(BaseClient):
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
-
-    def post_item_attachment(
-        self,
-        item_id: int,
-        attachment_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ) -> int:
-        """
-        Add an existing attachment to the item with the specified ID
-        :param item_id: this is the ID of the item
-        :param attachment_id: The ID of the attachment
-        :return: 201 if successful / the response status of the post operation
-        """
-        body = {"attachment": attachment_id}
-        resource_path = f"items/{item_id}/attachments"
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.post(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return response.status_code
-
-    def put_item(
-        self,
-        project_id: int,
-        item_id: int,
-        item_type_id: int,
-        child_item_type_id: int,
-        location: dict,
-        fields: dict,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """This method wil
-         PUT a new item to Jama Connect.
-        :param project integer representing the project to which this item is to be posted
-        :param item_id integer representing the item which is to be updated
-        :param item_type_id integer ID of an Item Type.
-        :param child_item_type_id integer ID of an Item Type.
-        :param location dictionary  with a key of 'item' or 'project' and an value with the ID of the parent
-        :param fields dictionary item field data.
-        :return integer ID of the successfully posted item or None if there was an error.
-        """
-
-        body = {
-            "project": project_id,
-            "itemType": item_type_id,
-            "childItemType": child_item_type_id,
-            "location": {"parent": location},
-            "fields": fields,
-        }
-        resource_path = f"items/{item_id}"
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.put(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        self.handle_response_status(response)
-        return response.status_code
 
     def get_attachment_file(
         self,

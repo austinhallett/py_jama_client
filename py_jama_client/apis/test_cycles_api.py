@@ -49,3 +49,25 @@ class TestCyclesAPI:
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
+
+    def get_test_cycle_runs(
+        self,
+        test_cycle_id: int,
+        *args,
+        params: Optional[dict] = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        This method will return all test runs associated with the specified test cycle.  Test runs will be returned
+        as a list of json objects.
+        Args:
+            test_cycle_id: (int) The id of the test cycle
+        """
+        resource_path = f"testcycles/{test_cycle_id}/testruns"
+        return self.client.get_all(
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
+        )

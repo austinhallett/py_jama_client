@@ -1,5 +1,5 @@
 """
-User API module
+Pick Lists API module
 
 Example usage:
 

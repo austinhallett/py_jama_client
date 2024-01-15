@@ -30,6 +30,15 @@ from py_jama_client.response import ClientResponse
 from typing import Optional
 from httpx import Response
 
+__DEBUG__ = False
+
+# disable warnings for ssl verification
+urllib3.disable_warnings()
+
+py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+
+DEFAULT_ALLOWED_RESULTS_PER_PAGE = 20  # Default is 20, Max is 50. if set to greater than 50, only 50 will items return.
+
 
 class AbstractClient(ABC):
     """
@@ -79,38 +88,12 @@ class AbstractClient(ABC):
         """
         ...
 
-    @abstractmethod
-    def _check_oauth_token(self):
-        ...
-
-    @abstractmethod
-    def _get_fresh_token(self):
-        """
-        This method will fetch a new oauth bearer token from the oauth token server.
-        """
-        ...
-
-    @abstractmethod
-    def _add_auth_header(self, **kwargs):
-        ...
-
-
-__DEBUG__ = False
-
-# disable warnings for ssl verification
-urllib3.disable_warnings()
-
 
 # class AsyncCore(Core):
 #     session_class = httpx.AsyncClient
 
 #     async def close(self):
 #         return await self.__session.aclose()
-
-
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
-
-DEFAULT_ALLOWED_RESULTS_PER_PAGE = 20  # Default is 20, Max is 50. if set to greater than 50, only 50 will items return.
 
 
 class BaseClient:
@@ -155,8 +138,8 @@ class BaseClient:
         url = self.__host_name + resource
 
         if self.__oauth:
-            self._check_oauth_token()
-            kwargs["headers"] = self._add_auth_header(**kwargs)
+            self.__check_oauth_token()
+            kwargs["headers"] = self.__add_auth_header(**kwargs)
             return self.__session.delete(url, **kwargs)
 
         return self.__session.delete(url, auth=self.__credentials, **kwargs)
@@ -166,8 +149,8 @@ class BaseClient:
         url = self.__host_name + resource
 
         if self.__oauth:
-            self._check_oauth_token()
-            kwargs["headers"] = self._add_auth_header(**kwargs)
+            self.__check_oauth_token()
+            kwargs["headers"] = self.__add_auth_header(**kwargs)
             return self.__session.get(url, params=params, **kwargs)
 
         return self.__session.get(url, auth=self.__credentials, params=params, **kwargs)
@@ -177,8 +160,8 @@ class BaseClient:
         url = self.__host_name + resource
 
         if self.__oauth:
-            self._check_oauth_token()
-            kwargs["headers"] = self._add_auth_header(**kwargs)
+            self.__check_oauth_token()
+            kwargs["headers"] = self.__add_auth_header(**kwargs)
             return self.__session.patch(
                 url, params=params, data=data, json=json, **kwargs
             )
@@ -192,8 +175,8 @@ class BaseClient:
         url = self.__host_name + resource
 
         if self.__oauth:
-            self._check_oauth_token()
-            kwargs["headers"] = self._add_auth_header(**kwargs)
+            self.__check_oauth_token()
+            kwargs["headers"] = self.__add_auth_header(**kwargs)
             return self.__session.post(
                 url, params=params, data=data, json=json, **kwargs
             )
@@ -207,8 +190,8 @@ class BaseClient:
         url = self.__host_name + resource
 
         if self.__oauth:
-            self._check_oauth_token()
-            kwargs["headers"] = self._add_auth_header(**kwargs)
+            self.__check_oauth_token()
+            kwargs["headers"] = self.__add_auth_header(**kwargs)
             return self.__session.put(
                 url, data=data, params=params, json=json, **kwargs
             )
@@ -217,7 +200,7 @@ class BaseClient:
             url, auth=self.__credentials, data=data, params=params, json=json, **kwargs
         )
 
-    def _check_oauth_token(self):
+    def __check_oauth_token(self):
         if self.__token is None:
             self._get_fresh_token()
 

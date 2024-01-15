@@ -475,52 +475,6 @@ class JamaClient(BaseClient):
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_pick_lists(
-        self,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Returns a list of all the pick lists
-
-        Args:
-            allowed_results_per_page: number of results per page
-
-        Returns: an array of dictionary objects
-
-        """
-        resource_path = "picklists/"
-        return self.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
-        )
-
-    def get_pick_list(
-        self,
-        pick_list_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Gets all a singular picklist
-
-        Args:
-            pick_list_id: The API id of the pick list to fetch
-
-        Returns: a dictionary object representing the picklist.
-
-        """
-        resource_path = "picklists/" + str(pick_list_id)
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
     def get_pick_list_options(
         self,
         pick_list_id: int,

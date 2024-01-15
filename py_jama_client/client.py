@@ -416,77 +416,10 @@ class JamaClient(BaseClient):
         try:
             response = self.__session.get("")
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
         return response.json()["data"]
-
-    def get_baselines(
-        self,
-        project_id: int,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-    ) -> ClientResponse:
-        """
-        Returns a list of Baseline objects
-        Args:
-            project_id:  the Id of the project to fetch baselines for
-            allowed_results_per_page: number of results per page
-
-        Returns: a list of Baseline objects
-        """
-        resource_path = "baselines"
-        if params is not None:
-            params.update({"project": project_id})
-        else:
-            params = {"project": project_id}
-
-        return self.get_all(
-            resource_path,
-            params=params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
-
-    def get_baseline(self, baseline_id: int, params: Optional[dict] = None):
-        """
-        Get baseline by id
-
-        Args:
-            baseline_id: the id of the baseline to fetch
-
-        Returns:
-            a dictionary object representing the baseline
-
-        """
-        resource_path = "baselines/" + str(baseline_id)
-
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_baselines_versioneditems(
-        self,
-        baseline_id: int,
-        params: Optional[dict] = None,
-        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-    ):
-        """
-        Get all baseline items in a baseline with the specified ID
-        Args:
-            baseline_id:  The id of the baseline to fetch items for.
-            allowed_results_per_page: Number of results per page
-        Returns: A list of versioned items belonging to the baseline
-        """
-        resource_path = "baselines/" + str(baseline_id) + "/versioneditems"
-        return self.get_all(
-            resource_path,
-            params=params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
 
     def get_filter_results(
         self,
@@ -534,118 +467,6 @@ class JamaClient(BaseClient):
 
         """
         resource_path = f"attachments/{attachment_id}"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_relationship_rule_sets(self):
-        """
-        This method will return all relationship rule sets across all projects of the Jama Connect instance.
-
-        Returns: An array of dictionary objects representing a rule set and its associated rules
-
-        """
-        resource_path = "relationshiprulesets/"
-        return self.get_all(resource_path)
-
-    def get_relationship_rule_set(self, id: int):
-        """
-        This method will return the relationship rule sets by id.
-
-        Returns: A dictionary object representing a rule set and its associated rules
-
-        """
-        resource_path = f"relationshiprulesets/{id}"
-        response = self._core.get(resource_path)
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_relationship_types(
-        self,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        This method will return all relationship types of the across all projects of the Jama Connect instance.
-
-        Args:
-            allowed_results_per_page: Number of results per page
-
-        Returns: An array of dictionary objects
-
-        """
-        resource_path = "relationshiptypes/"
-        return self.get_all(
-            resource_path, allowed_results_per_page=allowed_results_per_page
-        )
-
-    def get_relationship_type(
-        self, relationship_type_id: int, *args, params: Optional[dict] = None, **kwargs
-    ):
-        """
-        Gets relationship type information for a specific relationship type id.
-
-        Args:
-            relationship_type_id: The api id of the item type to fetch
-
-        Returns: JSON object
-
-        """
-        resource_path = f"relationshiptypes/{relationship_type_id}"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_item_types(
-        self,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        This method will return all item types of the across all projects of the Jama Connect instance.
-
-        Args:
-            allowed_results_per_page: Number of results per page
-
-        Returns: An array of dictionary objects
-
-        """
-        resource_path = "itemtypes/"
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
-
-    def get_item_type(
-        self,
-        item_type_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Gets item type information for a specific item type id.
-
-        Args:
-            item_type_id: The api id of the item type to fetch
-
-        Returns: JSON object
-
-        """
-        resource_path = f"itemtypes/{item_type_id}"
         try:
             response = self._core.get(resource_path, params)
         except CoreException as err:
@@ -738,61 +559,6 @@ class JamaClient(BaseClient):
 
         """
         resource_path = f"picklistoptions/{pick_list_option_id}"
-        try:
-            response = self._core.get(resource_path, params)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_relationships(
-        self,
-        project_id: int,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Returns a list of all relationships of a specified project
-
-        Args:
-            project_id: the api project id of a project
-            allowed_results_per_page: number of results per page
-
-        Returns: a list of dictionary objects that represents a relationships
-
-        """
-        resource_path = "relationships"
-        if params is None:
-            params = {"project": project_id}
-        else:
-            params.update({"project": project_id})
-
-        return self.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
-
-    def get_relationship(
-        self,
-        relationship_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Returns a specific relationship object of a specified relationship ID
-
-        Args:
-            relationship_id: the api project id of a relationship
-
-        Returns: a dictionary object that represents a relationship
-
-        """
-        resource_path = f"relationships/{relationship_id}"
         try:
             response = self._core.get(resource_path, params)
         except CoreException as err:
@@ -1035,25 +801,6 @@ class JamaClient(BaseClient):
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def delete_relationships(self, relationship_id: int) -> int:
-        """
-        Deletes a relationship with the specified relationship ID
-
-        Args:
-            relationship_id: the api project id of a relationship
-
-        Returns: The success status code.
-
-        """
-        resource_path = f"relationships/{relationship_id}"
-        try:
-            response = self._core.delete(resource_path)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return response.status_code
-
     def post_tag(
         self,
         name: str,
@@ -1139,78 +886,6 @@ class JamaClient(BaseClient):
             raise APIException(str(err))
 
         # Validate response
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def post_relationship(
-        self,
-        from_item: int,
-        to_item: int,
-        relationship_type: int = None,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Args:
-            from_item: integer API id of the source item
-            to_item: integer API id of the target item
-            relationship_type: Optional integer API id of the relationship type to create
-
-        Returns: The integer ID of the newly created relationship.
-
-        """
-        body = {
-            "fromItem": from_item,
-            "toItem": to_item,
-        }
-        if relationship_type is not None:
-            body["relationshipType"] = relationship_type
-        resource_path = "relationships/"
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.post(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs,
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def put_relationship(
-        self,
-        relationship_id: int,
-        from_item: int,
-        to_item: int,
-        relationship_type: int = None,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        Args:
-            relationship_id: integer API id of the relationship
-            from_item: integer API id of the source item
-            to_item: integer API id of the target item
-            relationship_type: Optional integer API id of the relationship type to create
-        """
-        body = {"fromItem": from_item, "toItem": to_item}
-        if relationship_type is not None:
-            body["relationshipType"] = relationship_type
-        resource_path = "relationships/{}".format(relationship_id)
-        headers = {"content-type": "application/json"}
-        try:
-            response = self._core.put(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
-            )
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 

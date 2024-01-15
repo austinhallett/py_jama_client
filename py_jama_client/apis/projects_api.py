@@ -21,7 +21,7 @@ from py_jama_client.client import BaseClient, ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 
 
 class ProjectsAPI:
@@ -47,7 +47,7 @@ class ProjectsAPI:
         """
         resource_path = "projects"
 
-        return self.get_all(
+        return self.client.get_all(
             resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
 
@@ -62,9 +62,9 @@ class ProjectsAPI:
         """
         resource_path = f"projects/{project_id}"
         try:
-            response = self._core.get(resource_path, params)
+            response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise ResourceNotFoundException(str(err))
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -77,7 +77,7 @@ class ProjectsAPI:
 
         """
         resource_path = f"relationshiprulesets/{id}/projects"
-        return self.get_all(resource_path)
+        return self.client.get_all(resource_path)
 
     def post_project_attachment(
         self,
@@ -100,7 +100,7 @@ class ProjectsAPI:
         resource_path = f"projects/{project_id}/attachments"
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.post(
+            response = self.client.post(
                 resource_path,
                 params,
                 data=json.dumps(body),
@@ -108,7 +108,7 @@ class ProjectsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         BaseClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -134,9 +134,9 @@ class ProjectsAPI:
         resource_path = f"projects/{project_id}/itemtypes/{item_type_id}"
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.put(resource_path, params, headers=headers, **kwargs)
+            response = self.client.put(resource_path, params, headers=headers, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
-        self.handle_response_status(response)
+        BaseClient.handle_response_status(response)
         return response.status_code

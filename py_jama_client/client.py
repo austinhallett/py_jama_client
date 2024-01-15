@@ -35,66 +35,6 @@ __DEBUG__ = False
 # disable warnings for ssl verification
 urllib3.disable_warnings()
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
-
-DEFAULT_ALLOWED_RESULTS_PER_PAGE = 20  # Default is 20, Max is 50. if set to greater than 50, only 50 will items return.
-
-
-class AbstractClient(ABC):
-    """
-    Abstract core class
-    This class defines the interface required to satisfy the base requirements of the client core class
-    """
-
-    @abstractmethod
-    def close(self) -> None:
-        """
-        Method to close underlying session
-        """
-        ...
-
-    @abstractmethod
-    def delete(self, resource: str, **kwargs):
-        """
-        This method will perform a delete operation on the specified resource
-        """
-        ...
-
-    @abstractmethod
-    def get(self, resource: str, params: dict = None, **kwargs):
-        """
-        This method will perform a get operation on the specified resource
-        """
-        ...
-
-    @abstractmethod
-    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
-        """
-        This method will perform a patch operation to the specified resource
-        """
-        ...
-
-    @abstractmethod
-    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
-        """
-        This method will perform a post operation to the specified resource.
-        """
-        ...
-
-    @abstractmethod
-    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
-        """
-        This method will perform a put operation to the specified resource
-        """
-        ...
-
-
-# class AsyncCore(Core):
-#     session_class = httpx.AsyncClient
-
-#     async def close(self):
-#         return await self.__session.aclose()
-
 
 class BaseClient:
     """
@@ -479,31 +419,6 @@ class JamaClient(BaseClient):
             **kwargs,
         )
 
-    def get_test_cycle(
-        self,
-        test_cycle_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs,
-    ):
-        """
-        This method will return JSON data about the test cycle specified by the test cycle id.
-
-        Args:
-            test_cycle_id: the api id of the test cycle to fetch
-
-        Returns: a dictionary object that represents the test cycle
-
-        """
-        resource_path = f"testcycles/{test_cycle_id}"
-        try:
-            response = self._core.get(resource_path)
-        except CoreException as err:
-            py_jama_rest_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
     def post_testplans_testcycles(
         self,
         testplan_id: int,
@@ -583,13 +498,3 @@ class JamaClient(BaseClient):
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code
-
-
-def get_jama_client(*args, **kwargs) -> JamaClient:
-    """
-    Returns the global JamaClient instance.
-
-    Returns:
-        JamaClient: The global JamaClient instance.
-    """
-    return JamaClient(Core(*args, **kwargs))

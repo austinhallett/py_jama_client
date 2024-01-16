@@ -8,7 +8,8 @@ def test_get_baselines(get_test_jama_client):
 
 
 def test_get_baselines_with_link(get_test_jama_client):
-    response = get_test_jama_client.get_baselines(
+    baselines_api = BaselinesAPI(get_test_jama_client)
+    response = baselines_api.get_baselines(
         project_id=82,
         params={"include": ("data.project", "data.createdBy")},
     )

@@ -1,11 +1,7 @@
 """
-Core Jama Connect API class
+Core Jama Connect Client API class
 
 This module contains core classes for interacting with the Jama Connect API
-
-Classes:
-    Core: This is the base class
-    AsyncCore: This class inherits the Core class using the httpx.AsyncClient class
 """
 import json
 import math
@@ -15,7 +11,6 @@ import time
 import logging
 from py_jama_client.exceptions import UnauthorizedTokenException
 from typing import Tuple
-from abc import ABC, abstractmethod
 from py_jama_client.exceptions import (
     APIException,
     CoreException,
@@ -35,8 +30,10 @@ __DEBUG__ = False
 # disable warnings for ssl verification
 urllib3.disable_warnings()
 
+py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 
-class BaseClient:
+
+class JamaClient:
     """
     Base client class
     """
@@ -65,6 +62,15 @@ class BaseClient:
             self.__token_host = host + "/rest/oauth/token"
             self.__token = None
             self.__get_fresh_token()
+
+    def get_available_endpoints(self):
+        try:
+            response = self.__session.get("")
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        BaseClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def close(self) -> None:
         """Method to close underlying session"""
@@ -344,55 +350,4 @@ class BaseClient:
         py_jama_rest_client_logger.error("{} error. {}".format(status, response.reason))
         raise APIException(
             "{} error".format(status), status_code=status, reason=response.reason
-        )
-
-
-class JamaClient(BaseClient):
-    """
-    A class to abstract communication with the Jama Connect API
-    """
-
-    def get_available_endpoints(self):
-        try:
-            response = self.__session.get("")
-        except CoreException as err:
-            py_jama_client_logger.error(err)
-            raise APIException(str(err))
-        BaseClient.handle_response_status(response)
-        return response.json()["data"]
-
-    def get_filter_results(
-        self,
-        filter_id: int,
-        project_id: int = None,
-        *args,
-        params: Optional[dict] = None,
-        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        **kwargs,
-    ):
-        """
-        Get all results items for the filter with the specified ID
-
-        Args:
-            filter_id: The ID of the filter to fetch the results for.
-            project_id: Use this only for filters that run on any project, where projectScope is CURRENT
-            allowed_results_per_page: Number of results per page
-
-        Returns:
-            A List of items that match the filter.
-
-        """
-        resource_path = f"filters/{filter_id}/results"
-
-        req_params = {"project": project_id}
-
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
-
-        return self.get_all(
-            resource_path,
-            params=params,
-            allowed_results_per_page=allowed_results_per_page,
         )

@@ -24,6 +24,7 @@ from py_jama_client.exceptions import (
 from py_jama_client.response import ClientResponse
 from typing import Optional
 from httpx import Response
+from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
 __DEBUG__ = False
 

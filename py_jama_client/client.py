@@ -70,7 +70,7 @@ class JamaClient:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def close(self) -> None:
@@ -261,7 +261,7 @@ class JamaClient:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     @staticmethod

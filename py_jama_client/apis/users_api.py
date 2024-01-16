@@ -13,7 +13,7 @@ import json
 import logging
 from typing import Optional
 from py_jama_client.exceptions import APIException, CoreException
-from py_jama_client.client import BaseClient
+from py_jama_client.client import JamaClient
 from py_jama_client.response import ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
@@ -21,11 +21,11 @@ py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
 
 
 class UsersAPI:
-    client: BaseClient
+    client: JamaClient
 
     resource_path = "users"
 
-    def __init__(self, client: BaseClient):
+    def __init__(self, client: JamaClient):
         self.client = client
 
     def get_users(
@@ -156,7 +156,7 @@ class UsersAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def put_user(

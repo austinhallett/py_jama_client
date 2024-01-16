@@ -13,7 +13,7 @@ import json
 import logging
 from typing import Optional
 from py_jama_client.exceptions import APIException, CoreException
-from py_jama_client.client import BaseClient
+from py_jama_client.client import JamaClient
 from py_jama_client.response import ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
@@ -21,7 +21,7 @@ py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 
 
 class TestPlansAPI:
-    client: BaseClient
+    client: JamaClient
 
     resource_path = "testplans"
 
@@ -77,5 +77,5 @@ class TestPlansAPI:
             raise APIException(str(err))
 
         # Validate response
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)

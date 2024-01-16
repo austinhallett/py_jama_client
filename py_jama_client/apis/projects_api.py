@@ -17,7 +17,7 @@ from py_jama_client.exceptions import (
     CoreException,
     ResourceNotFoundException,
 )
-from py_jama_client.client import BaseClient, ClientResponse
+from py_jama_client.client import JamaClient, ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
 
@@ -25,11 +25,11 @@ py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 
 
 class ProjectsAPI:
-    client: BaseClient
+    client: JamaClient
 
     resource_path = "projects/"
 
-    def __init__(self, client: BaseClient):
+    def __init__(self, client: JamaClient):
         self.client = client
 
     def get_projects(
@@ -66,7 +66,7 @@ class ProjectsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise ResourceNotFoundException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_relationship_rule_set_projects(self, id: int):
@@ -110,7 +110,7 @@ class ProjectsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def put_project_item_type(
@@ -138,5 +138,5 @@ class ProjectsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return response.status_code

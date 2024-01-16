@@ -13,7 +13,7 @@ import json
 import logging
 from typing import Optional
 from py_jama_client.exceptions import APIException, CoreException
-from py_jama_client.client import BaseClient
+from py_jama_client.client import JamaClient
 from py_jama_client.response import ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
@@ -21,7 +21,7 @@ py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 
 
 class AbstractItemsAPI:
-    client: BaseClient
+    client: JamaClient
 
     resource_path = "abstractitems"
 
@@ -114,7 +114,7 @@ class AbstractItemsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_abstract_item_versions(
@@ -158,7 +158,7 @@ class AbstractItemsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_abstract_versioned_item(
@@ -184,5 +184,5 @@ class AbstractItemsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)

@@ -13,7 +13,7 @@ import json
 import logging
 from typing import Optional
 from py_jama_client.exceptions import APIException, CoreException
-from py_jama_client.client import BaseClient, ClientResponse
+from py_jama_client.client import JamaClient, ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
 
@@ -21,11 +21,11 @@ py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
 
 
 class ItemsAPI:
-    client: BaseClient
+    client: JamaClient
 
     resource_path = "items"
 
-    def __init__(self, client: BaseClient):
+    def __init__(self, client: JamaClient):
         self.client = client
 
     def get_items(
@@ -79,7 +79,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def post_item(
@@ -140,7 +140,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def post_item_tag(
@@ -170,7 +170,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return response.status_code
 
     def post_item_sync(
@@ -205,7 +205,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def post_item_attachment(
@@ -236,7 +236,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return response.status_code
 
     def put_item(
@@ -324,7 +324,7 @@ class ItemsAPI:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
 
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return response.status_code
 
     def delete_item(
@@ -347,7 +347,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return response.status_code
 
     def get_tagged_items(
@@ -557,7 +557,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_item_versions(
@@ -601,7 +601,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_versioned_item(
@@ -627,7 +627,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_item_versions(
@@ -671,7 +671,7 @@ class ItemsAPI:
         """
         resource_path = f"items/{item_id}/versions/{version_num}"
         response = self.client.get(resource_path, params)
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_versioned_item(
@@ -693,7 +693,7 @@ class ItemsAPI:
         """
         resource_path = f"items/{item_id}/versions/{version_num}/versioneditem"
         response = self.client.get(resource_path, params)
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_item_lock(self, item_id: int, params: Optional[dict] = None):
@@ -712,7 +712,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_rest_client_logger.error(err)
             raise APIException(str(err))
-        BaseClient.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def put_item_lock(self, item_id: int, locked: bool) -> int:

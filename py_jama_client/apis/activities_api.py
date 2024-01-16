@@ -12,6 +12,8 @@ Example usage:
 import logging
 from typing import Optional
 from py_jama_client.client import JamaClient
+from py_jama_client.exceptions import CoreException, APIException
+from py_jama_client.response import ClientResponse
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
 py_jama_client_logger = logging.getLogger("py_jama_rest_client")
@@ -91,7 +93,13 @@ class ActivitiesAPI:
             activity_id: (int) activity resource id
         """
         resource_path = f"{self.resource_path}/{activity_id}"
-        return self.client.get(resource_path, params, **kwargs)
+        try:
+            response = self.client.get(resource_path, params, **kwargs)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def get_activity_affected_items(
         self,
@@ -131,11 +139,17 @@ class ActivitiesAPI:
             activity_id: (int) activity resource id
         """
         resource_path = f"{self.resource_path}/activities/{activity_id}/restore"
-        return self.client.post(
-            resource_path,
-            params,
-            **kwargs,
-        )
+        try:
+            response = self.client.post(
+                resource_path,
+                params,
+                **kwargs,
+            )
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def get_admin_activities(
         self,

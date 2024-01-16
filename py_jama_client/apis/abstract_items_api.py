@@ -61,39 +61,44 @@ class AbstractItemsAPI:
         resource_path = "abstractitems"
 
         # Add each parameter that is not null to the request.
-        params = {}
+        if params is None:
+            params = {}
 
         if project is not None:
-            params["project"] = project
+            params.update({"project": project})
 
         if item_type is not None:
-            params["itemType"] = item_type
+            params.update({"itemType": item_type})
 
         if document_key is not None:
-            params["documentKey"] = document_key
+            params.update({"documentKey": document_key})
 
         if release is not None:
-            params["release"] = release
+            params.update({"release": release})
 
         if created_date is not None:
-            params["createdDate"] = created_date
+            params.update({"createdDate": created_date})
 
         if modified_date is not None:
-            params["modifiedDate"] = modified_date
+            params.update({"modifiedDate": modified_date})
 
         if last_activity_date is not None:
-            params["lastActivityDate"] = last_activity_date
+            params.update({"lastActivityDate": last_activity_date})
 
         if contains is not None:
-            params["contains"] = contains
+            params.update({"contains": contains})
 
         if sort_by is not None:
-            params["sortBy"] = sort_by
+            params.update({"sortBy": sort_by})
 
         return self.client.get_all(resource_path, params, **kwargs)
 
     def get_abstract_item(
-        self, item_id: int, *args, params: Optional[dict] = None, **kwargs
+        self,
+        item_id: int,
+        *args,
+        params: Optional[dict] = None,
+        **kwargs,
     ):
         """
         This method will return an item, test plan, test cycle, test run, or attachment with the specified ID

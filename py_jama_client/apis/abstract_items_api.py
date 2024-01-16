@@ -9,7 +9,6 @@ Example usage:
     >>> abstract_items = abstract_items_api.get_abstract_items()    
 """
 
-import json
 import logging
 from typing import Optional
 from py_jama_client.exceptions import APIException, CoreException
@@ -36,29 +35,35 @@ class AbstractItemsAPI:
         last_activity_date: list[str] = None,
         contains: list[str] = None,
         sort_by: list[str] = None,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
         params: Optional[dict] = None,
         **kwargs,
     ):
         """
-        This method will return all items that match the query parameters entered.
+        Search for items, test plans, test cycles, test runs, or attachments
+        GET: /abstractitems/
 
         Args:
-            project:            Array[integer]
-            item_type:          Array[integer]
-            document_key:       Array[string]
-            release:            Array[integer]
-            created_date:       Array[string]
-            modified_date:      Array[string]
-            last_activity_date: Array[string]
-            contains:           Array[string]
-            sort_by:            Array[string]
-
-        Returns:
-            A JSON Array of items.
-
+            project: list of project resource ids
+            item_type: list of item type resource ids
+            document_key: list of document keys
+            release: list of release source ids
+            created_date: Filter datetime fields after a single date or within a range of values.
+                Provide one or two values in ISO8601 format (milliseconds or seconds) -
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
+            modified_date: Filter datetime fields after a single date or within a range of values.
+                Provide one or two values in ISO8601 format (milliseconds or seconds) -
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
+            last_activity_date: Filter datetime fields after a single date or within a range of values.
+                Provide one or two values in ISO8601 format (milliseconds or seconds) -
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
+            contains: Filter on the text contents of the item. Strings taken literally.
+                Multiple 'contains' values will be bitwise ORed.
+            sort_by: Sort orders can be added with the name of the field by which to sort, followed by .asc
+                or .desc (e.g. 'name.asc' or 'modifiedDate.desc'). If not set, this defaults to sorting
+                by sequence.asc and then documentKey.asc
         """
-        resource_path = "abstractitems"
 
         # Add each parameter that is not null to the request.
         if params is None:
@@ -91,7 +96,12 @@ class AbstractItemsAPI:
         if sort_by is not None:
             params.update({"sortBy": sort_by})
 
-        return self.client.get_all(resource_path, params, **kwargs)
+        return self.client.get_all(
+            self.resource_path,
+            params,
+            allowed_results_per_page,
+            **kwargs,
+        )
 
     def get_abstract_item(
         self,
@@ -101,12 +111,11 @@ class AbstractItemsAPI:
         **kwargs,
     ):
         """
-        This method will return an item, test plan, test cycle, test run, or attachment with the specified ID
+        Get any item, test plan, test cycle, test run, or attachment with the specified ID
+        GET: /abstractitems/{id}
+
         Args:
             item_id: the item id of the item to fetch
-
-        Returns: a dictonary object representing the abstract item
-
         """
         resource_path = f"abstractitems/{item_id}"
         try:
@@ -117,15 +126,49 @@ class AbstractItemsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
+    def get_abstract_versioned_relationships(
+        self,
+        item_id: int,
+        timestamp: str,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        *args,
+        params: Optional[dict] = None,
+        **kwargs,
+    ):
+        """
+        Get all versioned relationships that were associated to the item at the specified time
+        GET: /abstractitems/{id}/versionedrelationships
+
+        Args:
+            id: item resource id
+            timestamp: Get relationships for the specified item at this date and time.
+                Requires ISO8601 formatting (milliseconds or seconds) - "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+                or "yyyy-MM-dd'T'HH:mm:ssZ"
+        """
+        resource_path = f"{self.resource_path}/{item_id}/versionedrelationships"
+        req_params = {"timestamp": timestamp}
+        if params is None:
+            params = req_params
+        else:
+            params.update(req_params)
+        return self.client.get_all(
+            resource_path,
+            params,
+            allowed_results_per_page,
+            **kwargs,
+        )
+
     def get_abstract_item_versions(
         self,
         item_id: int,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
         params: Optional[dict] = None,
         **kwargs,
     ):
         """
         Get all versions for the item with the specified ID
+        GET: /abstractitems/{id}/versions
 
         Args:
             item_id: the item id of the item to fetch
@@ -133,7 +176,12 @@ class AbstractItemsAPI:
         Returns: JSON array with all versions for the item
         """
         resource_path = f"abstractitems/{item_id}/versions"
-        return self.client.get_all(resource_path, params, **kwargs)
+        return self.client.get_all(
+            resource_path,
+            params,
+            allowed_results_per_page,
+            **kwargs,
+        )
 
     def get_abtract_item_version(
         self,
@@ -145,12 +193,11 @@ class AbstractItemsAPI:
     ):
         """
         Get the numbered version for the item with the specified ID
+        GET: /abstractitems/{id}/versions/{versionNum}/
 
         Args:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
-
-        Returns: a dictionary object representing the numbered version
         """
         resource_path = f"abstractitems/{item_id}/versions/{version_num}"
         try:
@@ -171,12 +218,11 @@ class AbstractItemsAPI:
     ):
         """
         Get the snapshot of the item at the specified version
+        GET: /abstractitems/{id}/versions/{versionNum}/versioneditem/
 
         Args:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
-
-        Returns: a dictionary object representing the versioned item
         """
         resource_path = f"abstractitems/{item_id}/versions/{version_num}/versioneditem"
         try:

@@ -185,7 +185,7 @@ class JamaClient:
             self.__token_acquired_at = math.floor(time_before_request)
 
         else:
-            py_jama_rest_client_logger.error("Failed to retrieve OAuth Token")
+            py_jama_client_logger.error("Failed to retrieve OAuth Token")
 
     def __add_auth_header(self, **kwargs):
         headers = kwargs.get("headers")
@@ -257,9 +257,9 @@ class JamaClient:
             params.update(pagination)
 
         try:
-            response = self.__session.get(resource, params=params, **kwargs)
+            response = self.get(resource, params=params, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -289,7 +289,7 @@ class JamaClient:
                 pass
 
             # Log the error
-            py_jama_rest_client_logger.error(
+            py_jama_client_logger.error(
                 "API Client Error. Status: {} Message: {}".format(
                     status, response_message
                 )
@@ -338,7 +338,7 @@ class JamaClient:
             """These are server errors and network errors."""
 
             # Log The Error
-            py_jama_rest_client_logger.error(
+            py_jama_client_logger.error(
                 "{} Server error. {}".format(status, response.reason)
             )
             raise APIServerException(
@@ -348,7 +348,7 @@ class JamaClient:
             )
 
         # Catch anything unexpected
-        py_jama_rest_client_logger.error("{} error. {}".format(status, response.reason))
+        py_jama_client_logger.error("{} error. {}".format(status, response.reason))
         raise APIException(
             "{} error".format(status), status_code=status, reason=response.reason
         )

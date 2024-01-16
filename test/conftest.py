@@ -1,6 +1,6 @@
 import os
 import pytest
-from py_jama_client.client import BaseClient
+from py_jama_client.client import JamaClient
 
 
 @pytest.fixture(autouse=True)
@@ -16,7 +16,7 @@ def env_vars():
 
 @pytest.fixture(scope="session")
 def get_test_jama_client():
-    client = BaseClient(
+    client = JamaClient(
         host=os.getenv("HOST"),
         credentials=(os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")),
         verify=False,

@@ -44,9 +44,8 @@ class UsersAPI:
         Returns: JSON array
 
         """
-        resource_path = self.resource_path
         return self.client.get_all(
-            resource_path,
+            self.resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
             **kwargs,

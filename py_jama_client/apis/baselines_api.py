@@ -30,8 +30,10 @@ class BaselinesAPI:
     def get_baselines(
         self,
         project_id: int,
+        *args,
         params: Optional[dict] = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
     ) -> ClientResponse:
         """
         Returns a list of Baseline objects
@@ -41,16 +43,17 @@ class BaselinesAPI:
 
         Returns: a list of Baseline objects
         """
-        resource_path = "baselines"
-        if params is not None:
-            params.update({"project": project_id})
+        req_params = {"project": project_id}
+        if params is None:
+            params = req_params
         else:
-            params = {"project": project_id}
+            params.update(req_params)
 
         return self.client.get_all(
-            resource_path,
+            self.resource_path,
             params=params,
             allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
         )
 
     def get_baseline(
@@ -70,7 +73,7 @@ class BaselinesAPI:
             a dictionary object representing the baseline
 
         """
-        resource_path = "baselines/" + str(baseline_id)
+        resource_path = f"baselines/{baseline_id}"
 
         try:
             response = self.client.get(resource_path, params)
@@ -93,7 +96,7 @@ class BaselinesAPI:
             allowed_results_per_page: Number of results per page
         Returns: A list of versioned items belonging to the baseline
         """
-        resource_path = "baselines/" + str(baseline_id) + "/versioneditems"
+        resource_path = f"baselines/{baseline_id}/versioneditems"
         return self.client.get_all(
             resource_path,
             params=params,

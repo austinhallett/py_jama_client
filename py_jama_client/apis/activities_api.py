@@ -30,6 +30,7 @@ class ActivitiesAPI:
         item_type: list[int] = None,
         date: list[str] = None,
         delete_events: bool = None,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
         params: Optional[dict] = None,
         **kwargs,
@@ -71,7 +72,7 @@ class ActivitiesAPI:
         return self.client.get_all(
             self.resource_path,
             params,
-            allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+            allowed_results_per_page,
             **kwargs,
         )
 
@@ -95,6 +96,7 @@ class ActivitiesAPI:
     def get_activity_affected_items(
         self,
         activity_id: int,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
         params: Optional[dict] = None,
         **kwargs,
@@ -110,7 +112,7 @@ class ActivitiesAPI:
         return self.client.get_all(
             resource_path,
             params,
-            allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+            allowed_results_per_page,
             **kwargs,
         )
 
@@ -139,7 +141,7 @@ class ActivitiesAPI:
         self,
         filter_term: str = None,
         project_id: int = None,
-        *args,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE * args,
         params: Optional[dict] = None,
         **kwargs,
     ):
@@ -161,8 +163,9 @@ class ActivitiesAPI:
             params.update({"projectId": project_id})
 
         resource_path = f"{self.resource_path}/adminActivity"
-        return self.client.get(
+        return self.client.get_all(
             resource_path,
             params,
+            allowed_results_per_page,
             **kwargs,
         )

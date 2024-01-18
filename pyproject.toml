@@ -1,7 +1,7 @@
 [project]
 name = "py_jama_client"
 authors = [{ name = "Austin Hallett-Doughty" }]
-description = "Python client library for auth.silabs.net"
+description = "Python client library for Jama Connect"
 readme = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",

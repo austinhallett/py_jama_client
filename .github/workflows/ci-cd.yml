@@ -18,6 +18,14 @@ jobs:
                   python3 -m
                   pip install
                   build
+                  hatchling
+                  --user
+            - name: Version the package
+              run: >-
+                  python3 -m
+                  hatchling
+                  version
+                  ${{ github.ref_name }}
                   --user
             - name: Build a binary wheel and a source tarball
               run: python3 -m build

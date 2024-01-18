@@ -1,0 +1,51 @@
+[project]
+name = "py_jama_client"
+authors = [{ name = "Austin Hallett-Doughty" }]
+description = "Python client library for auth.silabs.net"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+requires-python = ">=3.11"
+
+dependencies = [
+    "requests>=2.31.0",
+    "anyio>=3.7.1",
+    "python-jose>=3.3.0",
+    "httpx>=0.24.1",
+]
+
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.4.0",
+    "black>=23.7.0",
+    "flake8>=6.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.1",
+    "pytest-dotenv>=0.5.2",
+]
+
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+minversion = "7.0"
+testpaths = ["test"]
+env_files = ".env"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+include = ["py_jama_client/**"]
+
+[tool.hatch.version]
+path = "py_jama_client/__about__.py"

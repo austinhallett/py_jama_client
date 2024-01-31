@@ -221,13 +221,19 @@ class JamaClient:
         total_results = float("inf")
 
         data, meta, links, linked = [], {}, {}, {}
-
         while len(data) < total_results:
             page = self.get_page(resource, start_index, params=params, **kwargs)
 
             meta.update(page.meta)
             links.update(page.links)
-            linked.update(page.linked)
+
+            for item_type_key in page.linked:
+                if item_type_key not in linked:
+                    linked[item_type_key] = {}
+                linked[item_type_key] = {
+                    **linked[item_type_key],
+                    **page.linked[item_type_key],
+                }
 
             page_info = page.meta.get("pageInfo")
             start_index = page_info.get("startIndex") + allowed_results_per_page

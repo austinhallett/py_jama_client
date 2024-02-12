@@ -370,7 +370,7 @@ class ItemsAPI:
 
         """
         resource_path = f"tags/{tag_id}/items"
-        return self.get_all(
+        return self.client.get_all(
             resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
@@ -395,7 +395,7 @@ class ItemsAPI:
 
         """
         resource_path = "items/" + str(item_id) + "/upstreamrelationships"
-        return self.get_all(
+        return self.client.get_all(
             resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
@@ -421,7 +421,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}/downstreamrelated"
-        return self.get_all(
+        return self.client.get_all(
             resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
@@ -446,7 +446,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}/downstreamrelationships"
-        return self.get_all(
+        return self.client.get_all(
             resource_path, allowed_results_per_page=allowed_results_per_page
         )
 
@@ -463,7 +463,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}/upstreamrelated"
-        return self.get_all(resource_path, params, **kwargs)
+        return self.client.get_all(resource_path, params, **kwargs)
 
     def get_item_workflow_transitions(
         self,
@@ -483,7 +483,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}/workflowtransitionoptions"
-        return self.get_all(resource_path, params, **kwargs)
+        return self.client.get_all(resource_path, params, **kwargs)
 
     def get_item_children(
         self,
@@ -502,7 +502,7 @@ class ItemsAPI:
         Returns: a List of Objects that represent the children of the item passed in.
         """
         resource_path = f"items/{item_id}/children"
-        return self.get_all(
+        return self.client.get_all(
             resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
@@ -529,7 +529,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}/synceditems"
-        return self.get_all(
+        return self.client.get_all(
             resource_path, allowed_results_per_page=allowed_results_per_page
         )
 
@@ -576,7 +576,7 @@ class ItemsAPI:
         Returns: JSON array with all versions for the item
         """
         resource_path = f"items/{item_id}/versions"
-        return self.get_all(resource_path, params)
+        return self.client.get_all(resource_path, params)
 
     def get_item_version(
         self,
@@ -648,7 +648,7 @@ class ItemsAPI:
         Returns: JSON array with all versions for the item
         """
         resource_path = f"items/{item_id}/versions"
-        return self.get_all(
+        return self.client.get_all(
             resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
 
@@ -761,7 +761,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}/tags"
-        return self.get_all(
+        return self.client.get_all(
             resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,

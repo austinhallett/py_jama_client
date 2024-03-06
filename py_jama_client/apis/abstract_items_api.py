@@ -6,7 +6,7 @@ Example usage:
     >>> from py_jama_rest_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> abstract_items_api = AbstractItemsAPI(client)
-    >>> abstract_items = abstract_items_api.get_abstract_items()    
+    >>> abstract_items = abstract_items_api.get_abstract_items()
 """
 
 import logging

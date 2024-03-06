@@ -6,7 +6,7 @@ Example usage:
     >>> from py_jama_rest_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> activities_api = ActivitiesAPI(client)
-    >>> activities = activities_api.get_activities(project_id=82)    
+    >>> activities = activities_api.get_activities(project_id=82)
 """
 
 import logging
@@ -155,7 +155,8 @@ class ActivitiesAPI:
         self,
         filter_term: str = None,
         project_id: int = None,
-        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE * args,
+        allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        *args,
         params: Optional[dict] = None,
         **kwargs,
     ):

@@ -3,12 +3,17 @@ Core Jama Connect Client API class
 
 This module contains core classes for interacting with the Jama Connect API
 """
+
+__all__ = ["JamaClient"]
+
+import ssl
 import json
 import math
 import urllib3
 import httpx
 import time
 import logging
+import typing
 from py_jama_client.exceptions import UnauthorizedTokenException
 from typing import Tuple
 from py_jama_client.exceptions import (
@@ -47,9 +52,21 @@ class JamaClient:
         credentials: Tuple[str, str] = ("username|client_id", "password|client_secret"),
         api_version: str = "/rest/v1/",
         oauth: bool = False,
-        verify: bool = True,
+        verify: typing.Union[bool, str, ssl.SSLContext] = True,
         timeout: int = 30,
     ):
+        """
+        Args:
+            host: The host name of the Jama Connect server
+            credentials: A tuple of username and password or client_id and client_secret
+            api_version: The version of the Jama Connect API to use
+            oauth: A boolean to indicate if OAuth is being used. Must be set to true
+                if credentials are client id/secret pair.
+            verify: SSL certificates (a.k.a CA bundle) used to verify the identity of requested
+                hosts. Either True (default CA bundle), a path to an SSL certificate file, an
+                ssl.SSLContext, or False.
+            timeout: The timeout for the session
+        """
         # Instance variables
         self.__api_version = api_version
         self.__host_name = host + self.__api_version

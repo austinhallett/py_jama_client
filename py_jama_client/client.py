@@ -4,6 +4,8 @@ Core Jama Connect Client API class
 This module contains core classes for interacting with the Jama Connect API
 """
 
+__all__ = ["JamaClient"]
+
 import ssl
 import json
 import math

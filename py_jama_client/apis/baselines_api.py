@@ -5,8 +5,9 @@ Example usage:
     >>> from py_jama_rest_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> baselines_api = BaselinesAPI(client)
-    >>> baselines = baselines_api.get_baselines(project_id=82)    
+    >>> baselines = baselines_api.get_baselines(project_id=82)
 """
+
 import json
 import logging
 from typing import Optional

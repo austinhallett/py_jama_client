@@ -6,7 +6,7 @@ Example usage:
     >>> from py_jama_rest_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> users_api = UsersAPI(client)
-    >>> users = users_api.get_users()    
+    >>> users = users_api.get_users()
 """
 
 import json

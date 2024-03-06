@@ -2,6 +2,7 @@ import os
 import pytest
 from py_jama_client.client import JamaClient
 from py_jama_client.response import ClientResponse
+import ssl
 
 
 @pytest.fixture(autouse=True)
@@ -17,10 +18,16 @@ def env_vars():
 
 @pytest.fixture(scope="session")
 def get_test_jama_client():
+
+    ssl_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
+    ssl_context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+
     client = JamaClient(
         host=os.getenv("HOST"),
         credentials=(os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")),
-        verify=False,
+        verify=ssl_context,
         oauth=True,
     )
 

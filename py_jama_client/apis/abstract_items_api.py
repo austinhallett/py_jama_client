@@ -24,6 +24,9 @@ class AbstractItemsAPI:
 
     resource_path = "abstractitems"
 
+    def __init__(self, client: JamaClient) -> None:
+        self.client = client
+
     def get_abstract_items(
         self,
         project: list[int] = None,

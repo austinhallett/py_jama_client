@@ -12,14 +12,11 @@ Example usage:
 import json
 import logging
 from typing import Optional
-from py_jama_client.exceptions import (
-    APIException,
-    CoreException,
-    ResourceNotFoundException,
-)
-from py_jama_client.client import JamaClient, ClientResponse
-from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 
+from py_jama_client.client import ClientResponse, JamaClient
+from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
+from py_jama_client.exceptions import (APIException, CoreException,
+                                       ResourceNotFoundException)
 
 py_jama_client_logger = logging.getLogger("py_jama_rest_client")
 

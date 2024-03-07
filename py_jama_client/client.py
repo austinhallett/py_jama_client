@@ -6,30 +6,27 @@ This module contains core classes for interacting with the Jama Connect API
 
 __all__ = ["JamaClient"]
 
-import ssl
 import json
-import math
-import urllib3
-import httpx
-import time
 import logging
+import math
+import ssl
+import time
 import typing
-from py_jama_client.exceptions import UnauthorizedTokenException
-from typing import Tuple
-from py_jama_client.exceptions import (
-    APIException,
-    CoreException,
-    ResourceNotFoundException,
-    AlreadyExistsException,
-    TooManyRequestsException,
-    APIClientException,
-    APIServerException,
-    UnauthorizedException,
-)
-from py_jama_client.response import ClientResponse
-from typing import Optional
+from typing import Optional, Tuple
+
+import httpx
+import urllib3
 from httpx import Response
+
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
+from py_jama_client.exceptions import (AlreadyExistsException,
+                                       APIClientException, APIException,
+                                       APIServerException, CoreException,
+                                       ResourceNotFoundException,
+                                       TooManyRequestsException,
+                                       UnauthorizedException,
+                                       UnauthorizedTokenException)
+from py_jama_client.response import ClientResponse
 
 __DEBUG__ = False
 

@@ -5,8 +5,8 @@ from .baselines_api import BaselinesAPI
 from .filters_api import FiltersAPI
 from .item_types_api import ItemTypesAPI
 from .items_api import ItemsAPI
-from .pick_lists_api import PickListsAPI
 from .pick_list_options_api import PickListOptionsAPI
+from .pick_lists_api import PickListsAPI
 from .projects_api import ProjectsAPI
 from .relationships_api import RelationshipsAPI
 from .tags_api import TagsAPI

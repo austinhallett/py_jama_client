@@ -1,8 +1,10 @@
 import os
+import ssl
+
 import pytest
+
 from py_jama_client.client import JamaClient
 from py_jama_client.response import ClientResponse
-import ssl
 
 
 @pytest.fixture(autouse=True)

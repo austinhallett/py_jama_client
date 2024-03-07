@@ -25,6 +25,9 @@ class AttachmentsAPI:
 
     resource_path = "attachments"
 
+    def __init__(self, client: JamaClient) -> None:
+        self.client = client
+
     def get_attachment(
         self,
         attachment_id: int,

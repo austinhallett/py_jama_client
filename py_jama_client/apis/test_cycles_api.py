@@ -25,6 +25,9 @@ class TestCyclesAPI:
 
     resource_path = "testcycles"
 
+    def __init__(self, client: JamaClient):
+        self.client = client
+
     def get_test_cycle(
         self,
         test_cycle_id: int,

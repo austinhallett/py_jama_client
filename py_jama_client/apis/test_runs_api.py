@@ -25,6 +25,9 @@ class TestRunsAPI:
 
     resource_path = "testruns"
 
+    def __init__(self, client: JamaClient):
+        self.client = client
+
     def put_test_run(
         self,
         test_run_id: int,

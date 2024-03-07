@@ -25,6 +25,9 @@ class TagsAPI:
 
     resource_path = "tags"
 
+    def __init__(self, client: JamaClient):
+        self.client = client
+
     def get_tags(
         self,
         project_id: int,

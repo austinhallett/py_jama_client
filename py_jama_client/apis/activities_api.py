@@ -24,6 +24,9 @@ class ActivitiesAPI:
 
     resource_path = "activities"
 
+    def __init__(self, client: JamaClient) -> None:
+        self.client = client
+
     def get_activities(
         self,
         project_id: int,

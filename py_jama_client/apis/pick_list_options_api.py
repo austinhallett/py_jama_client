@@ -25,6 +25,9 @@ class PickListOptionsAPI:
 
     resource_path = "picklistoptions"
 
+    def __init__(self, client: JamaClient):
+        self.client = client
+
     def get_pick_list_option(
         self,
         pick_list_option_id: int,

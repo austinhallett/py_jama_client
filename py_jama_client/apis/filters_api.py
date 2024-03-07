@@ -25,6 +25,9 @@ class FiltersAPI:
 
     resource_path = "testruns"
 
+    def __init__(self, client: JamaClient):
+        self.client = client
+
     def get_filter_results(
         self,
         filter_id: int,

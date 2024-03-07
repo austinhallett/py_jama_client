@@ -1,6 +1,6 @@
 from .abstract_items_api import AbstractItemsAPI
 from .activities_api import ActivitiesAPI
-from .attachments_api import AttachmentAPI
+from .attachments_api import AttachmentsAPI
 from .baselines_api import BaselinesAPI
 from .filters_api import FiltersAPI
 from .item_types_api import ItemTypesAPI
@@ -18,7 +18,7 @@ from .users_api import UsersAPI
 __all__ = [
     "AbstractItemsAPI",
     "ActivitiesAPI",
-    "AttachmentAPI",
+    "AttachmentsAPI",
     "BaselinesAPI",
     "FiltersAPI",
     "ItemTypesAPI",

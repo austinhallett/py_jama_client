@@ -3,7 +3,7 @@ Tags API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> tags_api = TagsAPI(client)
     >>> tags = tags_api.get_tags()

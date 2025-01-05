@@ -27,8 +27,8 @@ pip install py-jama-client
 #### Basic
 
 ```python
-from py_jama_rest_client.client import JamaClient # import client
-from py_jama_rest_client.apis.abstract_items_api import AbstractItemsAPI # import API
+from py_jama_client.client import JamaClient # import client
+from py_jama_client.apis.abstract_items_api import AbstractItemsAPI # import API
 
 client = JamaClient(
     host="example.jamacloud.com", 
@@ -45,8 +45,8 @@ print(abstract_items.data)
 #### With Links
 
 ```python
-from py_jama_rest_client.client import JamaClient # import client
-from py_jama_rest_client.apis.items_api import ItemsAPI # import API
+from py_jama_client.client import JamaClient # import client
+from py_jama_client.apis.items_api import ItemsAPI # import API
 
 client = JamaClient(
     host="example.jamacloud.com", 

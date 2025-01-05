@@ -68,7 +68,7 @@ class TagsAPI:
         **kwargs,
     ):
         """
-        Create a new tag in the project with the specified ID
+        Create a new tag in the project with the specified project ID
         Args:
             name: The display name for the tag
             project: The project to create the new tag in

@@ -113,7 +113,7 @@ class RelationshipsAPI:
         resource_path = "relationships/"
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.post(
+            response = self.client.post(
                 resource_path,
                 params,
                 data=json.dumps(body),
@@ -149,7 +149,7 @@ class RelationshipsAPI:
         resource_path = "relationships/{}".format(relationship_id)
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.put(
+            response = self.client.put(
                 resource_path, params, data=json.dumps(body), headers=headers, **kwargs
             )
         except CoreException as err:

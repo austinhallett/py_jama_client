@@ -158,7 +158,7 @@ class RelationshipsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def delete_relationships(self, relationship_id: int) -> int:
+    def delete_relationship(self, relationship_id: int) -> int:
         """
         Deletes a relationship with the specified relationship ID
 

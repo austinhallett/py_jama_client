@@ -45,9 +45,8 @@ class ItemTypesAPI:
         Returns: An array of dictionary objects
 
         """
-        resource_path = "itemtypes/"
-        return self.get_all(
-            resource_path,
+        return self.client.get_all(
+            self.resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
         )

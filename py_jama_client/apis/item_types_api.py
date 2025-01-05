@@ -49,6 +49,7 @@ class ItemTypesAPI:
             self.resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
         )
 
     def get_item_type(

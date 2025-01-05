@@ -159,3 +159,26 @@ class TagsAPI:
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
+
+    def get_tag_items(
+        self,
+        tag_id: int,
+        *args,
+        params: Optional[dict] = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        Get all items that have the tag with the specified id
+        Args:
+            allowed_results_per_page: Number of results per page
+
+        Returns: A Json Array containing all items tagged with the specified tag id.
+        """
+        resource_path = f"tags/{tag_id}/items"
+        return self.client.get_all(
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
+        )

@@ -142,3 +142,20 @@ class TagsAPI:
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
+
+    def delete_tag(self, tag_id: int) -> int:
+        """
+        Deletes a tag with the specified tag ID
+        Args:
+            tag_id: the api id of a tag
+
+        Returns: The success status code.
+        """
+        resource_path = f"tags/{tag_id}"
+        try:
+            response = self.client.delete(resource_path)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return response.status_code

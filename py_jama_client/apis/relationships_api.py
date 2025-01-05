@@ -177,6 +177,26 @@ class RelationshipsAPI:
         JamaClient.handle_response_status(response)
         return response.status_code
 
+    def delete_relationship_suspect(self, relationship_id: int) -> int:
+        """
+        Removes suspect status of a relationship with the 
+        specified relationship ID
+
+        Args:
+            relationship_id: the api project id of a relationship
+
+        Returns: The success status code.
+
+        """
+        resource_path = f"relationships/{relationship_id}/suspect"
+        try:
+            response = self.client.delete(resource_path)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return response.status_code
+
     def get_relationship_rule_sets(self):
         """
         This method will return all relationship rule sets across all projects of the Jama Connect instance.

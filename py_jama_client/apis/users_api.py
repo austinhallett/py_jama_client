@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class UsersAPI:
@@ -76,7 +76,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         return ClientResponse.from_response(response)
 
@@ -96,7 +96,7 @@ class UsersAPI:
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         return ClientResponse.from_response(response)
 
@@ -154,7 +154,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -212,7 +212,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code
@@ -246,7 +246,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code

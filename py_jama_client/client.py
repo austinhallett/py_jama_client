@@ -33,7 +33,7 @@ __DEBUG__ = False
 # disable warnings for ssl verification
 urllib3.disable_warnings()
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class JamaClient:

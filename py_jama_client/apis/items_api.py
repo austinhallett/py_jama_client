@@ -17,7 +17,7 @@ from py_jama_client.client import ClientResponse, JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class ItemsAPI:
@@ -77,7 +77,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -138,7 +138,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -168,7 +168,7 @@ class ItemsAPI:
                 resource_path, params, data=json.dumps(body), headers=headers, **kwargs
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
@@ -203,7 +203,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -234,7 +234,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
@@ -280,7 +280,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code
@@ -321,7 +321,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
 
         JamaClient.handle_response_status(response)
@@ -345,7 +345,7 @@ class ItemsAPI:
         try:
             response = self.client.delete(resource_path)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
@@ -555,7 +555,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -599,7 +599,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -625,7 +625,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -710,7 +710,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -738,7 +738,7 @@ class ItemsAPI:
                 headers=headers,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         return self.handle_response_status(response)
 

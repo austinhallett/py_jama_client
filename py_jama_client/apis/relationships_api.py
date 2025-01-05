@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class RelationshipsAPI:

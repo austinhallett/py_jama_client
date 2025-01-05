@@ -78,7 +78,7 @@ class TagsAPI:
         body = {"name": name, "project": project}
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.post(
+            response = self.client.post(
                 self.resource_path,
                 params,
                 data=json.dumps(body),
@@ -107,7 +107,7 @@ class TagsAPI:
         """
         resource_path = f"tags/{tag_id}"
         try:
-            response = self._core.get(resource_path, params)
+            response = self.client.get(resource_path, params)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -134,7 +134,7 @@ class TagsAPI:
         resource_path = "tags/{}".format(tag_id)
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.put(
+            response = self.client.put(
                 resource_path, params, data=json.dumps(body), headers=headers, **kwargs
             )
         except CoreException as err:

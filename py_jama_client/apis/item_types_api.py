@@ -70,7 +70,7 @@ class ItemTypesAPI:
         """
         resource_path = f"itemtypes/{item_type_id}"
         try:
-            response = self._core.get(resource_path, params)
+            response = self.client.get(resource_path, params)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

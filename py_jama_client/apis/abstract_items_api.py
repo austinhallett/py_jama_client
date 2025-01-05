@@ -179,7 +179,7 @@ class AbstractItemsAPI:
 
         Returns: JSON array with all versions for the item
         """
-        resource_path = f"abstractitems/{item_id}/versions"
+        resource_path = f"{self.resource_path}/{item_id}/versions"
         return self.client.get_all(
             resource_path,
             params,
@@ -203,7 +203,7 @@ class AbstractItemsAPI:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = f"abstractitems/{item_id}/versions/{version_num}"
+        resource_path = f"{self.resource_path}/{item_id}/versions/{version_num}"
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
@@ -228,7 +228,7 @@ class AbstractItemsAPI:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = f"abstractitems/{item_id}/versions/{version_num}/versioneditem"
+        resource_path = f"{self.resource_path}/{item_id}/versions/{version_num}/versioneditem"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:

@@ -90,3 +90,26 @@ class TagsAPI:
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
+
+    def get_tag(
+        self,
+        tag_id: int,
+        *args,
+        params: Optional[dict] = None,
+        **kwargs,
+    ):
+        """
+        Gets item tag information for a specific item tag id.
+        Args:
+            item_tag_id: The api id of the item tag to fetch
+
+        Returns: JSON object
+        """
+        resource_path = f"tags/{tag_id}"
+        try:
+            response = self._core.get(resource_path, params)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)

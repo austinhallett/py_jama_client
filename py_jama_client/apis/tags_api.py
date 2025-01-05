@@ -52,7 +52,7 @@ class TagsAPI:
         else:
             params.update(req_params)
 
-        return self.get_all(
+        return self.client.get_all(
             self.resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,

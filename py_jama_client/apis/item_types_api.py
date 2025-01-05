@@ -1,9 +1,9 @@
 """
-Relationship API module
+Item Types API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> item_types_api = ItemTypesAPI(client)
     >>> item_types = item_types_api.get_item_types()

@@ -187,14 +187,14 @@ class RelationshipsAPI:
         resource_path = "relationshiprulesets/"
         return self.client.get_all(resource_path)
 
-    def get_relationship_rule_set(self, id: int):
+    def get_relationship_rule_set(self, relationship_id: int):
         """
         This method will return the relationship rule sets by id.
 
         Returns: A dictionary object representing a rule set and its associated rules
 
         """
-        resource_path = f"relationshiprulesets/{id}"
+        resource_path = f"relationshiprulesets/{relationship_id}"
         response = self.client.get(resource_path)
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)

@@ -116,7 +116,7 @@ class AbstractItemsAPI:
     ):
         """
         Get any item, test plan, test cycle, test run, or attachment with the specified ID
-        GET: /abstractitems/{id}
+        GET: /abstractitems/{item_id}
 
         Args:
             item_id: the item id of the item to fetch
@@ -141,10 +141,10 @@ class AbstractItemsAPI:
     ):
         """
         Get all versioned relationships that were associated to the item at the specified time
-        GET: /abstractitems/{id}/versionedrelationships
+        GET: /abstractitems/{item_id}/versionedrelationships
 
         Args:
-            id: item resource id
+            item_id: item resource id
             timestamp: Get relationships for the specified item at this date and time.
                 Requires ISO8601 formatting (milliseconds or seconds) - "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 or "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -172,7 +172,7 @@ class AbstractItemsAPI:
     ):
         """
         Get all versions for the item with the specified ID
-        GET: /abstractitems/{id}/versions
+        GET: /abstractitems/{item_id}/versions
 
         Args:
             item_id: the item id of the item to fetch
@@ -197,7 +197,7 @@ class AbstractItemsAPI:
     ):
         """
         Get the numbered version for the item with the specified ID
-        GET: /abstractitems/{id}/versions/{versionNum}/
+        GET: /abstractitems/{item_id}/versions/{version_num}/
 
         Args:
             item_id: the item id of the item to fetch
@@ -222,7 +222,7 @@ class AbstractItemsAPI:
     ):
         """
         Get the snapshot of the item at the specified version
-        GET: /abstractitems/{id}/versions/{versionNum}/versioneditem/
+        GET: /abstractitems/{item_id}/versions/{version_num}/versioneditem/
 
         Args:
             item_id: the item id of the item to fetch

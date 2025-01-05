@@ -3,7 +3,7 @@ Attachments API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> attachments_api = AttachmentsAPI(client)
     >>> attachments = attachments_api.get_attachment(attachment_id=10)

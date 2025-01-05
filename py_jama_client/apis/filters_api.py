@@ -3,7 +3,7 @@ Filters API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> filters_api = FiltersAPI(client)
     >>> filters = filters_api.get_filter_results()

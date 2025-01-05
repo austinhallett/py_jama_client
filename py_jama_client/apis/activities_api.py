@@ -3,7 +3,7 @@ Activities API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> activities_api = ActivitiesAPI(client)
     >>> activities = activities_api.get_activities(project_id=82)

@@ -1,12 +1,12 @@
 """
-User API module
+Items API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
-    >>> item_api = ItemAPI(client)
-    >>> items = projects.get_items(project_id=1)
+    >>> items_api = ItemsAPI(client)
+    >>> items = items_api.get_items(project_id=1)
 """
 
 import json

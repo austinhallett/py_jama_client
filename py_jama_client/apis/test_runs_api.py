@@ -3,7 +3,7 @@ Test Runs API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> test_runs_api = TestRunsAPI(client)
     >>> test_runs = test_runs_api.get_test_runs()

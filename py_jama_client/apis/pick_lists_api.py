@@ -3,7 +3,7 @@ Pick Lists API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> pick_lists_api = PickListsAPI(client)
     >>> pick_lists = pick_lists_api.get_pick_lists()

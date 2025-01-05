@@ -1,9 +1,9 @@
 """
-User API module
+Projects API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> projects_api = ProjectsAPI(client)
     >>> projects = projects_api.get_projects()

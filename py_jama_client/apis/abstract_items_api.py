@@ -187,7 +187,7 @@ class AbstractItemsAPI:
             **kwargs,
         )
 
-    def get_abtract_item_version(
+    def get_abstract_item_version(
         self,
         item_id: int,
         version_num: int,

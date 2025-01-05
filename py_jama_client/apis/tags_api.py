@@ -113,3 +113,32 @@ class TagsAPI:
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
+
+    def put_tag(
+        self,
+        tag_id: int,
+        name: str,
+        project: int,
+        *args,
+        params: Optional[dict] = None,
+        **kwargs,
+    ):
+        """
+        Update an existing tag with the specified tag ID in the project with the specified project ID
+        Args:
+            tag_id: integer API id of the tag
+            name: string name of the tag
+            project: the project in which to update the tag
+        """
+        body = {"name": name, "project": project}
+        resource_path = "tags/{}".format(tag_id)
+        headers = {"content-type": "application/json"}
+        try:
+            response = self._core.put(
+                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
+            )
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)

@@ -37,7 +37,8 @@ class ItemTypesAPI:
         **kwargs,
     ):
         """
-        This method will return all item types of the across all projects of the Jama Connect instance.
+        This method will return all item types of the across all projects of
+        the Jama Connect instance.
 
         Args:
             allowed_results_per_page: Number of results per page

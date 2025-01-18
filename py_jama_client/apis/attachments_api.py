@@ -95,7 +95,8 @@ class AttachmentsAPI:
         PUT: /attachments/{attachmentId}/file
 
         Args:
-            attachment_id: the integer ID of the attachment item to which we are uploading the file
+            attachment_id: the integer ID of the attachment item to which we
+                are uploading the file
             file_path: the file path of the file to be uploaded
         """
         resource_path = f"attachments/{attachment_id}/file"
@@ -122,7 +123,8 @@ class AttachmentsAPI:
         **kwargs,
     ):
         """
-        Get the locked state, last locked date, and last locked by user for the item with the specified ID
+        Get the locked state, last locked date, and last locked by user for
+        the item with the specified ID
         GET: /attachments/{attachmentId}/lock
 
         Args:
@@ -197,7 +199,8 @@ class AttachmentsAPI:
         Get the numbered version for the item with the specified ID
         GET: /attachments/{attachmentId}/versions/{versionNum}
         """
-        resource_path = f"{self.resource_path}/{attachment_id}/versions/{version_num}"
+        resource_path = (
+            f"{self.resource_path}/{attachment_id}/versions/{version_num}")
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
@@ -219,7 +222,8 @@ class AttachmentsAPI:
         GET: /attachments/{attachmentId}/versions/{versionNum}/versionedItem
         """
         resource_path = (
-            f"{self.resource_path}/{attachment_id}/versions/{version_num}/versionedItem"
+            f"{self.resource_path}/{attachment_id}/versions/"
+            f"{version_num}/versionedItem"
         )
         try:
             response = self.client.get(resource_path, params, **kwargs)

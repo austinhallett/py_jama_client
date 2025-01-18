@@ -43,7 +43,8 @@ class TagsAPI:
             project: The API ID of the project to fetch tags for.
             allowed_results_per_page: Number of results per page
 
-        Returns: A Json Array that contains all the tag data for the specified project.
+        Returns: A Json Array that contains all the tag data for the specified
+        project.
 
         """
         req_params = {"project": project_id}
@@ -124,7 +125,8 @@ class TagsAPI:
         **kwargs,
     ):
         """
-        Update an existing tag with the specified tag ID in the project with the specified project ID
+        Update an existing tag with the specified tag ID in the project with
+        the specified project ID
         Args:
             tag_id: integer API id of the tag
             name: string name of the tag
@@ -135,7 +137,11 @@ class TagsAPI:
         headers = {"content-type": "application/json"}
         try:
             response = self.client.put(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
+                resource_path,
+                params,
+                data=json.dumps(body),
+                headers=headers,
+                **kwargs
             )
         except CoreException as err:
             py_jama_client_logger.error(err)
@@ -173,7 +179,8 @@ class TagsAPI:
         Args:
             allowed_results_per_page: Number of results per page
 
-        Returns: A Json Array containing all items tagged with the specified tag id.
+        Returns: A Json Array containing all items tagged with the specified
+        tag id.
         """
         resource_path = f"tags/{tag_id}/items"
         return self.client.get_all(

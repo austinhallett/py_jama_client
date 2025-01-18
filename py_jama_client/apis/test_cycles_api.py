@@ -37,7 +37,8 @@ class TestCyclesAPI:
         **kwargs,
     ):
         """
-        This method will return JSON data about the test cycle specified by the test cycle id.
+        This method will return JSON data about the test cycle specified by
+        the test cycle id.
 
         Args:
             test_cycle_id: the api id of the test cycle to fetch
@@ -63,8 +64,8 @@ class TestCyclesAPI:
         **kwargs,
     ):
         """
-        This method will return all test runs associated with the specified test cycle.  Test runs will be returned
-        as a list of json objects.
+        This method will return all test runs associated with the specified
+        test cycle.  Test runs will be returned as a list of json objects.
         Args:
             test_cycle_id: (int) The id of the test cycle
         """

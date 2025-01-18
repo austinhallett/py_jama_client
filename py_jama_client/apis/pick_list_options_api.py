@@ -6,7 +6,8 @@ Example usage:
     >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> pick_list_options_api = PickListOptionsAPI(client)
-    >>> pick_list_options = pick_list_options_api.get_pick_list_options(pick_list_id=10)
+    >>> pick_list_options = pick_list_options_api.get_pick_list_options(
+            pick_list_id=10)
 """
 
 import json

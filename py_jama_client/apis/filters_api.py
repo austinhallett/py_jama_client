@@ -43,7 +43,8 @@ class FiltersAPI:
 
         Args:
             filter_id: The ID of the filter to fetch the results for.
-            project_id: Use this only for filters that run on any project, where projectScope is CURRENT
+            project_id: Use this only for filters that run on any project,
+                where projectScope is CURRENT
             allowed_results_per_page: Number of results per page
 
         Returns:

@@ -127,7 +127,11 @@ class UsersAPI:
             phone: str - optional
             title: str - optional
             location: str - optional
-            licenseType: enum [ NAMED, FLOATING, STAKEHOLDER, FLOATING_COLLABORATOR, RESERVED_COLLABORATOR, FLOATING_REVIEWER, RESERVED_REVIEWER, NAMED_REVIEWER, TEST_RUNNER, EXPIRING_TRIAL, INACTIVE ]
+            licenseType: enum [ NAMED, FLOATING, STAKEHOLDER,
+                                FLOATING_COLLABORATOR,
+                                RESERVED_COLLABORATOR, FLOATING_REVIEWER,
+                                RESERVED_REVIEWER, NAMED_REVIEWER,
+                                TEST_RUNNER, EXPIRING_TRIAL, INACTIVE ]
 
         Returns: newly created user
 

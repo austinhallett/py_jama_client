@@ -8,7 +8,8 @@ class CoreException(Exception):
 
 
 class UnauthorizedTokenException(CoreException):
-    """This exception is thrown whenever fetching the oauth token returns a 401 unauthorized response."""
+    """This exception is thrown whenever fetching the oauth token returns a
+    401 unauthorized response."""
 
     pass
 
@@ -23,25 +24,29 @@ class APIException(Exception):
 
 
 class UnauthorizedException(APIException):
-    """This exception is thrown whenever the api returns a 401 unauthorized response."""
+    """This exception is thrown whenever the api returns a 401 unauthorized
+    response."""
 
     pass
 
 
 class TooManyRequestsException(APIException):
-    """This exception is thrown whenever the api returns a 429 too many requests response."""
+    """This exception is thrown whenever the api returns a 429 too many
+    requests response."""
 
     pass
 
 
 class ResourceNotFoundException(APIException):
-    """This exception is raised whenever the api returns a 404 not found response."""
+    """This exception is raised whenever the api returns a 404 not found
+    response."""
 
     pass
 
 
 class AlreadyExistsException(APIException):
-    """This exception is thrown when the API returns a 400 response with a message that the resource already exists."""
+    """This exception is thrown when the API returns a 400 response with a
+    message that the resource already exists."""
 
     pass
 
@@ -53,6 +58,7 @@ class APIClientException(APIException):
 
 
 class APIServerException(APIException):
-    """This exception is thrown whenever an unknown 500 response is encountered."""
+    """This exception is thrown whenever an unknown 500 response is
+    encountered."""
 
     pass

@@ -88,10 +88,12 @@ class PickListsAPI:
             pick_list_id: the api id of the picklist to fetch options for.
             allowed_results_per_page: number of results per page
 
-        Returns: an array of dictionary objects that represent the picklist options.
-
+        Returns: an array of dictionary objects that represent the
+        picklist options.
         """
         resource_path = f"picklists/{pick_list_id}/options"
         return self.client.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page
         )

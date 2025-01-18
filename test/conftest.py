@@ -12,8 +12,8 @@ def env_vars():
     if os.getenv("CLIENT_ID") is None and os.getenv("CLIENT_SECRET") is None:
         raise ValueError(
             """
-                Please set environment variables 'client_id' and 'client_secret' 
-                to run tests properly.
+                Please set environment variables 'client_id' and
+                'client_secret' to run tests properly.
             """
         )
 
@@ -42,20 +42,26 @@ def get_example_client_response():
         meta={
             "status": "OK",
             "timestamp": "2024-01-24T14:19:40.043+0000",
-            "pageInfo": {"startIndex": 0, "resultCount": 20, "totalResults": 515},
+            "pageInfo": {"startIndex": 0,
+                         "resultCount": 20,
+                         "totalResults": 515},
         },
         links={
             "data.itemType": {
                 "type": "itemtypes",
-                "href": "https://silabs.jamacloud.com/rest/v1/itemtypes/{data.itemType}",
+                "href": ("https://silabs.jamacloud.com/rest/v1/itemtypes/"
+                         "{data.itemType}"),
             },
             "data.location.parent.project": {
                 "type": "projects",
-                "href": "https://silabs.jamacloud.com/rest/v1/projects/{data.location.parent.project}",
+                "href": ("https://silabs.jamacloud.com/rest/v1/projects/"
+                         "{data.location.parent.project}"),
             },
             "data.fields.verification_method$141": {
                 "type": "picklistoptions",
-                "href": "https://silabs.jamacloud.com/rest/v1/picklistoptions/{data.fields.verification_method$141}",
+                "href": ("https://silabs.jamacloud.com/rest/v1/"
+                         "picklistoptions/"
+                         "{data.fields.verification_method$141}"),
             },
         },
         linked={"test": "linked"},
@@ -77,7 +83,8 @@ def get_example_client_response():
                     "name": "Security Requirments",
                     "description": "",
                 },
-                "resources": {"self": {"allowed": ["GET", "PUT", "PATCH", "DELETE"]}},
+                "resources": {"self": {
+                    "allowed": ["GET", "PUT", "PATCH", "DELETE"]}},
                 "location": {
                     "sortOrder": 0,
                     "globalSortOrder": 4902930,
@@ -106,7 +113,8 @@ def get_example_client_response():
                     "description": "",
                     "document_status$31": 566,
                 },
-                "resources": {"self": {"allowed": ["GET", "PUT", "PATCH", "DELETE"]}},
+                "resources": {"self": {
+                    "allowed": ["GET", "PUT", "PATCH", "DELETE"]}},
                 "location": {
                     "sortOrder": 0,
                     "globalSortOrder": 9805860,

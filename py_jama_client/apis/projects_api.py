@@ -45,10 +45,14 @@ class ProjectsAPI:
         resource_path = "projects"
 
         return self.client.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page
         )
 
-    def get_project_by_id(self, project_id: int, params: Optional[dict] = None):
+    def get_project_by_id(self,
+                          project_id: int,
+                          params: Optional[dict] = None):
         """
         This method will return a single project as JSON object
         Args:
@@ -68,9 +72,11 @@ class ProjectsAPI:
 
     def get_relationship_rule_set_projects(self, id: int):
         """
-        This method will return the projects that have a given relationship rule set defined.
+        This method will return the projects that have a given relationship
+        rule set defined.
 
-        Returns: An array of the dictionary objects representing the projects with a given rule set assigned
+        Returns: An array of the dictionary objects representing the projects
+        with a given rule set assigned
 
         """
         resource_path = f"relationshiprulesets/{id}/projects"
@@ -131,7 +137,8 @@ class ProjectsAPI:
         resource_path = f"projects/{project_id}/itemtypes/{item_type_id}"
         headers = {"content-type": "application/json"}
         try:
-            response = self.client.put(resource_path, params, headers=headers, **kwargs)
+            response = self.client.put(
+                resource_path, params, headers=headers, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

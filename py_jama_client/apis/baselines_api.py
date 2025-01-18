@@ -108,7 +108,8 @@ class BaselinesAPI:
             "baselineStatusPickListOption": baseline_status_pick_list_option,
         }
         try:
-            response = self.client.put(resource_path, data=json.dumps(body) ** kwargs)
+            response = self.client.put(resource_path,
+                                       data=json.dumps(body) ** kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -188,14 +189,16 @@ class BaselinesAPI:
         **kwargs,
     ):
         """
-        Get the baseline item with the specified ID in a baseline with the specified ID
+        Get the baseline item with the specified ID in a baseline with the
+        specified ID
         GET: /baselines/{baselineId}/versioneditems/{itemId}
 
         Args:
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}"
+        resource_path = (
+            f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}")
         return self.client.get_all(resource_path, params, **kwargs)
 
     def get_baseline_versioned_item_relationships(
@@ -209,13 +212,16 @@ class BaselinesAPI:
     ):
         """
         Get all versioned relationships for the item in the baseline
-        GET: /baselines/{baselineId}/versioneditems/{itemId}/versionedrelationships
+        GET:
+         /baselines/{baselineId}/versioneditems/{itemId}/versionedrelationships
 
         Args:
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}/versionedrelationships"
+        resource_path = (
+            f"{self.resource_path}/{baseline_id}/versioneditems/"
+            f"{item_id}/versionedrelationships")
         return self.client.get_all(
             resource_path, params, allowed_results_per_page, **kwargs
         )

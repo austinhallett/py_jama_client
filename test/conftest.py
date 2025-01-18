@@ -7,14 +7,23 @@ from py_jama_client.client import JamaClient
 from py_jama_client.response import ClientResponse
 
 
-@pytest.fixture(autouse=True)
-def env_vars():
-    if os.getenv("CLIENT_ID") is None and os.getenv("CLIENT_SECRET") is None:
+@pytest.fixture(autouse=True, scope="session")
+def connection_env_vars():
+    needed_evs = ['CLIENT_ID', 'CLIENT_SECRET', 'HOST']
+    missing_evs = [ev for ev in needed_evs if ev not in os.environ]
+    if len(missing_evs) > 0:
+        bulleted_ev_list = ('    - ' + 
+                       '\n                    - '.join(missing_evs))
+        if len(missing_evs) > 1:
+            singular_or_plural = 's'
+        else:
+            singular_or_plural = ''
         raise ValueError(
-            """
-                Please set environment variables 'client_id' and
-                'client_secret' to run tests properly.
-            """
+            f"""
+                Please set the following environment variable{singular_or_plural}
+                to run tests properly:
+                {bulleted_ev_list}
+            """    
         )
 
 
@@ -30,7 +39,7 @@ def get_test_jama_client():
         host=os.getenv("HOST"),
         credentials=(os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")),
         verify=ssl_context,
-        oauth=True,
+        oauth=False,
     )
 
     yield client

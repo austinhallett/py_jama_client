@@ -175,7 +175,7 @@ def real_abstract_item_version(get_test_jama_client, real_abstract_item):
                 version testing
             """)    
     else:
-        return abstract_item_versions[0]['id']
+        return abstract_item_versions[0]['versionNumber']
 
 
 @pytest.fixture(scope="session")

@@ -199,7 +199,13 @@ class BaselinesAPI:
         """
         resource_path = (
             f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}")
-        return self.client.get_all(resource_path, params, **kwargs)
+        try:
+            response = self.client.get(resource_path, params, **kwargs)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def get_baseline_versioned_item_relationships(
         self,

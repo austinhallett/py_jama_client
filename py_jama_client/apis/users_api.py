@@ -100,6 +100,29 @@ class UsersAPI:
             raise APIException(str(err))
         return ClientResponse.from_response(response)
 
+    def get_current_user_favorite_filters(
+        self,
+        *args,
+        params: Optional[dict] = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        Gets a list of favorite filters for the current user
+
+        Args:
+            allowed_results_per_page: Number of results per page
+
+        Returns: JSON array
+
+        """
+        return self.client.get_all(
+            self.resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
+        )
+
     def post_user(
         self,
         username: str,

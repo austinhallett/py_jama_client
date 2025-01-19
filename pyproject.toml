@@ -36,6 +36,7 @@ include = '\.pyi?$'
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 minversion = "7.0"
 testpaths = ["test"]
 env_files = ".env"

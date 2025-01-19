@@ -221,9 +221,9 @@ def real_project(get_test_jama_client):
             """
                 Unable to identify a viable project for sample testing
             """)    
-    # return projects[0]['id']
     else:
-        return 350
+        # return 350
+        return projects[0]['id']
 
 
 @pytest.fixture(scope="session")

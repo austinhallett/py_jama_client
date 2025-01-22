@@ -3,7 +3,7 @@ User API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> users_api = UsersAPI(client)
     >>> users = users_api.get_users()
@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class UsersAPI:
@@ -76,7 +76,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         return ClientResponse.from_response(response)
 
@@ -96,9 +96,34 @@ class UsersAPI:
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         return ClientResponse.from_response(response)
+
+    def get_current_user_favorite_filters(
+        self,
+        *args,
+        params: Optional[dict] = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        Gets a list of favorite filters for the current user
+
+        Args:
+            allowed_results_per_page: Number of results per page
+
+        Returns: JSON array
+
+        """
+        resource_path = f"{self.resource_path}/current/favoritefilters"
+
+        return self.client.get_all(
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
+        )
 
     def post_user(
         self,
@@ -127,7 +152,11 @@ class UsersAPI:
             phone: str - optional
             title: str - optional
             location: str - optional
-            licenseType: enum [ NAMED, FLOATING, STAKEHOLDER, FLOATING_COLLABORATOR, RESERVED_COLLABORATOR, FLOATING_REVIEWER, RESERVED_REVIEWER, NAMED_REVIEWER, TEST_RUNNER, EXPIRING_TRIAL, INACTIVE ]
+            licenseType: enum [ NAMED, FLOATING, STAKEHOLDER,
+                                FLOATING_COLLABORATOR,
+                                RESERVED_COLLABORATOR, FLOATING_REVIEWER,
+                                RESERVED_REVIEWER, NAMED_REVIEWER,
+                                TEST_RUNNER, EXPIRING_TRIAL, INACTIVE ]
 
         Returns: newly created user
 
@@ -154,7 +183,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -212,7 +241,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code
@@ -246,7 +275,7 @@ class UsersAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code

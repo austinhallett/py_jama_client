@@ -3,7 +3,7 @@ Pick Lists API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> pick_lists_api = PickListsAPI(client)
     >>> pick_lists = pick_lists_api.get_pick_lists()
@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class PickListsAPI:
@@ -88,10 +88,12 @@ class PickListsAPI:
             pick_list_id: the api id of the picklist to fetch options for.
             allowed_results_per_page: number of results per page
 
-        Returns: an array of dictionary objects that represent the picklist options.
-
+        Returns: an array of dictionary objects that represent the
+        picklist options.
         """
         resource_path = f"picklists/{pick_list_id}/options"
         return self.client.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page
         )

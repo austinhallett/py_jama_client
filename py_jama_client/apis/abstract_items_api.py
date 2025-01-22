@@ -3,7 +3,7 @@ Abstract Items API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> abstract_items_api = AbstractItemsAPI(client)
     >>> abstract_items = abstract_items_api.get_abstract_items()
@@ -17,7 +17,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class AbstractItemsAPI:
@@ -116,7 +116,7 @@ class AbstractItemsAPI:
     ):
         """
         Get any item, test plan, test cycle, test run, or attachment with the specified ID
-        GET: /abstractitems/{id}
+        GET: /abstractitems/{item_id}
 
         Args:
             item_id: the item id of the item to fetch
@@ -141,10 +141,10 @@ class AbstractItemsAPI:
     ):
         """
         Get all versioned relationships that were associated to the item at the specified time
-        GET: /abstractitems/{id}/versionedrelationships
+        GET: /abstractitems/{item_id}/versionedrelationships
 
         Args:
-            id: item resource id
+            item_id: item resource id
             timestamp: Get relationships for the specified item at this date and time.
                 Requires ISO8601 formatting (milliseconds or seconds) - "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 or "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -172,14 +172,14 @@ class AbstractItemsAPI:
     ):
         """
         Get all versions for the item with the specified ID
-        GET: /abstractitems/{id}/versions
+        GET: /abstractitems/{item_id}/versions
 
         Args:
             item_id: the item id of the item to fetch
 
         Returns: JSON array with all versions for the item
         """
-        resource_path = f"abstractitems/{item_id}/versions"
+        resource_path = f"{self.resource_path}/{item_id}/versions"
         return self.client.get_all(
             resource_path,
             params,
@@ -187,7 +187,7 @@ class AbstractItemsAPI:
             **kwargs,
         )
 
-    def get_abtract_item_version(
+    def get_abstract_item_version(
         self,
         item_id: int,
         version_num: int,
@@ -197,13 +197,13 @@ class AbstractItemsAPI:
     ):
         """
         Get the numbered version for the item with the specified ID
-        GET: /abstractitems/{id}/versions/{versionNum}/
+        GET: /abstractitems/{item_id}/versions/{version_num}/
 
         Args:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = f"abstractitems/{item_id}/versions/{version_num}"
+        resource_path = f"{self.resource_path}/{item_id}/versions/{version_num}"
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
@@ -222,13 +222,13 @@ class AbstractItemsAPI:
     ):
         """
         Get the snapshot of the item at the specified version
-        GET: /abstractitems/{id}/versions/{versionNum}/versioneditem/
+        GET: /abstractitems/{item_id}/versions/{version_num}/versioneditem/
 
         Args:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = f"abstractitems/{item_id}/versions/{version_num}/versioneditem"
+        resource_path = f"{self.resource_path}/{item_id}/versions/{version_num}/versioneditem"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:

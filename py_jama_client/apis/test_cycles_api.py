@@ -3,7 +3,7 @@ Test Cycles API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> test_cycles_api = TestCyclesAPI(client)
     >>> test_cycles = test_cycles_api.get_test_cycles()
@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class TestCyclesAPI:
@@ -37,7 +37,8 @@ class TestCyclesAPI:
         **kwargs,
     ):
         """
-        This method will return JSON data about the test cycle specified by the test cycle id.
+        This method will return JSON data about the test cycle specified by
+        the test cycle id.
 
         Args:
             test_cycle_id: the api id of the test cycle to fetch
@@ -63,8 +64,8 @@ class TestCyclesAPI:
         **kwargs,
     ):
         """
-        This method will return all test runs associated with the specified test cycle.  Test runs will be returned
-        as a list of json objects.
+        This method will return all test runs associated with the specified
+        test cycle.  Test runs will be returned as a list of json objects.
         Args:
             test_cycle_id: (int) The id of the test cycle
         """

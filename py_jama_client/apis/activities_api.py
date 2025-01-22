@@ -3,7 +3,7 @@ Activities API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> activities_api = ActivitiesAPI(client)
     >>> activities = activities_api.get_activities(project_id=82)
@@ -17,7 +17,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class ActivitiesAPI:
@@ -47,17 +47,25 @@ class ActivitiesAPI:
 
         Args:
             project_id: Project resource id
-            event_type: Event type to filter on. More than one event type can be chosen
-                Available values : CREATE, BATCH_CREATE, UPDATE, BATCH_UPDATE, DELETE, BATCH_DELETE,
-                PUBLIC, BATCH_SUMMARY, COPY, BATCH_COPY, MOVE, APPLY, MERGE, CREATE_INSTANCE, EDIT,
-                EDIT_PROJECT, REMOVE_INSTANCE, REMOVE
-            object_type: Object type to filter on. More than one object type can be chosen
-                Available values : PROJECT, ITEM, USER, RELATIONSHIP, COMMENT, ITEM_TAG, TAG, ITEM_ATTACHMENT,
-                URL, TEST_RESULT, BASELINE, CHANGE_REQUEST, REVIEW, REVISION, REVISION_ITEM, TEST_PLAN, TEST_CYCLE,
-                TEST_RUN, INTEGRATION, MISCELLANEOUS, CATEGORY, CATEGORIZED_ITEM, CATEGORY_PATH
-            item_type: ID of item type to filter on. More than one item type can be chosen
-            date: Filter datetime fields after a single date or within a range of values. Provide one or two values
-                in ISO8601 format (milliseconds or seconds) - "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
+            event_type: Event type to filter on. More than one event type can
+                be chosen
+                Available values : CREATE, BATCH_CREATE, UPDATE, BATCH_UPDATE,
+                DELETE, BATCH_DELETE, PUBLIC, BATCH_SUMMARY, COPY, BATCH_COPY,
+                MOVE, APPLY, MERGE, CREATE_INSTANCE, EDIT, EDIT_PROJECT,
+                REMOVE_INSTANCE, REMOVE
+            object_type: Object type to filter on. More than one object type
+                can be chosen
+                Available values : PROJECT, ITEM, USER, RELATIONSHIP, COMMENT,
+                ITEM_TAG, TAG, ITEM_ATTACHMENT, URL, TEST_RESULT, BASELINE,
+                CHANGE_REQUEST, REVIEW, REVISION, REVISION_ITEM, TEST_PLAN,
+                TEST_CYCLE, TEST_RUN, INTEGRATION, MISCELLANEOUS, CATEGORY,
+                CATEGORIZED_ITEM, CATEGORY_PATH
+            item_type: ID of item type to filter on. More than one item type
+                can be chosen
+            date: Filter datetime fields after a single date or within a range
+                of values. Provide one or two values in ISO8601 format
+                (milliseconds or seconds)
+                - "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
             delete_events: Get item delete events only
         """
         req_params = {"project": project_id}
@@ -142,7 +150,8 @@ class ActivitiesAPI:
         Args:
             activity_id: (int) activity resource id
         """
-        resource_path = f"{self.resource_path}/activities/{activity_id}/restore"
+        resource_path = (
+            f"{self.resource_path}/activities/{activity_id}/restore")
         try:
             response = self.client.post(
                 resource_path,
@@ -170,9 +179,11 @@ class ActivitiesAPI:
 
         Args:
             filter_term: (str) Filter on the text contents of the activities.
-                Strings in quotations taken literally.
-                Multiple values will be treated as separate tokens for matching.
-            project_id: (int) Filter by Project ID. User must be at least Project Administrator
+                         - Strings in quotations taken literally.
+                         - Multiple values are treated as separate tokens
+                                for matching.
+            project_id: (int) Filter by Project ID. User must be at least
+                        Project Administrator
         """
         if params is None:
             params = {}

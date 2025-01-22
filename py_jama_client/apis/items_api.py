@@ -1,12 +1,12 @@
 """
-User API module
+Items API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
-    >>> item_api = ItemAPI(client)
-    >>> items = projects.get_items(project_id=1)
+    >>> items_api = ItemsAPI(client)
+    >>> items = items_api.get_items(project_id=1)
 """
 
 import json
@@ -17,7 +17,7 @@ from py_jama_client.client import ClientResponse, JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class ItemsAPI:
@@ -77,7 +77,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -138,7 +138,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -165,10 +165,14 @@ class ItemsAPI:
         headers = {"content-type": "application/json"}
         try:
             response = self.client.post(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
+                resource_path,
+                params,
+                data=json.dumps(body),
+                headers=headers,
+                **kwargs
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
@@ -184,8 +188,8 @@ class ItemsAPI:
         """
         add an item to an existing pool of global ids
         Args:
-            source_item: integer API ID of the source item, this item will adopt the global id of the
-                         pool_item.
+            source_item: integer API ID of the source item, this item will
+                adopt the global id of the pool_item.
             pool_item: integer API ID of the item in the target global ID pool.
 
         Returns: the integer ID of the modified source item.
@@ -203,7 +207,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -234,7 +238,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
@@ -251,15 +255,19 @@ class ItemsAPI:
         params: Optional[dict] = None,
         **kwargs,
     ):
-        """This method wil
-         PUT a new item to Jama Connect.
-        :param project integer representing the project to which this item is to be posted
-        :param item_id integer representing the item which is to be updated
-        :param item_type_id integer ID of an Item Type.
-        :param child_item_type_id integer ID of an Item Type.
-        :param location dictionary  with a key of 'item' or 'project' and an value with the ID of the parent
-        :param fields dictionary item field data.
-        :return integer ID of the successfully posted item or None if there was an error.
+        """
+        This method will PUT a new item to Jama Connect.
+        Args:
+            project: integer representing the project to which this item is to
+                be posted
+            item_id: integer representing the item which is to be updated
+            item_type_id: integer ID of an Item Type.
+            child_item_type_id: integer ID of an Item Type.
+            location: dictionary with a key of 'item' or 'project' and a value
+                with the ID of the parent
+            fields: dictionary item field data.
+        Returns: integer ID of the successfully posted item or None if there
+        was an error.
         """
 
         body = {
@@ -280,7 +288,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         self.handle_response_status(response)
         return response.status_code
@@ -297,7 +305,8 @@ class ItemsAPI:
         This method will patch an item.
         Args:
             item_id: the API ID of the item that is to be patched
-            patches: An array of dicts, that represent patch operations each dict should have the following entries
+            patches: An array of dicts, that represent patch operations each
+                dict should have the following entries
              [
                 {
                     "op": string,
@@ -310,7 +319,8 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}"
-        headers = {"Content-Type": "application/json", "Accept": "application/json"}
+        headers = {"Content-Type": "application/json",
+                   "Accept": "application/json"}
 
         try:
             response = self.client.patch(
@@ -321,7 +331,7 @@ class ItemsAPI:
                 **kwargs,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
 
         JamaClient.handle_response_status(response)
@@ -345,7 +355,7 @@ class ItemsAPI:
         try:
             response = self.client.delete(resource_path)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return response.status_code
@@ -386,12 +396,14 @@ class ItemsAPI:
         **kwargs,
     ):
         """
-        Returns a list of all the upstream relationships for the item with the specified ID.
+        Returns a list of all the upstream relationships for the item with the
+        specified API ID.
         Args:
             item_id: the api id of the item
             allowed_results_per_page: number of results per page
 
-        Returns: an array of dictionary objects that represent the upstream relationships for the item.
+        Returns: an array of dictionary objects that represent the upstream
+        relationships for the item.
 
         """
         resource_path = "items/" + str(item_id) + "/upstreamrelationships"
@@ -411,13 +423,15 @@ class ItemsAPI:
         **kwargs,
     ):
         """
-        Returns a list of all the downstream related items for the item with the specified ID.
+        Returns a list of all the downstream related items for the item with
+        the specified API ID.
 
         Args:
             item_id: the api id of the item to fetch downstream items for
             allowed_results_per_page: number of results per page
 
-        Returns: an array of dictionary objects that represent the downstream related items for the specified item.
+        Returns: an array of dictionary objects that represent the downstream
+        related items for the specified item.
 
         """
         resource_path = f"items/{item_id}/downstreamrelated"
@@ -437,12 +451,14 @@ class ItemsAPI:
         **kwargs,
     ):
         """
-        Returns a list of all the downstream relationships for the item with the specified ID.
+        Returns a list of all the downstream relationships for the item with
+        the specified API ID.
 
         Args:
             item_id: the api id of the item
 
-        Returns: an array of dictionary objects that represent the downstream relationships for the item.
+        Returns: an array of dictionary objects that represent the downstream
+        relationships for the item.
 
         """
         resource_path = f"items/{item_id}/downstreamrelationships"
@@ -454,12 +470,14 @@ class ItemsAPI:
         self, item_id: int, *args, params: Optional[dict] = None, **kwargs
     ):
         """
-        Returns a list of all the upstream related items for the item with the specified ID.
+        Returns a list of all the upstream related items for the item with the
+        specified API ID.
 
         Args:
             item_id: the api id of the item to fetch upstream items for
 
-        Returns: an array of dictionary objects that represent the upstream related items for the specified item.
+        Returns: an array of dictionary objects that represent the upstream
+        related items for the specified item.
 
         """
         resource_path = f"items/{item_id}/upstreamrelated"
@@ -473,13 +491,15 @@ class ItemsAPI:
         **kwargs,
     ):
         """
-        Get all valid workflow transitions that can be made with the specified id
+        Get all valid workflow transitions that can be made with the specified
+        API ID
 
         Args:
             item_id: the api id of the item
             allowed_results_per_page: number of results per page
 
-        Returns: an array of dictionary objects that represent the workflow transitions for the item.
+        Returns: an array of dictionary objects that represent the workflow
+        transitions for the item.
 
         """
         resource_path = f"items/{item_id}/workflowtransitionoptions"
@@ -494,12 +514,14 @@ class ItemsAPI:
         **kwargs,
     ):
         """
-        This method will return list of the child items of the item passed to the function.
+        This method will return list of the child items of the item passed to
+        the function.
         Args:
-            item_id: (int) The id of the item for which children items should be fetched
-            allowed_results_per_page: Number of results per page
+            item_id: (int) The id of the item for which children items should
+            be fetched allowed_results_per_page: Number of results per page
 
-        Returns: a List of Objects that represent the children of the item passed in.
+        Returns: a List of Objects that represent the children of the item
+        passed in.
         """
         resource_path = f"items/{item_id}/children"
         return self.client.get_all(
@@ -524,8 +546,8 @@ class ItemsAPI:
             item_id: The API id of the item being
             allowed_results_per_page: Number of results per page
 
-        Returns: A list of JSON Objects representing the items that are in the same synchronization group as the
-        specified item.
+        Returns: A list of JSON Objects representing the items that are in the
+        same synchronization group as the specified item.
 
         """
         resource_path = f"items/{item_id}/synceditems"
@@ -548,14 +570,16 @@ class ItemsAPI:
             item_id: The id of the item to compare against
             synced_item_id: the id of the item to check if it is in sync
 
-        Returns: The response JSON from the API which contains a single field 'inSync' with a boolean value.
+        Returns: The response JSON from the API which contains a single field
+            'inSync' with a boolean value.
 
         """
-        resource_path = f"items/{item_id}/synceditems/{synced_item_id}/syncstatus"
+        resource_path = (
+            f"items/{item_id}/synceditems/{synced_item_id}/syncstatus")
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -599,7 +623,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -625,7 +649,7 @@ class ItemsAPI:
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -649,7 +673,9 @@ class ItemsAPI:
         """
         resource_path = f"items/{item_id}/versions"
         return self.client.get_all(
-            resource_path, params, allowed_results_per_page=allowed_results_per_page
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page
         )
 
     def get_item_version(
@@ -698,19 +724,21 @@ class ItemsAPI:
 
     def get_item_lock(self, item_id: int, params: Optional[dict] = None):
         """
-        Get the locked state, last locked date, and last locked by user for the item with the specified ID
+        Get the locked state, last locked date, and last locked by user for
+        the item with the specified ID
         Args:
             item_id: The API ID of the item to get the lock info for.
 
         Returns:
-            A JSON object with the lock information for the item with the specified ID.
+            A JSON object with the lock information for the item with the
+            specified ID.
 
         """
         resource_path = f"items/{item_id}/lock"
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -738,7 +766,7 @@ class ItemsAPI:
                 headers=headers,
             )
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         return self.handle_response_status(response)
 

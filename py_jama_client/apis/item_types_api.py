@@ -1,9 +1,9 @@
 """
-Relationship API module
+Item Types API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> item_types_api = ItemTypesAPI(client)
     >>> item_types = item_types_api.get_item_types()
@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class ItemTypesAPI:
@@ -37,7 +37,8 @@ class ItemTypesAPI:
         **kwargs,
     ):
         """
-        This method will return all item types of the across all projects of the Jama Connect instance.
+        This method will return all item types of the across all projects of
+        the Jama Connect instance.
 
         Args:
             allowed_results_per_page: Number of results per page
@@ -45,11 +46,11 @@ class ItemTypesAPI:
         Returns: An array of dictionary objects
 
         """
-        resource_path = "itemtypes/"
-        return self.get_all(
-            resource_path,
+        return self.client.get_all(
+            self.resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
         )
 
     def get_item_type(
@@ -70,7 +71,7 @@ class ItemTypesAPI:
         """
         resource_path = f"itemtypes/{item_type_id}"
         try:
-            response = self._core.get(resource_path, params)
+            response = self.client.get(resource_path, params)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

@@ -1,8 +1,8 @@
 """
-Baseline API module
+Baselines API module
 
 Example usage:
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
     >>> baselines_api = BaselinesAPI(client)
     >>> baselines = baselines_api.get_baselines(project_id=82)
@@ -17,7 +17,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_rest_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class BaselinesAPI:
@@ -74,7 +74,7 @@ class BaselinesAPI:
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -108,9 +108,10 @@ class BaselinesAPI:
             "baselineStatusPickListOption": baseline_status_pick_list_option,
         }
         try:
-            response = self.client.put(resource_path, data=json.dumps(body) ** kwargs)
+            response = self.client.put(resource_path,
+                                       data=json.dumps(body) ** kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -132,7 +133,7 @@ class BaselinesAPI:
         try:
             response = self.client.delete(resource_path, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
             return JamaClient.handle_response_status(response)
 
@@ -153,7 +154,7 @@ class BaselinesAPI:
         try:
             response = self.client.get(resource_path, **kwargs)
         except CoreException as err:
-            py_jama_rest_client_logger.error(err)
+            py_jama_client_logger.error(err)
             raise APIException(str(err))
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -188,15 +189,23 @@ class BaselinesAPI:
         **kwargs,
     ):
         """
-        Get the baseline item with the specified ID in a baseline with the specified ID
+        Get the baseline item with the specified ID in a baseline with the
+        specified ID
         GET: /baselines/{baselineId}/versioneditems/{itemId}
 
         Args:
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}"
-        return self.client.get_all(resource_path, params, **kwargs)
+        resource_path = (
+            f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}")
+        try:
+            response = self.client.get(resource_path, params, **kwargs)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def get_baseline_versioned_item_relationships(
         self,
@@ -209,13 +218,16 @@ class BaselinesAPI:
     ):
         """
         Get all versioned relationships for the item in the baseline
-        GET: /baselines/{baselineId}/versioneditems/{itemId}/versionedrelationships
+        GET:
+         /baselines/{baselineId}/versioneditems/{itemId}/versionedrelationships
 
         Args:
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}/versionedrelationships"
+        resource_path = (
+            f"{self.resource_path}/{baseline_id}/versioneditems/"
+            f"{item_id}/versionedrelationships")
         return self.client.get_all(
             resource_path, params, allowed_results_per_page, **kwargs
         )

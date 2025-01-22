@@ -1,11 +1,11 @@
 """
-Relationship API module
+Relationships API module
 
 Example usage:
 
-    >>> from py_jama_rest_client.client import JamaClient
+    >>> from py_jama_client.client import JamaClient
     >>> client = JamaClient(host=HOST, credentials=(USERNAME, PASSWORD))
-    >>> relationship_api = RelationshipsAPI(client)
+    >>> relationships_api = RelationshipsAPI(client)
     >>> relationships = relationships_api.get_relationships(project_id=82)
 """
 
@@ -18,7 +18,7 @@ from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
-py_jama_client_logger = logging.getLogger("py_jama_rest_client")
+py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
 class RelationshipsAPI:
@@ -99,7 +99,8 @@ class RelationshipsAPI:
         Args:
             from_item: integer API id of the source item
             to_item: integer API id of the target item
-            relationship_type: Optional integer API id of the relationship type to create
+            relationship_type: Optional integer API id of the relationship
+                type to create
 
         Returns: The integer ID of the newly created relationship.
 
@@ -113,7 +114,7 @@ class RelationshipsAPI:
         resource_path = "relationships/"
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.post(
+            response = self.client.post(
                 resource_path,
                 params,
                 data=json.dumps(body),
@@ -141,7 +142,8 @@ class RelationshipsAPI:
             relationship_id: integer API id of the relationship
             from_item: integer API id of the source item
             to_item: integer API id of the target item
-            relationship_type: Optional integer API id of the relationship type to create
+            relationship_type: Optional integer API id of the relationship
+                type to create
         """
         body = {"fromItem": from_item, "toItem": to_item}
         if relationship_type is not None:
@@ -149,8 +151,12 @@ class RelationshipsAPI:
         resource_path = "relationships/{}".format(relationship_id)
         headers = {"content-type": "application/json"}
         try:
-            response = self._core.put(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
+            response = self.client.put(
+                resource_path,
+                params,
+                data=json.dumps(body),
+                headers=headers,
+                **kwargs
             )
         except CoreException as err:
             py_jama_client_logger.error(err)
@@ -158,7 +164,7 @@ class RelationshipsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def delete_relationships(self, relationship_id: int) -> int:
+    def delete_relationship(self, relationship_id: int) -> int:
         """
         Deletes a relationship with the specified relationship ID
 
@@ -177,24 +183,47 @@ class RelationshipsAPI:
         JamaClient.handle_response_status(response)
         return response.status_code
 
+    def delete_relationship_suspect(self, relationship_id: int) -> int:
+        """
+        Removes suspect status of a relationship with the
+        specified relationship ID
+
+        Args:
+            relationship_id: the api project id of a relationship
+
+        Returns: The success status code.
+
+        """
+        resource_path = f"relationships/{relationship_id}/suspect"
+        try:
+            response = self.client.delete(resource_path)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return response.status_code
+
     def get_relationship_rule_sets(self):
         """
-        This method will return all relationship rule sets across all projects of the Jama Connect instance.
+        This method will return all relationship rule sets across all projects
+        of the Jama Connect instance.
 
-        Returns: An array of dictionary objects representing a rule set and its associated rules
+        Returns: An array of dictionary objects representing a rule set and
+        its associated rules
 
         """
         resource_path = "relationshiprulesets/"
         return self.client.get_all(resource_path)
 
-    def get_relationship_rule_set(self, id: int):
+    def get_relationship_rule_set(self, relationship_id: int):
         """
         This method will return the relationship rule sets by id.
 
-        Returns: A dictionary object representing a rule set and its associated rules
+        Returns: A dictionary object representing a rule set and its
+                 associated rules
 
         """
-        resource_path = f"relationshiprulesets/{id}"
+        resource_path = f"relationshiprulesets/{relationship_id}"
         response = self.client.get(resource_path)
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
@@ -207,7 +236,8 @@ class RelationshipsAPI:
         **kwargs,
     ):
         """
-        This method will return all relationship types of the across all projects of the Jama Connect instance.
+        This method will return all relationship types of the across all
+        projects of the Jama Connect instance.
 
         Args:
             allowed_results_per_page: Number of results per page
@@ -221,7 +251,11 @@ class RelationshipsAPI:
         )
 
     def get_relationship_type(
-        self, relationship_type_id: int, *args, params: Optional[dict] = None, **kwargs
+        self,
+        relationship_type_id: int,
+        *args,
+        params: Optional[dict] = None,
+        **kwargs
     ):
         """
         Gets relationship type information for a specific relationship type id.

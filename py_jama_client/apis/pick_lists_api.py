@@ -9,7 +9,6 @@ Example usage:
     >>> pick_lists = pick_lists_api.get_pick_lists()
 """
 
-import json
 import logging
 from typing import Optional
 

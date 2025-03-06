@@ -699,8 +699,8 @@ class ItemsAPI:
         response = self.client.get(resource_path, params)
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
-
-    def get_versioned_item(
+    
+    def get_versioned_item( # noqa: F811
         self,
         item_id: int,
         version_num: int,

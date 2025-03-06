@@ -9,7 +9,6 @@ Example usage:
     >>> item_types = item_types_api.get_item_types()
 """
 
-import json
 import logging
 from typing import Optional
 

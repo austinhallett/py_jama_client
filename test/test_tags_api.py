@@ -1,6 +1,7 @@
 from py_jama_client.apis.tags_api import TagsAPI
 import pytest
 
+
 @pytest.fixture(scope="function")
 def tags_api(get_test_jama_client):
     api_instance = TagsAPI(get_test_jama_client)

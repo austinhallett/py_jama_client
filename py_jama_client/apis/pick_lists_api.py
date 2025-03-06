@@ -92,7 +92,5 @@ class PickListsAPI:
         """
         resource_path = f"picklists/{pick_list_id}/options"
         return self.client.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page
+            resource_path, params, allowed_results_per_page=allowed_results_per_page
         )

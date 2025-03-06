@@ -152,11 +152,7 @@ class RelationshipsAPI:
         headers = {"content-type": "application/json"}
         try:
             response = self.client.put(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs
+                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
             )
         except CoreException as err:
             py_jama_client_logger.error(err)
@@ -251,11 +247,7 @@ class RelationshipsAPI:
         )
 
     def get_relationship_type(
-        self,
-        relationship_type_id: int,
-        *args,
-        params: Optional[dict] = None,
-        **kwargs
+        self, relationship_type_id: int, *args, params: Optional[dict] = None, **kwargs
     ):
         """
         Gets relationship type information for a specific relationship type id.

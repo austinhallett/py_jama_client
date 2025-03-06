@@ -150,8 +150,7 @@ class ActivitiesAPI:
         Args:
             activity_id: (int) activity resource id
         """
-        resource_path = (
-            f"{self.resource_path}/activities/{activity_id}/restore")
+        resource_path = f"{self.resource_path}/activities/{activity_id}/restore"
         try:
             response = self.client.post(
                 resource_path,

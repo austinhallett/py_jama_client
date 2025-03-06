@@ -1,6 +1,7 @@
 from py_jama_client.apis.projects_api import ProjectsAPI
 import pytest
 
+
 @pytest.fixture(scope="function")
 def projects_api(get_test_jama_client):
     api_instance = ProjectsAPI(get_test_jama_client)

@@ -228,7 +228,9 @@ class AbstractItemsAPI:
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = f"{self.resource_path}/{item_id}/versions/{version_num}/versioneditem"
+        resource_path = (
+            f"{self.resource_path}/{item_id}/versions/{version_num}/versioneditem"
+        )
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:

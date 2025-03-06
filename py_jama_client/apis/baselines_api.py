@@ -108,8 +108,7 @@ class BaselinesAPI:
             "baselineStatusPickListOption": baseline_status_pick_list_option,
         }
         try:
-            response = self.client.put(resource_path,
-                                       data=json.dumps(body) ** kwargs)
+            response = self.client.put(resource_path, data=json.dumps(body) ** kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -197,8 +196,7 @@ class BaselinesAPI:
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
-        resource_path = (
-            f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}")
+        resource_path = f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
@@ -227,7 +225,8 @@ class BaselinesAPI:
         """
         resource_path = (
             f"{self.resource_path}/{baseline_id}/versioneditems/"
-            f"{item_id}/versionedrelationships")
+            f"{item_id}/versionedrelationships"
+        )
         return self.client.get_all(
             resource_path, params, allowed_results_per_page, **kwargs
         )

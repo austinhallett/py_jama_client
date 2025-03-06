@@ -165,11 +165,7 @@ class ItemsAPI:
         headers = {"content-type": "application/json"}
         try:
             response = self.client.post(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs
+                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
             )
         except CoreException as err:
             py_jama_client_logger.error(err)
@@ -319,8 +315,7 @@ class ItemsAPI:
 
         """
         resource_path = f"items/{item_id}"
-        headers = {"Content-Type": "application/json",
-                   "Accept": "application/json"}
+        headers = {"Content-Type": "application/json", "Accept": "application/json"}
 
         try:
             response = self.client.patch(
@@ -574,8 +569,7 @@ class ItemsAPI:
             'inSync' with a boolean value.
 
         """
-        resource_path = (
-            f"items/{item_id}/synceditems/{synced_item_id}/syncstatus")
+        resource_path = f"items/{item_id}/synceditems/{synced_item_id}/syncstatus"
         try:
             response = self.client.get(resource_path, params)
         except CoreException as err:
@@ -654,7 +648,7 @@ class ItemsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_item_versions( # noqa: F811
+    def get_item_versions(  # noqa: F811
         self,
         item_id: int,
         *args,
@@ -673,12 +667,10 @@ class ItemsAPI:
         """
         resource_path = f"items/{item_id}/versions"
         return self.client.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page
+            resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
 
-    def get_item_version( # noqa F811
+    def get_item_version(  # noqa F811
         self,
         item_id: int,
         version_num: int,
@@ -699,8 +691,8 @@ class ItemsAPI:
         response = self.client.get(resource_path, params)
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
-    
-    def get_versioned_item( # noqa: F811
+
+    def get_versioned_item(  # noqa: F811
         self,
         item_id: int,
         version_num: int,

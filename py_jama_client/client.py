@@ -19,13 +19,17 @@ import urllib3
 from httpx import Response
 
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
-from py_jama_client.exceptions import (AlreadyExistsException,
-                                       APIClientException, APIException,
-                                       APIServerException, CoreException,
-                                       ResourceNotFoundException,
-                                       TooManyRequestsException,
-                                       UnauthorizedException,
-                                       UnauthorizedTokenException)
+from py_jama_client.exceptions import (
+    AlreadyExistsException,
+    APIClientException,
+    APIException,
+    APIServerException,
+    CoreException,
+    ResourceNotFoundException,
+    TooManyRequestsException,
+    UnauthorizedException,
+    UnauthorizedTokenException,
+)
 from py_jama_client.response import ClientResponse
 
 __DEBUG__ = False
@@ -46,8 +50,7 @@ class JamaClient:
     def __init__(
         self,
         host: str,
-        credentials: Tuple[str, str] = ("username|client_id",
-                                        "password|client_secret"),
+        credentials: Tuple[str, str] = ("username|client_id", "password|client_secret"),
         api_version: str = "/rest/v1/",
         oauth: bool = False,
         verify: typing.Union[bool, str, ssl.SSLContext] = True,
@@ -115,17 +118,9 @@ class JamaClient:
             kwargs["headers"] = self.__add_auth_header(**kwargs)
             return self.__session.get(url, params=params, **kwargs)
 
-        return self.__session.get(url,
-                                  auth=self.__credentials,
-                                  params=params,
-                                  **kwargs)
+        return self.__session.get(url, auth=self.__credentials, params=params, **kwargs)
 
-    def patch(self,
-              resource: str,
-              params: dict = None,
-              data=None,
-              json=None,
-              **kwargs):
+    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
         """This method will perform a patch operation to the specified
         resource"""
         url = self.__host_name + resource
@@ -138,20 +133,10 @@ class JamaClient:
             )
 
         return self.__session.patch(
-            url,
-            auth=self.__credentials,
-            params=params,
-            data=data,
-            json=json,
-            **kwargs
+            url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
         )
 
-    def post(self,
-             resource: str,
-             params: dict = None,
-             data=None,
-             json=None,
-             **kwargs):
+    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
         """This method will perform a post operation to the specified
         resource."""
         url = self.__host_name + resource
@@ -164,20 +149,10 @@ class JamaClient:
             )
 
         return self.__session.post(
-            url,
-            auth=self.__credentials,
-            params=params,
-            data=data,
-            json=json,
-            **kwargs
+            url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
         )
 
-    def put(self,
-            resource: str,
-            params: dict = None,
-            data=None,
-            json=None,
-            **kwargs):
+    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
         """This method will perform a put operation to the specified
         resource"""
         url = self.__host_name + resource
@@ -190,12 +165,7 @@ class JamaClient:
             )
 
         return self.__session.put(
-            url,
-            auth=self.__credentials,
-            data=data,
-            params=params,
-            json=json,
-            **kwargs
+            url, auth=self.__credentials, data=data, params=params, json=json, **kwargs
         )
 
     def __check_oauth_token(self):
@@ -268,8 +238,7 @@ class JamaClient:
         """
 
         if allowed_results_per_page < 1 or allowed_results_per_page > 50:
-            raise ValueError("Allowed results per page must be between 1 "
-                             "and 50")
+            raise ValueError("Allowed results per page must be between 1 and 50")
 
         start_index = 0
         allowed_results_per_page = 20
@@ -277,10 +246,7 @@ class JamaClient:
 
         data, meta, links, linked = [], {}, {}, {}
         while len(data) < total_results:
-            page = self.get_page(resource,
-                                 start_index,
-                                 params=params,
-                                 **kwargs)
+            page = self.get_page(resource, start_index, params=params, **kwargs)
 
             meta.update(page.meta)
             links.update(page.links)
@@ -294,8 +260,7 @@ class JamaClient:
                 }
 
             page_info = page.meta.get("pageInfo")
-            start_index = (page_info.get("startIndex") +
-                           allowed_results_per_page)
+            start_index = page_info.get("startIndex") + allowed_results_per_page
             total_results = page_info.get("totalResults")
             data.extend(page.data)
 
@@ -315,8 +280,7 @@ class JamaClient:
         Pass any needed parameters along
         The response object will be returned
         """
-        pagination = {"startAt": start_at,
-                      "maxResults": allowed_results_per_page}
+        pagination = {"startAt": start_at, "maxResults": allowed_results_per_page}
 
         if params is None:
             params = pagination
@@ -364,8 +328,7 @@ class JamaClient:
                 )
             )
 
-            if (response_message is not None and
-               "already exists" in response_message):
+            if response_message is not None and "already exists" in response_message:
                 raise AlreadyExistsException(
                     "Entity already exists.",
                     status_code=status,
@@ -396,8 +359,7 @@ class JamaClient:
                 )
 
             raise APIClientException(
-                "{} {} Client Error.  Bad Request.  "
-                "API response message: {}".format(
+                "{} {} Client Error.  Bad Request.  API response message: {}".format(
                     status, response.reason, response_message
                 ),
                 status_code=status,
@@ -418,10 +380,7 @@ class JamaClient:
             )
 
         # Catch anything unexpected
-        py_jama_client_logger.error("{} error. {}".format(status,
-                                                          response.reason))
+        py_jama_client_logger.error("{} error. {}".format(status, response.reason))
         raise APIException(
-            "{} error".format(status),
-            status_code=status,
-            reason=response.reason
+            "{} error".format(status), status_code=status, reason=response.reason
         )

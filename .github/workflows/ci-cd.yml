@@ -2,11 +2,32 @@ name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
 
 on:
     push:
+        branches:
+            "**"
         tags:
             - "*"
 
 jobs:
+    lint:
+        name: Lint the Python 🐍 code
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.x"
+                  cache: "pip"
+                  
+            - name: Install ruff
+              run: python3 -m pip install ruff
+
+            - name: Lint the Python 🐍 code
+              run: python3 -m ruff check
     build:
+        if: startsWith(github.ref, 'refs/tags/')
+        needs: [lint]
         name: Build distribution 📦
         runs-on: ubuntu-latest
 
@@ -25,10 +46,8 @@ jobs:
                   --user
             - name: Version the package
               run: >-
-                  python3 -m
-                  hatchling
-                  version
-                  ${{ github.ref_name }}
+                  python3 -m hatchling
+                  version ${{ github.ref_name }}
             - name: Build a binary wheel and a source tarball
               run: python3 -m build
             - name: Store the distribution packages
@@ -104,6 +123,7 @@ jobs:
                   --repo '${{ github.repository }}'
 
     publish-to-testpypi:
+        if: startsWith(github.ref, 'refs/tags/')
         name: Publish Python 🐍 distribution 📦 to TestPyPI
         needs:
             - build

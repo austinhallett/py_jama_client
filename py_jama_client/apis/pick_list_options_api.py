@@ -10,12 +10,10 @@ Example usage:
             pick_list_id=10)
 """
 
-import json
 import logging
 from typing import Optional
 
 from py_jama_client.client import JamaClient
-from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 

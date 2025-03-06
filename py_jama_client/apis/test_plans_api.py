@@ -14,7 +14,6 @@ import logging
 from typing import Optional
 
 from py_jama_client.client import JamaClient
-from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
 from py_jama_client.response import ClientResponse
 
@@ -63,17 +62,13 @@ class TestPlansAPI:
         """
         resource_path = f"testplans/{testplan_id}/testcycles"
         headers = {"content-type": "application/json"}
-        fields = {"name": testcycle_name,
-                  "startDate": start_date,
-                  "endDate": end_date}
+        fields = {"name": testcycle_name, "startDate": start_date, "endDate": end_date}
         test_run_gen_config = {}
         if testgroups_to_include is not None:
             test_run_gen_config["testGroupsToInclude"] = testgroups_to_include
         if testrun_status_to_include is not None:
-            test_run_gen_config["testRunStatusesToInclude"] = (
-                testrun_status_to_include)
-        body = {"fields": fields,
-                "testRunGenerationConfig": test_run_gen_config}
+            test_run_gen_config["testRunStatusesToInclude"] = testrun_status_to_include
+        body = {"fields": fields, "testRunGenerationConfig": test_run_gen_config}
 
         # Make the API Call
         try:

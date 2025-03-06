@@ -1,6 +1,7 @@
 from py_jama_client.apis.item_types_api import ItemTypesAPI
 import pytest
 
+
 @pytest.fixture(scope="function")
 def item_types_api(get_test_jama_client):
     api_instance = ItemTypesAPI(get_test_jama_client)

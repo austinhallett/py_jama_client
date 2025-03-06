@@ -9,7 +9,6 @@ Example usage:
     >>> test_cycles = test_cycles_api.get_test_cycles()
 """
 
-import json
 import logging
 from typing import Optional
 

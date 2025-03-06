@@ -137,11 +137,7 @@ class TagsAPI:
         headers = {"content-type": "application/json"}
         try:
             response = self.client.put(
-                resource_path,
-                params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs
+                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
             )
         except CoreException as err:
             py_jama_client_logger.error(err)

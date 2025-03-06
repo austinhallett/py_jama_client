@@ -15,8 +15,11 @@ from typing import Optional
 
 from py_jama_client.client import ClientResponse, JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
-from py_jama_client.exceptions import (APIException, CoreException,
-                                       ResourceNotFoundException)
+from py_jama_client.exceptions import (
+    APIException,
+    CoreException,
+    ResourceNotFoundException,
+)
 
 py_jama_client_logger = logging.getLogger("py_jama_client")
 
@@ -45,14 +48,10 @@ class ProjectsAPI:
         resource_path = "projects"
 
         return self.client.get_all(
-            resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page
+            resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
 
-    def get_project_by_id(self,
-                          project_id: int,
-                          params: Optional[dict] = None):
+    def get_project_by_id(self, project_id: int, params: Optional[dict] = None):
         """
         This method will return a single project as JSON object
         Args:
@@ -137,8 +136,7 @@ class ProjectsAPI:
         resource_path = f"projects/{project_id}/itemtypes/{item_type_id}"
         headers = {"content-type": "application/json"}
         try:
-            response = self.client.put(
-                resource_path, params, headers=headers, **kwargs)
+            response = self.client.put(resource_path, params, headers=headers, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

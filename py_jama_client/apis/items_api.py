@@ -654,7 +654,7 @@ class ItemsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_item_versions(
+    def get_item_versions( # noqa: F811
         self,
         item_id: int,
         *args,
@@ -678,7 +678,7 @@ class ItemsAPI:
             allowed_results_per_page=allowed_results_per_page
         )
 
-    def get_item_version(
+    def get_item_version( # noqa F811
         self,
         item_id: int,
         version_num: int,

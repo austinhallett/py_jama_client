@@ -6,6 +6,20 @@ on:
             - "*"
 
 jobs:
+    lint:
+        name: Lint the Python 🐍 code
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.x"
+                  cache: "ruff"
+            
+            - name: Lint the Python 🐍 code
+              run: python3 -m ruff check
     build:
         name: Build distribution 📦
         runs-on: ubuntu-latest

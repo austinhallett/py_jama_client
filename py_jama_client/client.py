@@ -93,10 +93,6 @@ class JamaClient:
         """Method to close underlying session"""
         self.__session.close()
 
-    async def close(self) -> None:
-        raise RuntimeError("await syntax not supported on sync core client"
-                           "class")
-
     def delete(self, resource: str, **kwargs):
         """This method will perform a delete operation on the specified
         resource"""

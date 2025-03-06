@@ -326,7 +326,7 @@ class ItemsAPI:
             response = self.client.patch(
                 resource_path,
                 params,
-                data=json.dums(patches),
+                data=json.dumps(patches),
                 headers=headers,
                 **kwargs,
             )

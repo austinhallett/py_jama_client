@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/py-jama-client.svg)](https://badge.fury.io/py/py-jama-client)
 # py_jama_client
 
 A python Jama Connect REST API client library

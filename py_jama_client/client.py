@@ -360,7 +360,7 @@ class JamaClient:
 
             raise APIClientException(
                 "{} {} Client Error.  Bad Request.  API response message: {}".format(
-                    status, response.reason, response_message
+                    status, response.reason_phrase, response_message
                 ),
                 status_code=status,
                 reason=response_message,
@@ -371,16 +371,16 @@ class JamaClient:
 
             # Log The Error
             py_jama_client_logger.error(
-                "{} Server error. {}".format(status, response.reason)
+                "{} Server error. {}".format(status, response.reason_phrase)
             )
             raise APIServerException(
                 "{} Server Error.".format(status),
                 status_code=status,
-                reason=response.reason,
+                reason=response.reason_phrase,
             )
 
         # Catch anything unexpected
-        py_jama_client_logger.error("{} error. {}".format(status, response.reason))
+        py_jama_client_logger.error("{} error. {}".format(status, response.reason_phrase))
         raise APIException(
-            "{} error".format(status), status_code=status, reason=response.reason
+            "{} error".format(status), status_code=status, reason=response.reason_phrase
         )

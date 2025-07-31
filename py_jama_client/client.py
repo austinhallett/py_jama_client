@@ -241,12 +241,17 @@ class JamaClient:
             raise ValueError("Allowed results per page must be between 1 and 50")
 
         start_index = 0
-        allowed_results_per_page = 20
         total_results = float("inf")
 
         data, meta, links, linked = [], {}, {}, {}
         while len(data) < total_results:
-            page = self.get_page(resource, start_index, params=params, **kwargs)
+            page = self.get_page(
+                resource,
+                start_index,
+                params=params,
+                allowed_results_per_page=allowed_results_per_page,
+                **kwargs
+            )
 
             meta.update(page.meta)
             links.update(page.links)

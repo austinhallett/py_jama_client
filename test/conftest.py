@@ -8,6 +8,7 @@ from py_jama_client.apis.baselines_api import BaselinesAPI
 from py_jama_client.apis.item_types_api import ItemTypesAPI
 from py_jama_client.apis.projects_api import ProjectsAPI
 from py_jama_client.apis.relationships_api import RelationshipsAPI
+from py_jama_client.apis.releases_api import ReleasesAPI
 from py_jama_client.apis.tags_api import TagsAPI
 from py_jama_client.apis.users_api import UsersAPI
 from py_jama_client.client import JamaClient
@@ -294,6 +295,22 @@ def real_tag(get_test_jama_client, real_project):
         )
     else:
         return tags[0]["id"]
+
+
+@pytest.fixture(scope="session")
+def real_release(get_test_jama_client, real_project):
+    if "RELEASE_ID" in os.environ:
+        return os.environ.get("RELEASE_ID")
+    projects_api = ReleasesAPI(get_test_jama_client)
+    releases = projects_api.get_releases(real_project).data
+    if releases == []:
+        raise ValueError(
+            """
+                Unable to identify a viable release for sample testing
+            """
+        )
+    else:
+        return releases[0]["id"]
 
 
 @pytest.fixture(scope="session")

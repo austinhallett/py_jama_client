@@ -9,6 +9,7 @@ from .pick_list_options_api import PickListOptionsAPI
 from .pick_lists_api import PickListsAPI
 from .projects_api import ProjectsAPI
 from .relationships_api import RelationshipsAPI
+from .releases_api import ReleasesAPI
 from .tags_api import TagsAPI
 from .test_cycles_api import TestCyclesAPI
 from .test_plans_api import TestPlansAPI
@@ -21,12 +22,13 @@ __all__ = [
     "AttachmentsAPI",
     "BaselinesAPI",
     "FiltersAPI",
-    "ItemTypesAPI",
     "ItemsAPI",
-    "PickListsAPI",
+    "ItemTypesAPI",
     "PickListOptionsAPI",
+    "PickListsAPI",
     "ProjectsAPI",
     "RelationshipsAPI",
+    "ReleasesAPI",
     "TagsAPI",
     "TestCyclesAPI",
     "TestPlansAPI",

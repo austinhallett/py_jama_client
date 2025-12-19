@@ -44,7 +44,7 @@ def get_test_jama_client():
         host=os.getenv("HOST"),
         credentials=(os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")),
         verify=ssl_context,
-        oauth=False,
+        oauth=(os.getenv("OAUTH", "false").lower() in {"true", "yes", "on", "1"}),
     )
 
     yield client

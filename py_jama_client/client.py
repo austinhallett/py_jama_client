@@ -12,7 +12,6 @@ import math
 import ssl
 import time
 import typing
-from typing import Optional, Tuple
 
 import httpx
 import urllib3
@@ -50,7 +49,7 @@ class JamaClient:
     def __init__(
         self,
         host: str,
-        credentials: Tuple[str, str] = ("username|client_id", "password|client_secret"),
+        credentials: tuple[str, str] = ("username|client_id", "password|client_secret"),
         api_version: str = "/rest/v1/",
         oauth: bool = False,
         verify: typing.Union[bool, str, ssl.SSLContext] = True,
@@ -226,7 +225,7 @@ class JamaClient:
     def get_all(
         self,
         resource,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):

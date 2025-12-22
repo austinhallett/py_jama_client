@@ -11,7 +11,6 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -32,7 +31,7 @@ class UsersAPI:
     def get_users(
         self,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -56,7 +55,7 @@ class UsersAPI:
         self,
         user_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -83,7 +82,7 @@ class UsersAPI:
     def get_current_user(
         self,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -103,7 +102,7 @@ class UsersAPI:
     def get_current_user_favorite_filters(
         self,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -137,7 +136,7 @@ class UsersAPI:
         title: str = None,
         location: str = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -200,7 +199,7 @@ class UsersAPI:
         title: str = None,
         location: str = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -251,7 +250,7 @@ class UsersAPI:
         user_id: int,
         is_active: bool,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

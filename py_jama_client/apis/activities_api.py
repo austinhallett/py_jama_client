@@ -30,11 +30,11 @@ class ActivitiesAPI:
     def get_activities(
         self,
         project_id: int,
-        event_type: list[str] = None,
-        object_type: list[str] = None,
-        item_type: list[int] = None,
-        date: list[str] = None,
-        delete_events: bool = None,
+        event_type: list[str] | None = None,
+        object_type: list[str] | None = None,
+        item_type: list[int] | None = None,
+        date: list[str] | None = None,
+        delete_events: bool | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
         params: dict | None = None,
@@ -164,8 +164,8 @@ class ActivitiesAPI:
 
     def get_admin_activities(
         self,
-        filter_term: str = None,
-        project_id: int = None,
+        filter_term: str | None = None,
+        project_id: int | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
         params: dict | None = None,

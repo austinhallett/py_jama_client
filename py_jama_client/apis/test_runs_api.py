@@ -28,7 +28,7 @@ class TestRunsAPI:
     def put_test_run(
         self,
         test_run_id: int,
-        data: dict = None,
+        data: dict | None = None,
         *args,
         params: dict | None = None,
         **kwargs,

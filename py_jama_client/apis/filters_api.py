@@ -28,7 +28,7 @@ class FiltersAPI:
     def get_filter_results(
         self,
         filter_id: int,
-        project_id: int = None,
+        project_id: int | None = None,
         *args,
         params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,

@@ -88,7 +88,7 @@ class ItemsAPI:
         child_item_type_id: int,
         location: dict,
         fields: dict,
-        global_id: int = None,
+        global_id: int | None = None,
         *args,
         params: dict | None = None,
         **kwargs,

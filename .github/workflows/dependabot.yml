@@ -1,0 +1,35 @@
+name: Dependabot
+
+on: pull_request_target
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    name: Pull Request Approve and Merge
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    env:
+        PR_URL: ${{ github.event.pull_request.html_url }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      # Fetch Metadata from Dependabot PRs
+      # https://github.com/marketplace/actions/fetch-metadata-from-dependabot-prs
+      - name: Dependabot metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@08eff52bf64351f401fb50d4972fa95b9f2c2d1b # v2.4.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      # GitHub command line
+      # https://cli.github.com
+      - name: Approve Pull Request
+        run: gh pr review --approve "${PR_URL}"
+
+      - name: Enable auto-merge for Dependabot Pull Requests
+        if: ${{ steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major' }}
+        run: gh pr merge --auto --squash "${PR_URL}"
+        

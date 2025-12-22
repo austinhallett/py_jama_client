@@ -11,7 +11,7 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
+
 
 from py_jama_client.client import JamaClient
 from py_jama_client.exceptions import APIException, CoreException
@@ -37,7 +37,7 @@ class TestPlansAPI:
         testgroups_to_include: list[int] = None,
         testrun_status_to_include: list[str] = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

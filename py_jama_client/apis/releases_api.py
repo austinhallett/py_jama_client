@@ -12,7 +12,7 @@ Example usage:
 import datetime
 import json
 import logging
-from typing import Optional
+
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -34,7 +34,7 @@ class ReleasesAPI:
         self,
         project_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -65,7 +65,7 @@ class ReleasesAPI:
         self,
         release_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -94,7 +94,7 @@ class ReleasesAPI:
         project_id: int,
         description: str = "",
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -139,7 +139,7 @@ class ReleasesAPI:
         project_id: int,
         description: str = "",
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

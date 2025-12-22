@@ -3,6 +3,9 @@ name = "py_jama_client"
 authors = [{ name = "Austin Hallett-Doughty" }]
 description = "Python client library for Jama Connect"
 readme = "README.md"
+dynamic = ["version"]
+license = "MIT"
+license-files = ["LICENSE"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -10,24 +13,26 @@ classifiers = [
 requires-python = ">=3.11"
 
 dependencies = [
-    "requests>=2.31.0",
     "anyio>=3.7.1",
-    "python-jose>=3.3.0",
     "httpx>=0.24.1",
+    "python-jose>=3.3.0",
+    "requests>=2.31.0",
 ]
-
-dynamic = ["version"]
 
 [project.optional-dependencies]
 test = [
-    "pytest>=7.4.0",
     "black>=23.7.0",
+    "build>=1.0.0",
     "flake8>=6.0.0",
-    "pytest-cov>=4.1.0",
     "pytest-asyncio>=0.21.1",
+    "pytest-cov>=4.1.0",
     "pytest-dotenv>=0.5.2",
+    "pytest>=7.4.0",
 ]
 
+[project.urls]
+source = "https://github.com/austinhallett/py_jama_client"
+issues = "https://github.com/austinhallett/py_jama_client/issues"
 
 [tool.black]
 line-length = 88

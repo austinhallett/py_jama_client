@@ -250,7 +250,7 @@ class JamaClient:
                 start_index,
                 params=params,
                 allowed_results_per_page=allowed_results_per_page,
-                **kwargs
+                **kwargs,
             )
 
             meta.update(page.meta)
@@ -385,7 +385,9 @@ class JamaClient:
             )
 
         # Catch anything unexpected
-        py_jama_client_logger.error("{} error. {}".format(status, response.reason_phrase))
+        py_jama_client_logger.error(
+            "{} error. {}".format(status, response.reason_phrase)
+        )
         raise APIException(
             "{} error".format(status), status_code=status, reason=response.reason_phrase
         )

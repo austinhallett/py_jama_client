@@ -3,7 +3,7 @@ name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
 on:
     push:
         branches:
-            "**"
+            - "**"
         tags:
             - "*"
 
@@ -11,15 +11,16 @@ jobs:
     lint:
         name: Lint the Python 🐍 code
         runs-on: ubuntu-latest
-
         steps:
-            - uses: actions/checkout@v6
-            - name: Set up Python
-              uses: actions/setup-python@v6
+            - &checkout
+              uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+            - &setup-python
+              name: Set up Python
+              uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
               with:
                   python-version: "3.x"
                   cache: "pip"
-                  
+
             - name: Install ruff
               run: python3 -m pip install ruff
 
@@ -30,20 +31,13 @@ jobs:
         needs: [lint]
         name: Build distribution 📦
         runs-on: ubuntu-latest
-
         steps:
-            - uses: actions/checkout@v6
-            - name: Set up Python
-              uses: actions/setup-python@v6
-              with:
-                  python-version: "3.x"
+            - *checkout
+            - *setup-python
             - name: Install pypa/build
               run: >-
-                  python3 -m
-                  pip install
-                  build
-                  hatchling
-                  --user
+                  python3 -m pip install
+                  --user build hatchling
             - name: Version the package
               run: >-
                   python3 -m hatchling
@@ -51,7 +45,7 @@ jobs:
             - name: Build a binary wheel and a source tarball
               run: python3 -m build
             - name: Store the distribution packages
-              uses: actions/upload-artifact@v6
+              uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
               with:
                   name: python-package-distributions
                   path: dist/
@@ -70,13 +64,14 @@ jobs:
             id-token: write # IMPORTANT: mandatory for trusted publishing
 
         steps:
-            - name: Download all the dists
-              uses: actions/download-artifact@v7
+            - &download-dists
+              name: Download all the dists
+              uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7.0.0
               with:
                   name: python-package-distributions
                   path: dist/
             - name: Publish distribution 📦 to PyPI
-              uses: pypa/gh-action-pypi-publish@release/v1
+              uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
 
     github-release:
         name: >-
@@ -91,11 +86,7 @@ jobs:
             id-token: write # IMPORTANT: mandatory for sigstore
 
         steps:
-            - name: Download all the dists
-              uses: actions/download-artifact@v7
-              with:
-                  name: python-package-distributions
-                  path: dist/
+            - *download-dists
             - name: Sign the dists with Sigstore
               uses: sigstore/gh-action-sigstore-python@v3.2.0
               with:
@@ -137,12 +128,8 @@ jobs:
             id-token: write # IMPORTANT: mandatory for trusted publishing
 
         steps:
-            - name: Download all the dists
-              uses: actions/download-artifact@v7
-              with:
-                  name: python-package-distributions
-                  path: dist/
+            - *download-dists
             - name: Publish distribution 📦 to TestPyPI
-              uses: pypa/gh-action-pypi-publish@release/v1
+              uses: pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e # v1.13.0
               with:
                   repository-url: https://test.pypi.org/legacy/

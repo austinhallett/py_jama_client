@@ -10,7 +10,7 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
+
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -33,7 +33,7 @@ class BaselinesAPI:
         project_id: int,
         *args,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ) -> ClientResponse:
         """
@@ -59,7 +59,7 @@ class BaselinesAPI:
         self,
         baseline_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -162,7 +162,7 @@ class BaselinesAPI:
         self,
         baseline_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -184,7 +184,7 @@ class BaselinesAPI:
         baseline_id: int,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -210,7 +210,7 @@ class BaselinesAPI:
         baseline_id: int,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):

@@ -11,7 +11,7 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
+
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -33,7 +33,7 @@ class RelationshipsAPI:
         self,
         project_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -65,7 +65,7 @@ class RelationshipsAPI:
         self,
         relationship_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -92,7 +92,7 @@ class RelationshipsAPI:
         to_item: int,
         relationship_type: int = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -134,7 +134,7 @@ class RelationshipsAPI:
         to_item: int,
         relationship_type: int = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -227,7 +227,7 @@ class RelationshipsAPI:
     def get_relationship_types(
         self,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -247,7 +247,7 @@ class RelationshipsAPI:
         )
 
     def get_relationship_type(
-        self, relationship_type_id: int, *args, params: Optional[dict] = None, **kwargs
+        self, relationship_type_id: int, *args, params: dict | None = None, **kwargs
     ):
         """
         Gets relationship type information for a specific relationship type id.

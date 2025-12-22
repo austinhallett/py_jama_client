@@ -10,7 +10,7 @@ Example usage:
 """
 
 import logging
-from typing import Optional
+
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -38,7 +38,7 @@ class ActivitiesAPI:
         delete_events: bool = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -94,7 +94,7 @@ class ActivitiesAPI:
         self,
         activity_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -118,7 +118,7 @@ class ActivitiesAPI:
         activity_id: int,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -140,7 +140,7 @@ class ActivitiesAPI:
         self,
         activity_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -169,7 +169,7 @@ class ActivitiesAPI:
         project_id: int = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

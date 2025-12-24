@@ -10,7 +10,6 @@ Example usage:
 """
 
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.exceptions import APIException, CoreException
@@ -29,9 +28,9 @@ class TestRunsAPI:
     def put_test_run(
         self,
         test_run_id: int,
-        data: dict = None,
+        data: dict | None = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """This method will post a test run to Jama through the API"""

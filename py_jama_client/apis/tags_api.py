@@ -11,7 +11,6 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -33,7 +32,7 @@ class TagsAPI:
         self,
         project_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -65,7 +64,7 @@ class TagsAPI:
         name: str,
         project: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -96,7 +95,7 @@ class TagsAPI:
         self,
         tag_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -121,7 +120,7 @@ class TagsAPI:
         name: str,
         project: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -166,7 +165,7 @@ class TagsAPI:
         self,
         tag_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):

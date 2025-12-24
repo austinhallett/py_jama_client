@@ -11,7 +11,6 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
 
 from py_jama_client.client import ClientResponse, JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -32,7 +31,7 @@ class ItemsAPI:
         self,
         project_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -62,7 +61,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -89,9 +88,9 @@ class ItemsAPI:
         child_item_type_id: int,
         location: dict,
         fields: dict,
-        global_id: int = None,
+        global_id: int | None = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -148,7 +147,7 @@ class ItemsAPI:
         item_id: int,
         tag_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ) -> int:
         """
@@ -178,7 +177,7 @@ class ItemsAPI:
         source_item: int,
         pool_item: int,
         *args,
-        params: Optional[dict],
+        params: dict | None,
         **kwargs,
     ):
         """
@@ -213,7 +212,7 @@ class ItemsAPI:
         item_id: int,
         attachment_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ) -> int:
         """
@@ -248,7 +247,7 @@ class ItemsAPI:
         location: dict,
         fields: dict,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -294,7 +293,7 @@ class ItemsAPI:
         item_id: int,
         patches: list[dict],
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ) -> int:
         """
@@ -359,7 +358,7 @@ class ItemsAPI:
         self,
         tag_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -386,7 +385,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -413,7 +412,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -441,7 +440,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -462,7 +461,7 @@ class ItemsAPI:
         )
 
     def get_items_upstream_related(
-        self, item_id: int, *args, params: Optional[dict] = None, **kwargs
+        self, item_id: int, *args, params: dict | None = None, **kwargs
     ):
         """
         Returns a list of all the upstream related items for the item with the
@@ -482,7 +481,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -504,7 +503,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -530,7 +529,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -555,7 +554,7 @@ class ItemsAPI:
         item_id: int,
         synced_item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -582,7 +581,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -601,7 +600,7 @@ class ItemsAPI:
         item_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -627,7 +626,7 @@ class ItemsAPI:
         item_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -652,7 +651,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -675,7 +674,7 @@ class ItemsAPI:
         item_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -697,7 +696,7 @@ class ItemsAPI:
         item_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -714,7 +713,7 @@ class ItemsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_item_lock(self, item_id: int, params: Optional[dict] = None):
+    def get_item_lock(self, item_id: int, params: dict | None = None):
         """
         Get the locked state, last locked date, and last locked by user for
         the item with the specified ID
@@ -766,7 +765,7 @@ class ItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):

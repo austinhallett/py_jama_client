@@ -11,7 +11,6 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
 
 from py_jama_client.client import ClientResponse, JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -34,7 +33,7 @@ class ProjectsAPI:
 
     def get_projects(
         self,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     ):
         """
@@ -51,7 +50,7 @@ class ProjectsAPI:
             resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
 
-    def get_project_by_id(self, project_id: int, params: Optional[dict] = None):
+    def get_project_by_id(self, project_id: int, params: dict | None = None):
         """
         This method will return a single project as JSON object
         Args:
@@ -87,7 +86,7 @@ class ProjectsAPI:
         name: str,
         description: str,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -120,7 +119,7 @@ class ProjectsAPI:
         project_id: int,
         item_type_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

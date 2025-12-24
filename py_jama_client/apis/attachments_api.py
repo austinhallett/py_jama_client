@@ -11,7 +11,6 @@ Example usage:
 
 import json
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -33,7 +32,7 @@ class AttachmentsAPI:
         self,
         attachment_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -56,7 +55,7 @@ class AttachmentsAPI:
         self,
         attachment_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ) -> bytes:
         """
@@ -87,7 +86,7 @@ class AttachmentsAPI:
         attachment_id: int,
         file_path: str,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ) -> int:
         """
@@ -119,7 +118,7 @@ class AttachmentsAPI:
         self,
         attachment_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -144,7 +143,7 @@ class AttachmentsAPI:
         attachment_id: int,
         locked: bool,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -172,7 +171,7 @@ class AttachmentsAPI:
         attachment_id: int,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -192,7 +191,7 @@ class AttachmentsAPI:
         attachment_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -213,7 +212,7 @@ class AttachmentsAPI:
         attachment_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

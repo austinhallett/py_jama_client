@@ -10,7 +10,6 @@ Example usage:
 """
 
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -30,18 +29,18 @@ class AbstractItemsAPI:
 
     def get_abstract_items(
         self,
-        project: list[int] = None,
-        item_type: list[int] = None,
-        document_key: list[str] = None,
-        release: list[int] = None,
-        created_date: list[str] = None,
-        modified_date: list[str] = None,
-        last_activity_date: list[str] = None,
-        contains: list[str] = None,
-        sort_by: list[str] = None,
+        project: list[int] | None = None,
+        item_type: list[int] | None = None,
+        document_key: list[str] | None = None,
+        release: list[int] | None = None,
+        created_date: list[str] | None = None,
+        modified_date: list[str] | None = None,
+        last_activity_date: list[str] | None = None,
+        contains: list[str] | None = None,
+        sort_by: list[str] | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -111,7 +110,7 @@ class AbstractItemsAPI:
         self,
         item_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -136,7 +135,7 @@ class AbstractItemsAPI:
         timestamp: str,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -167,7 +166,7 @@ class AbstractItemsAPI:
         item_id: int,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -192,7 +191,7 @@ class AbstractItemsAPI:
         item_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -217,7 +216,7 @@ class AbstractItemsAPI:
         item_id: int,
         version_num: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

@@ -10,7 +10,6 @@ Example usage:
 """
 
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -29,9 +28,9 @@ class FiltersAPI:
     def get_filter_results(
         self,
         filter_id: int,
-        project_id: int = None,
+        project_id: int | None = None,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):

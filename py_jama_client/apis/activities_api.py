@@ -10,7 +10,6 @@ Example usage:
 """
 
 import logging
-from typing import Optional
 
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
@@ -31,14 +30,14 @@ class ActivitiesAPI:
     def get_activities(
         self,
         project_id: int,
-        event_type: list[str] = None,
-        object_type: list[str] = None,
-        item_type: list[int] = None,
-        date: list[str] = None,
-        delete_events: bool = None,
+        event_type: list[str] | None = None,
+        object_type: list[str] | None = None,
+        item_type: list[int] | None = None,
+        date: list[str] | None = None,
+        delete_events: bool | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -94,7 +93,7 @@ class ActivitiesAPI:
         self,
         activity_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -118,7 +117,7 @@ class ActivitiesAPI:
         activity_id: int,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -140,7 +139,7 @@ class ActivitiesAPI:
         self,
         activity_id: int,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """
@@ -165,11 +164,11 @@ class ActivitiesAPI:
 
     def get_admin_activities(
         self,
-        filter_term: str = None,
-        project_id: int = None,
+        filter_term: str | None = None,
+        project_id: int | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         *args,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         **kwargs,
     ):
         """

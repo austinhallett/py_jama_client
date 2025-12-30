@@ -12,7 +12,6 @@ import math
 import ssl
 import time
 import typing
-from typing import Optional, Tuple
 
 import httpx
 import urllib3
@@ -50,7 +49,7 @@ class JamaClient:
     def __init__(
         self,
         host: str,
-        credentials: Tuple[str, str] = ("username|client_id", "password|client_secret"),
+        credentials: tuple[str, str] = ("username|client_id", "password|client_secret"),
         api_version: str = "/rest/v1/",
         oauth: bool = False,
         verify: typing.Union[bool, str, ssl.SSLContext] = True,
@@ -108,7 +107,7 @@ class JamaClient:
 
         return self.__session.delete(url, auth=self.__credentials, **kwargs)
 
-    def get(self, resource: str, params: dict = None, **kwargs):
+    def get(self, resource: str, params: dict | None = None, **kwargs):
         """This method will perform a get operation on the specified
         resource"""
         url = self.__host_name + resource
@@ -120,7 +119,9 @@ class JamaClient:
 
         return self.__session.get(url, auth=self.__credentials, params=params, **kwargs)
 
-    def patch(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+    def patch(
+        self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
+    ):
         """This method will perform a patch operation to the specified
         resource"""
         url = self.__host_name + resource
@@ -136,7 +137,9 @@ class JamaClient:
             url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
         )
 
-    def post(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+    def post(
+        self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
+    ):
         """This method will perform a post operation to the specified
         resource."""
         url = self.__host_name + resource
@@ -152,7 +155,9 @@ class JamaClient:
             url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
         )
 
-    def put(self, resource: str, params: dict = None, data=None, json=None, **kwargs):
+    def put(
+        self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
+    ):
         """This method will perform a put operation to the specified
         resource"""
         url = self.__host_name + resource
@@ -226,7 +231,7 @@ class JamaClient:
     def get_all(
         self,
         resource,
-        params: Optional[dict] = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -275,7 +280,7 @@ class JamaClient:
         self,
         resource,
         start_at,
-        params: dict = None,
+        params: dict | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):

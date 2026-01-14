@@ -112,6 +112,8 @@ class ItemsAPI:
             }
         }
         """
+        if params is None:
+            params = {}
 
         body = {
             "project": project_id,

@@ -107,7 +107,7 @@ class BaselinesAPI:
             "baselineStatusPickListOption": baseline_status_pick_list_option,
         }
         try:
-            response = self.client.put(resource_path, data=json.dumps(body) ** kwargs)
+            response = self.client.put(resource_path, data=json.dumps(body), **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

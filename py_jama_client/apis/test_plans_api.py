@@ -62,7 +62,7 @@ class TestPlansAPI:
         resource_path = f"testplans/{testplan_id}/testcycles"
         headers = {"content-type": "application/json"}
         fields = {"name": testcycle_name, "startDate": start_date, "endDate": end_date}
-        test_run_gen_config = {}
+        test_run_gen_config: dict = {}
         if testgroups_to_include is not None:
             test_run_gen_config["testGroupsToInclude"] = testgroups_to_include
         if testrun_status_to_include is not None:

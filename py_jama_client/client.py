@@ -248,7 +248,7 @@ class JamaClient:
         start_index = 0
         total_results = float("inf")
 
-        data, meta, links, linked = [], {}, {}, {}
+        data, meta, links, linked = [], {}, {}, {} # type: ignore[var-annotated]
         while len(data) < total_results:
             page = self.get_page(
                 resource,

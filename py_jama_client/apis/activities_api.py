@@ -67,7 +67,7 @@ class ActivitiesAPI:
                 - "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
             delete_events: Get item delete events only
         """
-        req_params = {"project": project_id}
+        req_params: dict = {"project": project_id}
         if params is None:
             params = req_params
         else:

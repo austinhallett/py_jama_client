@@ -285,7 +285,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        self.handle_response_status(response)
+        JamaClient.handle_response_status(response)
         return response.status_code
 
     def patch_item(
@@ -759,7 +759,7 @@ class ItemsAPI:
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-        return self.handle_response_status(response)
+        return JamaClient.handle_response_status(response)
 
     def get_item_tags(
         self,

@@ -54,11 +54,108 @@ class RelationshipsAPI:
         else:
             params.update(req_params)
 
-        return self.client.get_all(
+        # Minimal request to check if lastId is required
+        response = self.client.get(
             resource_path,
-            params,
-            allowed_results_per_page=allowed_results_per_page,
-        )
+            params=params | {"maxResults": 1},
+            **kwargs)
+        if (response.status_code == 400 and
+                "lastId parameter is now required" in response.text):
+            last_id_required = True
+        else:
+            last_id_required = False
+
+        if last_id_required:
+            return self.get_all_lastid(
+                    resource_path,
+                    params,
+                    allowed_results_per_page=allowed_results_per_page,
+            )
+        else:
+            return self.client.get_all(
+                resource_path,
+                params,
+                allowed_results_per_page=allowed_results_per_page,
+            )
+
+    def get_all_lastid(
+        self,
+        resource_path: str,
+        params: dict | None = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        This method will get all of the resources specified by the resource
+        parameter, if an id or some other parameter is required for the
+        resource, include it in the params parameter.
+        Returns a single JSON array with all of the retrieved items.
+        """
+
+        if allowed_results_per_page < 1 or allowed_results_per_page > 50:
+            raise ValueError(
+                "Allowed results per page must be between 1 and 50")
+
+        last_id = 0
+        total_results = float("inf")
+
+        data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated] # noqa: E501
+        while len(data) < total_results:
+            page = self.get_page_lastid(
+                resource_path,
+                last_id,
+                params=params,
+                allowed_results_per_page=allowed_results_per_page,
+                **kwargs,
+            )
+
+            meta.update(page.meta)
+            links.update(page.links)
+
+            for item_type_key in page.linked:
+                if item_type_key not in linked:
+                    linked[item_type_key] = {}
+                linked[item_type_key] = {
+                    **linked[item_type_key],
+                    **page.linked[item_type_key],
+                }
+
+            page_info = page.meta.get("pageInfo")
+            last_id = page.data[-1]["id"] if page.data else last_id
+            total_results = page_info.get("totalResults")
+            data.extend(page.data)
+
+        return ClientResponse(meta, links, linked, data)
+
+    def get_page_lastid(
+        self,
+        resource_path: str,
+        last_id: int,
+        params: dict | None = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        This method will return one page of results from the specified
+        resource type.
+        Pass any needed parameters along
+        The response object will be returned
+        """
+        pagination = {"lastId": last_id,
+                      "maxResults": allowed_results_per_page}
+
+        if params is None:
+            params = pagination
+        else:
+            params.update(pagination)
+
+        try:
+            response = self.client.get(resource_path, params=params, **kwargs)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def get_relationship(
         self,
@@ -151,7 +248,10 @@ class RelationshipsAPI:
         headers = {"content-type": "application/json"}
         try:
             response = self.client.put(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
+                resource_path, params,
+                data=json.dumps(body),
+                headers=headers,
+                **kwargs
             )
         except CoreException as err:
             py_jama_client_logger.error(err)
@@ -246,7 +346,11 @@ class RelationshipsAPI:
         )
 
     def get_relationship_type(
-        self, relationship_type_id: int, *args, params: dict | None = None, **kwargs
+        self,
+        relationship_type_id: int,
+        *args,
+        params: dict | None = None,
+        **kwargs
     ):
         """
         Gets relationship type information for a specific relationship type id.

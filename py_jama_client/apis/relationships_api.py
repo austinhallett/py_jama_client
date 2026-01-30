@@ -54,7 +54,7 @@ class RelationshipsAPI:
         else:
             params.update(req_params)
 
-        return self.client.get_all(
+        return self.client.get_all_using_lastid(
             resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,

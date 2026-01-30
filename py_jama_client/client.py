@@ -38,7 +38,6 @@ urllib3.disable_warnings()
 
 py_jama_client_logger = logging.getLogger("py_jama_client")
 
-
 class JamaClient:
     """
     Base client class
@@ -252,7 +251,7 @@ class JamaClient:
         while len(data) < total_results:
             page = self.get_page(
                 resource,
-                start_index,
+                start_at=start_index,
                 params=params,
                 allowed_results_per_page=allowed_results_per_page,
                 **kwargs,
@@ -275,6 +274,83 @@ class JamaClient:
             data.extend(page.data)
 
         return ClientResponse(meta, links, linked, data)
+
+    def get_all_using_lastid(
+        self,
+        resource,
+        params: dict | None = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        This method will get all of the resources specified by the resource
+        parameter, if an id or some other parameter is required for the
+        resource, include it in the params parameter.
+        Returns a single JSON array with all of the retrieved items.
+        """
+
+        if allowed_results_per_page < 1 or allowed_results_per_page > 50:
+            raise ValueError("Allowed results per page must be between 1 and 50")
+
+        last_id = 0
+        total_results = float("inf")
+
+        data, meta, links, linked = [], {}, {}, {} # type: ignore[var-annotated]
+        while len(data) < total_results:
+            page = self.get_page_using_lastid(
+                resource,
+                last_id=last_id,
+                params=params,
+                allowed_results_per_page=allowed_results_per_page,
+                **kwargs,
+            )
+
+            meta.update(page.meta)
+            links.update(page.links)
+
+            for item_type_key in page.linked:
+                if item_type_key not in linked:
+                    linked[item_type_key] = {}
+                linked[item_type_key] = {
+                    **linked[item_type_key],
+                    **page.linked[item_type_key],
+                }
+
+            page_info = page.meta.get("pageInfo")
+            last_id = page.data[-1]["id"]
+            total_results = page_info.get("totalResults")
+            data.extend(page.data)
+
+        return ClientResponse(meta, links, linked, data)
+
+    def get_page_using_lastid(
+        self,
+        resource,
+        last_id,
+        params: dict | None = None,
+        allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        **kwargs,
+    ):
+        """
+        This method will return one page of results from the specified
+        resource type.
+        Pass any needed parameters along
+        The response object will be returned
+        """
+        pagination = {"lastId": last_id, "maxResults": allowed_results_per_page}
+
+        if params is None:
+            params = pagination
+        else:
+            params.update(pagination)
+
+        try:
+            response = self.get(resource, params=params, **kwargs)
+        except CoreException as err:
+            py_jama_client_logger.error(err)
+            raise APIException(str(err))
+        JamaClient.handle_response_status(response)
+        return ClientResponse.from_response(response)
 
     def get_page(
         self,

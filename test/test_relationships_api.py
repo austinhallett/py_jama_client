@@ -13,8 +13,40 @@ def test_get_relationships(relationships_api, real_project):
     assert response.data != []
 
 
+def test_get_all_lastid(relationships_api, real_project):
+    resource_path = "relationships"
+    params = {"project": real_project,
+              "maxResults": 1}
+    response = relationships_api.client.get(resource_path, params=params)
+    if (response.status_code == 400 and
+            "lastId parameter is now required" in response.text):
+        response = relationships_api.get_all_lastid(
+            resource_path=resource_path,
+            params={"project": real_project})
+    else:
+        pytest.skip("lastId parameter is not required by test Jama instance.")
+    assert response.data != []
+
+
+def test_get_page_lastid(relationships_api, real_project):
+    resource_path = "relationships"
+    params = {"project": real_project,
+              "maxResults": 1}
+    response = relationships_api.client.get(resource_path, params=params)
+    if (response.status_code == 400 and
+            "lastId parameter is now required" in response.text):
+        response = relationships_api.get_page_lastid(
+            resource_path=resource_path,
+            last_id=0,
+            params={"project": real_project})
+    else:
+        pytest.skip("lastId parameter is not required by test Jama instance.")
+    assert response.data != []
+
+
 def test_get_relationship(relationships_api, real_relationship):
-    response = relationships_api.get_relationship(relationship_id=real_relationship)
+    response = relationships_api.get_relationship(
+        relationship_id=real_relationship)
     assert response.data != []
 
 

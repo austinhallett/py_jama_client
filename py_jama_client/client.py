@@ -84,7 +84,7 @@ class JamaClient:
 
     def get_available_endpoints(self):
         try:
-            response = self.__session.get("")
+            response = self.__session.get(self.__host_name, auth=self.__credentials)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

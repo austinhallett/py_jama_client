@@ -11,7 +11,6 @@ import logging
 import math
 import ssl
 import time
-import typing
 
 import httpx
 import urllib3
@@ -52,7 +51,7 @@ class JamaClient:
         credentials: tuple[str, str] = ("username|client_id", "password|client_secret"),
         api_version: str = "/rest/v1/",
         oauth: bool = False,
-        verify: typing.Union[bool, str, ssl.SSLContext] = True,
+        verify: bool | str | ssl.SSLContext = True,
         timeout: int = 30,
     ):
         """
@@ -339,9 +338,7 @@ class JamaClient:
 
             # Log the error
             py_jama_client_logger.error(
-                "API Client Error. Status: {} Message: {}".format(
-                    status, response_message
-                )
+                f"API Client Error. Status: {status} Message: {response_message}"
             )
 
             if response_message is not None and "already exists" in response_message:
@@ -354,7 +351,7 @@ class JamaClient:
             if status == 401:
                 raise UnauthorizedException(
                     "Unauthorized: check credentials and permissions.  "
-                    "API response message {}".format(response_message),
+                    f"API response message {response_message}",
                     status_code=status,
                     reason=response_message,
                 )
@@ -375,9 +372,7 @@ class JamaClient:
                 )
 
             raise APIClientException(
-                "{} {} Client Error.  Bad Request.  API response message: {}".format(
-                    status, response.reason_phrase, response_message
-                ),
+                f"{status} {response.reason_phrase} Client Error.  Bad Request.  API response message: {response_message}",
                 status_code=status,
                 reason=response_message,
             )
@@ -387,18 +382,18 @@ class JamaClient:
 
             # Log The Error
             py_jama_client_logger.error(
-                "{} Server error. {}".format(status, response.reason_phrase)
+                f"{status} Server error. {response.reason_phrase}"
             )
             raise APIServerException(
-                "{} Server Error.".format(status),
+                f"{status} Server Error.",
                 status_code=status,
                 reason=response.reason_phrase,
             )
 
         # Catch anything unexpected
         py_jama_client_logger.error(
-            "{} error. {}".format(status, response.reason_phrase)
+            f"{status} error. {response.reason_phrase}"
         )
         raise APIException(
-            "{} error".format(status), status_code=status, reason=response.reason_phrase
+            f"{status} error", status_code=status, reason=response.reason_phrase
         )

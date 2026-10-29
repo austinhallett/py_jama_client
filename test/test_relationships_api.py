@@ -1,5 +1,6 @@
-from py_jama_client.apis.relationships_api import RelationshipsAPI
 import pytest
+
+from py_jama_client.apis.relationships_api import RelationshipsAPI
 
 
 @pytest.fixture(scope="function")

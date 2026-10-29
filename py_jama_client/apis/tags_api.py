@@ -132,7 +132,7 @@ class TagsAPI:
             project: the project in which to update the tag
         """
         body = {"name": name, "project": project}
-        resource_path = "tags/{}".format(tag_id)
+        resource_path = f"tags/{tag_id}"
         headers = {"content-type": "application/json"}
         try:
             response = self.client.put(

@@ -1,5 +1,6 @@
-from py_jama_client.apis.baselines_api import BaselinesAPI
 import pytest
+
+from py_jama_client.apis.baselines_api import BaselinesAPI
 
 
 @pytest.fixture(scope="function")

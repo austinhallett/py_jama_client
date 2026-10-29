@@ -99,7 +99,7 @@ class RelationshipsAPI:
         last_id = 0
         total_results = float("inf")
 
-        data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated] # noqa: E501
+        data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated]
         while len(data) < total_results:
             page = self.get_page_lastid(
                 resource_path,
@@ -250,7 +250,7 @@ class RelationshipsAPI:
         body = {"fromItem": from_item, "toItem": to_item}
         if relationship_type is not None:
             body["relationshipType"] = relationship_type
-        resource_path = "relationships/{}".format(relationship_id)
+        resource_path = f"relationships/{relationship_id}"
         headers = {"content-type": "application/json"}
         try:
             response = self.client.put(

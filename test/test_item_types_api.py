@@ -1,5 +1,6 @@
-from py_jama_client.apis.item_types_api import ItemTypesAPI
 import pytest
+
+from py_jama_client.apis.item_types_api import ItemTypesAPI
 
 
 @pytest.fixture(scope="function")

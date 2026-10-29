@@ -1,5 +1,6 @@
-from py_jama_client.apis.tags_api import TagsAPI
 import pytest
+
+from py_jama_client.apis.tags_api import TagsAPI
 
 
 @pytest.fixture(scope="function")

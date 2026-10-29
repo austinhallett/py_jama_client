@@ -1,5 +1,6 @@
-from py_jama_client.apis.projects_api import ProjectsAPI
 import pytest
+
+from py_jama_client.apis.projects_api import ProjectsAPI
 
 
 @pytest.fixture(scope="function")

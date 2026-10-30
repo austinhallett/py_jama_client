@@ -579,24 +579,6 @@ class ItemsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_item_versions(
-        self,
-        item_id: int,
-        *args,
-        params: dict | None = None,
-        **kwargs,
-    ):
-        """
-        Get all versions for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-
-        Returns: JSON array with all versions for the item
-        """
-        resource_path = f"items/{item_id}/versions"
-        return self.client.get_all(resource_path, params)
-
     def get_item_version(
         self,
         item_id: int,
@@ -649,7 +631,7 @@ class ItemsAPI:
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
-    def get_item_versions(  # noqa: F811
+    def get_item_versions(
         self,
         item_id: int,
         *args,
@@ -670,50 +652,6 @@ class ItemsAPI:
         return self.client.get_all(
             resource_path, params, allowed_results_per_page=allowed_results_per_page
         )
-
-    def get_item_version(  # noqa F811
-        self,
-        item_id: int,
-        version_num: int,
-        *args,
-        params: dict | None = None,
-        **kwargs,
-    ):
-        """
-        Get the numbered version for the item with the specified ID
-
-        Args:
-            item_id: the item id of the item to fetch
-            version_num: the version number for the item
-
-        Returns: a dictionary object representing the numbered version
-        """
-        resource_path = f"items/{item_id}/versions/{version_num}"
-        response = self.client.get(resource_path, params)
-        JamaClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
-
-    def get_versioned_item(  # noqa: F811
-        self,
-        item_id: int,
-        version_num: int,
-        *args,
-        params: dict | None = None,
-        **kwargs,
-    ):
-        """
-        Get the snapshot of the item at the specified version
-
-        Args:
-            item_id: the item id of the item to fetch
-            version_num: the version number for the item
-
-        Returns: a dictionary object representing the versioned item
-        """
-        resource_path = f"items/{item_id}/versions/{version_num}/versioneditem"
-        response = self.client.get(resource_path, params)
-        JamaClient.handle_response_status(response)
-        return ClientResponse.from_response(response)
 
     def get_item_lock(self, item_id: int, params: dict | None = None):
         """

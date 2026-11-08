@@ -105,11 +105,10 @@ class RelationshipsAPI:
                 "Allowed results per page must be between 1 and 50")
 
         last_id = 0
-        total_results = float("inf")
         throttle_waits = 0
 
         data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated]
-        while len(data) < total_results:
+        while True:
             try:
                 page = self.get_page_lastid(
                     resource_path,
@@ -137,17 +136,12 @@ class RelationshipsAPI:
                     **linked[item_type_key],
                     **page.linked[item_type_key],
                 }
-            if page.data:
-                last_id = page.data[-1]["id"]
-            else:
+            if not page.data:
                 break
-            page_info = page.meta.get("pageInfo")
-            if page_info:
-                total_results = page_info.get("totalResults", total_results)
-            else:
-                total_results = 0
-                break
+            last_id = page.data[-1]["id"]
             data.extend(page.data)
+            if len(page.data) < allowed_results_per_page:
+                break
 
         return ClientResponse(meta, links, linked, data)
 

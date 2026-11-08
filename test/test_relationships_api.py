@@ -1,6 +1,11 @@
+from unittest.mock import Mock
+
 import pytest
 
 from py_jama_client.apis.relationships_api import RelationshipsAPI
+from py_jama_client.constants import MAX_THROTTLE_WAITS
+from py_jama_client.exceptions import TooManyRequestsException
+from py_jama_client.response import ClientResponse
 
 
 @pytest.fixture(scope="function")
@@ -27,6 +32,55 @@ def test_get_all_lastid(relationships_api, real_project):
     else:
         pytest.skip("lastId parameter is not required by test Jama instance.")
     assert response.data != []
+
+
+def test_get_all_lastid_honors_retry_after(monkeypatch):
+    api = RelationshipsAPI(Mock())
+    throttled = TooManyRequestsException("throttled")
+    throttled.headers = {"Retry-After": "17"}
+    api.get_page_lastid = Mock(side_effect=[
+        ClientResponse(
+            {"pageInfo": {"startIndex": 0, "totalResults": 3}},
+            {},
+            {},
+            [{"id": 1}, {"id": 2}],
+        ),
+        throttled,
+        ClientResponse(
+            {"pageInfo": {"startIndex": 2, "totalResults": 3}},
+            {},
+            {},
+            [{"id": 3}],
+        ),
+    ])
+    sleep = Mock()
+    monkeypatch.setattr("time.sleep", sleep)
+
+    response = api.get_all_lastid(
+        "relationships", params={"project": 1}, allowed_results_per_page=2
+    )
+
+    assert response.data == [{"id": 1}, {"id": 2}, {"id": 3}]
+    assert [call.args[1] for call in api.get_page_lastid.call_args_list] == [
+        0, 2, 2
+    ]
+    sleep.assert_called_once_with(17.0)
+
+
+def test_get_all_lastid_stops_after_max_consecutive_throttles(monkeypatch):
+    api = RelationshipsAPI(Mock())
+    api.get_page_lastid = Mock(side_effect=[
+        TooManyRequestsException("throttled")
+        for _ in range(MAX_THROTTLE_WAITS + 1)
+    ])
+    sleep = Mock()
+    monkeypatch.setattr("time.sleep", sleep)
+
+    with pytest.raises(TooManyRequestsException):
+        api.get_all_lastid("relationships", allowed_results_per_page=2)
+
+    assert api.get_page_lastid.call_count == MAX_THROTTLE_WAITS + 1
+    assert sleep.call_count == MAX_THROTTLE_WAITS
 
 
 def test_get_page_lastid(relationships_api, real_project):

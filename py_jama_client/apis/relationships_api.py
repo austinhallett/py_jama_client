@@ -11,10 +11,18 @@ Example usage:
 
 import json
 import logging
+import time
 
 from py_jama_client.client import JamaClient
-from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
-from py_jama_client.exceptions import APIException, CoreException
+from py_jama_client.constants import (
+    DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+    MAX_THROTTLE_WAITS,
+)
+from py_jama_client.exceptions import (
+    APIException,
+    CoreException,
+    TooManyRequestsException,
+)
 from py_jama_client.response import ClientResponse
 
 py_jama_client_logger = logging.getLogger("py_jama_client")
@@ -98,16 +106,26 @@ class RelationshipsAPI:
 
         last_id = 0
         total_results = float("inf")
+        throttle_waits = 0
 
         data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated]
         while len(data) < total_results:
-            page = self.get_page_lastid(
-                resource_path,
-                last_id,
-                params=params,
-                allowed_results_per_page=allowed_results_per_page,
-                **kwargs,
-            )
+            try:
+                page = self.get_page_lastid(
+                    resource_path,
+                    last_id,
+                    params=params,
+                    allowed_results_per_page=allowed_results_per_page,
+                    **kwargs,
+                )
+            except TooManyRequestsException as err:
+                throttle_waits += 1
+                if throttle_waits > MAX_THROTTLE_WAITS:
+                    raise
+                retry_after = (err.headers or {}).get("Retry-After") or 30
+                time.sleep(float(retry_after))
+                continue
+            throttle_waits = 0
 
             meta.update(page.meta)
             links.update(page.links)

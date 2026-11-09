@@ -1,6 +1,7 @@
 import pytest
 
 from py_jama_client.apis.baselines_api import BaselinesAPI
+from py_jama_client.exceptions import ResourceNotFoundException
 
 
 @pytest.fixture(scope="function")
@@ -9,24 +10,35 @@ def baselines_api(get_test_jama_client):
     return api_instance
 
 
-def test_get_baselines(baselines_api, real_project):
+def test_get_baselines(baselines_api, real_project, real_baseline):
     response = baselines_api.get_baselines(project_id=real_project)
-    assert response.data is not None
+    assert str(real_baseline) in {str(baseline["id"]) for baseline in response.data}
 
 
 def test_get_baseline(baselines_api, real_baseline):
     response = baselines_api.get_baseline(baseline_id=real_baseline)
-    assert response.data is not None
+    assert str(response.data["id"]) == str(real_baseline)
 
 
 def test_get_baseline_review_link(baselines_api, real_baseline):
-    response = baselines_api.get_baseline_review_link(baseline_id=real_baseline)
+    try:
+        response = baselines_api.get_baseline_review_link(
+            baseline_id=real_baseline
+        )
+    except ResourceNotFoundException as error:
+        if error.reason and "Review not found for this baseline" in error.reason:
+            pytest.skip("The selected baseline has no review.")
+        raise
     assert response.data is not None
 
 
-def test_get_baseline_versioned_items(baselines_api, real_baseline):
+def test_get_baseline_versioned_items(
+    baselines_api, real_baseline, real_baseline_versioned_item
+):
     response = baselines_api.get_baseline_versioned_items(baseline_id=real_baseline)
-    assert response.data is not None
+    assert str(real_baseline_versioned_item) in {
+        str(item["id"]) for item in response.data
+    }
 
 
 def test_get_baseline_versioned_item(
@@ -35,7 +47,7 @@ def test_get_baseline_versioned_item(
     response = baselines_api.get_baseline_versioned_item(
         baseline_id=real_baseline, item_id=real_baseline_versioned_item
     )
-    assert response.data is not None
+    assert str(response.data["id"]) == str(real_baseline_versioned_item)
 
 
 def test_get_baseline_versioned_item_relationships(
@@ -44,7 +56,9 @@ def test_get_baseline_versioned_item_relationships(
     response = baselines_api.get_baseline_versioned_item_relationships(
         baseline_id=real_baseline, item_id=real_baseline_versioned_item
     )
-    assert response.data is not None
+    if not response.data:
+        pytest.skip("The selected baseline item has no relationships.")
+    assert response.data
 
 
 def test_get_baselines_with_link(baselines_api, real_project):

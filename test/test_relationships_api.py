@@ -9,17 +9,20 @@ from py_jama_client.response import ClientResponse
 
 
 @pytest.fixture(scope="function")
-def relationships_api(get_test_jama_client):
+def relationships_api(get_test_jama_client, bounded_live_pages):
     api_instance = RelationshipsAPI(get_test_jama_client)
     return api_instance
 
 
-def test_get_relationships(relationships_api, real_project):
+def test_get_relationships(relationships_api, real_project, bounded_live_pages):
     response = relationships_api.get_relationships(project_id=real_project)
-    assert response.data != []
+    assert len(response.data) == 12
+    page_sizes = (bounded_live_pages["last_id"] or
+                  bounded_live_pages["offset"])
+    assert page_sizes == [5, 5, 2]
 
 
-def test_get_all_lastid(relationships_api, real_project):
+def test_get_all_lastid(relationships_api, real_project, bounded_live_pages):
     resource_path = "relationships"
     params = {"project": real_project,
               "maxResults": 1}
@@ -28,10 +31,12 @@ def test_get_all_lastid(relationships_api, real_project):
             "lastId parameter is now required" in response.text):
         response = relationships_api.get_all_lastid(
             resource_path=resource_path,
-            params={"project": real_project})
+            params={"project": real_project},
+            allowed_results_per_page=5)
     else:
         pytest.skip("lastId parameter is not required by test Jama instance.")
-    assert response.data != []
+    assert len(response.data) == 12
+    assert bounded_live_pages["last_id"] == [5, 5, 2]
 
 
 def test_get_all_lastid_ignores_zero_total_results_when_page_has_data():

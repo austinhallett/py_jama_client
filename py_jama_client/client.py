@@ -308,6 +308,7 @@ class JamaClient:
         if params is None:
             params = pagination
         else:
+            params = params.copy()
             params.update(pagination)
 
         try:

@@ -122,3 +122,19 @@ def test_get_all_merges_linked_data_across_pages():
             3: {"id": 3},
         }
     }
+
+
+def test_get_page_does_not_mutate_params():
+    client = JamaClient.__new__(JamaClient)
+    response = Mock(status_code=200)
+    response.json.return_value = {"meta": {}, "links": {}, "linked": {},
+                                  "data": []}
+    client.get = Mock(return_value=response)
+    params = {"project": 1}
+
+    client.get_page("items", 10, params=params, allowed_results_per_page=5)
+
+    assert params == {"project": 1}
+    assert client.get.call_args.kwargs["params"] == {
+        "project": 1, "startAt": 10, "maxResults": 5
+    }

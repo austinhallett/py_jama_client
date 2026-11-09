@@ -86,6 +86,23 @@ def test_get_all_lastid_merges_linked_data_across_pages():
     }
 
 
+def test_get_page_lastid_does_not_mutate_params():
+    api = RelationshipsAPI(Mock())
+    response = Mock(status_code=200)
+    response.json.return_value = {"meta": {}, "links": {}, "linked": {},
+                                  "data": []}
+    api.client.get = Mock(return_value=response)
+    params = {"project": 1}
+
+    api.get_page_lastid("relationships", 10, params=params,
+                        allowed_results_per_page=5)
+
+    assert params == {"project": 1}
+    assert api.client.get.call_args.kwargs["params"] == {
+        "project": 1, "lastId": 10, "maxResults": 5
+    }
+
+
 def test_get_all_lastid_honors_retry_after(monkeypatch):
     api = RelationshipsAPI(Mock())
     throttled = TooManyRequestsException("throttled")

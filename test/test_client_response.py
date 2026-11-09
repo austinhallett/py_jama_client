@@ -92,3 +92,33 @@ def test_get_all_stops_after_max_consecutive_throttles(monkeypatch):
 
     assert client.get_page.call_count == MAX_THROTTLE_WAITS + 1
     assert sleep.call_count == MAX_THROTTLE_WAITS
+
+
+def test_get_all_merges_linked_data_across_pages():
+    client = JamaClient.__new__(JamaClient)
+    client.get_page = Mock(side_effect=[
+        ClientResponse(
+            {"pageInfo": {"startIndex": 0, "totalResults": 2}},
+            {},
+            {"items": {1: {"id": 1, "name": "first"},
+                       2: {"id": 2}}},
+            [{"id": 1}],
+        ),
+        ClientResponse(
+            {"pageInfo": {"startIndex": 1, "totalResults": 2}},
+            {},
+            {"items": {1: {"id": 1, "name": "updated"},
+                       3: {"id": 3}}},
+            [{"id": 2}],
+        ),
+    ])
+
+    response = client.get_all("items", allowed_results_per_page=1)
+
+    assert response.linked == {
+        "items": {
+            1: {"id": 1, "name": "updated"},
+            2: {"id": 2},
+            3: {"id": 3},
+        }
+    }

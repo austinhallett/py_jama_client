@@ -273,13 +273,8 @@ class JamaClient:
             meta.update(page.meta)
             links.update(page.links)
 
-            for item_type_key in page.linked:
-                if item_type_key not in linked:
-                    linked[item_type_key] = {}
-                linked[item_type_key] = {
-                    **linked[item_type_key],
-                    **page.linked[item_type_key],
-                }
+            for item_type_key, page_items in page.linked.items():
+                linked.setdefault(item_type_key, {}).update(page_items)
             if not page.data:
                 break
             page_info = page.meta.get("pageInfo")

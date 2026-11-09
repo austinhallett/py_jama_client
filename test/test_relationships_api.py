@@ -64,6 +64,28 @@ def test_get_all_lastid_ignores_zero_total_results_when_page_has_data():
     ]
 
 
+def test_get_all_lastid_merges_linked_data_across_pages():
+    api = RelationshipsAPI(Mock())
+    api.get_page_lastid = Mock(side_effect=[
+        ClientResponse({}, {}, {"items": {1: {"id": 1, "name": "first"},
+                                          2: {"id": 2}}},
+                       [{"id": 1}, {"id": 2}]),
+        ClientResponse({}, {}, {"items": {1: {"id": 1, "name": "updated"},
+                                          3: {"id": 3}}},
+                       [{"id": 3}]),
+    ])
+
+    response = api.get_all_lastid("relationships", allowed_results_per_page=2)
+
+    assert response.linked == {
+        "items": {
+            1: {"id": 1, "name": "updated"},
+            2: {"id": 2},
+            3: {"id": 3},
+        }
+    }
+
+
 def test_get_all_lastid_honors_retry_after(monkeypatch):
     api = RelationshipsAPI(Mock())
     throttled = TooManyRequestsException("throttled")

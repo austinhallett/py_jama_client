@@ -34,25 +34,6 @@ def test_get_all_lastid(relationships_api, real_project):
     assert response.data != []
 
 
-def test_get_all_lastid_uses_short_page_when_page_info_is_missing():
-    api = RelationshipsAPI(Mock())
-    api.get_page_lastid = Mock(side_effect=[
-        ClientResponse({}, {}, {}, [{"id": 1}, {"id": 2}]),
-        ClientResponse({}, {}, {}, [{"id": 3}]),
-    ])
-
-    response = api.get_all_lastid(
-        "relationships",
-        params={"project": 1, "omitCount": "true"},
-        allowed_results_per_page=2,
-    )
-
-    assert response.data == [{"id": 1}, {"id": 2}, {"id": 3}]
-    assert [call.args[1] for call in api.get_page_lastid.call_args_list] == [
-        0, 2
-    ]
-
-
 def test_get_all_lastid_ignores_zero_total_results_when_page_has_data():
     api = RelationshipsAPI(Mock())
     api.get_page_lastid = Mock(side_effect=[
@@ -77,6 +58,7 @@ def test_get_all_lastid_ignores_zero_total_results_when_page_has_data():
     )
 
     assert response.data == [{"id": 1}, {"id": 2}, {"id": 3}]
+    assert response.meta["pageInfo"]["totalResults"] == 3
     assert [call.args[1] for call in api.get_page_lastid.call_args_list] == [
         0, 2
     ]

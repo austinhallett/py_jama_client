@@ -106,6 +106,10 @@ class RelationshipsAPI:
 
         last_id = 0
         throttle_waits = 0
+        omit_count = (
+            params is not None
+            and str(params.get("omitCount", "")).lower() == "true"
+        )
 
         data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated]
         while True:
@@ -142,6 +146,9 @@ class RelationshipsAPI:
             data.extend(page.data)
             if len(page.data) < allowed_results_per_page:
                 break
+
+        if omit_count:
+            meta.setdefault("pageInfo", {})["totalResults"] = len(data)
 
         return ClientResponse(meta, links, linked, data)
 

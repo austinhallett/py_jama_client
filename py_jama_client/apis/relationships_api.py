@@ -141,6 +141,14 @@ class RelationshipsAPI:
                 break
             last_id = page.data[-1]["id"]
             data.extend(page.data)
+            total_results = (page.meta.get("pageInfo") or {}).get("totalResults")
+            if (
+                not omit_count
+                and isinstance(total_results, int)
+                and total_results > 0
+                and len(data) >= total_results
+            ):
+                break
             if len(page.data) < allowed_results_per_page:
                 break
 

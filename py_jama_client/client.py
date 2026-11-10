@@ -13,6 +13,7 @@ import ssl
 import time
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
+from threading import Lock
 
 import httpx
 import urllib3
@@ -106,6 +107,7 @@ class JamaClient:
         if self.__oauth:
             self.__token_host = host + "/rest/oauth/token"
             self.__token = None
+            self.__oauth_token_lock = Lock()
             self.__get_fresh_token()
 
     def get_available_endpoints(self):
@@ -200,10 +202,11 @@ class JamaClient:
         )
 
     def __check_oauth_token(self):
-        if self.__token is None:
-            self._get_fresh_token()
+        with self.__oauth_token_lock:
+            if self.__token is None:
+                self.__get_fresh_token()
+                return
 
-        else:
             time_elapsed = time.time() - self.__token_acquired_at
             time_remaining = self.__token_expires_in - time_elapsed
             if time_remaining < 60:

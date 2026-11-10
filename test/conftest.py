@@ -55,7 +55,12 @@ def get_test_jama_client():
 def bounded_live_pages(monkeypatch, get_test_jama_client):
     page_size = 5
     result_limit = 12
-    page_sizes = {"offset": [], "last_id": []}
+    page_sizes = {
+        "offset": [],
+        "last_id": [],
+        "offset_total": None,
+        "last_id_total": None,
+    }
     offset_remaining = [result_limit]
     last_id_remaining = {}
     client = get_test_jama_client
@@ -120,6 +125,10 @@ def bounded_live_pages(monkeypatch, get_test_jama_client):
             allowed_results_per_page=page_size,
             **kwargs,
         )
+        if start_at == 0:
+            page_sizes["offset_total"] = (
+                (page.meta.get("pageInfo") or {}).get("totalResults")
+            )
         offset_remaining[0] = limit_page(page, offset_remaining[0])
         page_sizes["offset"].append(len(page.data))
         if len(page.data) < page_size:
@@ -158,6 +167,10 @@ def bounded_live_pages(monkeypatch, get_test_jama_client):
             allowed_results_per_page=page_size,
             **kwargs,
         )
+        if last_id == 0:
+            page_sizes["last_id_total"] = (
+                (page.meta.get("pageInfo") or {}).get("totalResults")
+            )
         last_id_remaining[api_key] = limit_page(page, remaining)
         page_sizes["last_id"].append(len(page.data))
         return page
@@ -318,8 +331,8 @@ def real_baseline(get_test_jama_client, real_project):
 
 @pytest.fixture(scope="session")
 def real_baseline_versioned_item(get_test_jama_client, real_baseline):
-    if "BASELINE_ID" in os.environ:
-        return os.environ.get("BASELINE_ID")
+    if "BASELINE_VERSIONED_ITEM_ID" in os.environ:
+        return os.environ.get("BASELINE_VERSIONED_ITEM_ID")
     baselines_api = BaselinesAPI(get_test_jama_client)
     baseline_versioned_items = baselines_api.get_baseline_versioned_items(
         baseline_id=real_baseline

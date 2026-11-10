@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta, timezone
+from email.utils import format_datetime
 from unittest.mock import Mock
 
 import pytest
@@ -111,7 +113,10 @@ def test_get_page_lastid_does_not_mutate_params():
 def test_get_all_lastid_honors_retry_after(monkeypatch):
     api = RelationshipsAPI(Mock())
     throttled = TooManyRequestsException("throttled")
-    throttled.headers = {"Retry-After": "17"}
+    retry_at = datetime.now(timezone.utc) + timedelta(minutes=1)
+    throttled.headers = {
+        "Retry-After": format_datetime(retry_at, usegmt=True)
+    }
     api.get_page_lastid = Mock(side_effect=[
         ClientResponse(
             {"pageInfo": {"startIndex": 0, "totalResults": 3}},
@@ -138,7 +143,8 @@ def test_get_all_lastid_honors_retry_after(monkeypatch):
     assert [call.args[1] for call in api.get_page_lastid.call_args_list] == [
         0, 2, 2
     ]
-    sleep.assert_called_once_with(17.0)
+    sleep.assert_called_once()
+    assert 0 < sleep.call_args.args[0] <= 60
 
 
 def test_get_all_lastid_stops_after_max_consecutive_throttles(monkeypatch):

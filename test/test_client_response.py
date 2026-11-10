@@ -1,8 +1,10 @@
+from datetime import datetime, timedelta, timezone
+from email.utils import format_datetime
 from unittest.mock import Mock
 
 import pytest
 
-from py_jama_client.client import JamaClient
+from py_jama_client.client import JamaClient, _retry_after_seconds
 from py_jama_client.constants import MAX_THROTTLE_WAITS
 from py_jama_client.exceptions import TooManyRequestsException
 from py_jama_client.response import ClientResponse
@@ -32,6 +34,18 @@ def test_client_combination(get_example_client_response):
     assert combined_response.data[2]["id"] == 1
 
 
+def test_retry_after_seconds_parses_delta_and_http_date_values():
+    now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    future = format_datetime(now + timedelta(seconds=27), usegmt=True)
+    past = format_datetime(now - timedelta(seconds=27), usegmt=True)
+
+    assert _retry_after_seconds("17", now) == 17.0
+    assert _retry_after_seconds(future, now) == 27.0
+    assert _retry_after_seconds(past, now) == 0.0
+    assert _retry_after_seconds("invalid", now) == 30.0
+    assert _retry_after_seconds(None, now) == 30.0
+
+
 def test_too_many_requests_exception_includes_response_headers():
     response = Mock(
         status_code=429,
@@ -48,7 +62,10 @@ def test_too_many_requests_exception_includes_response_headers():
 def test_get_all_honors_retry_after(monkeypatch):
     client = JamaClient.__new__(JamaClient)
     throttled = TooManyRequestsException("throttled")
-    throttled.headers = {"Retry-After": "17"}
+    retry_at = datetime.now(timezone.utc) + timedelta(minutes=1)
+    throttled.headers = {
+        "Retry-After": format_datetime(retry_at, usegmt=True)
+    }
     client.get_page = Mock(side_effect=[
         ClientResponse(
             {"pageInfo": {"startIndex": 0, "totalResults": 3}},
@@ -75,7 +92,8 @@ def test_get_all_honors_retry_after(monkeypatch):
     assert [call.args[1] for call in client.get_page.call_args_list] == [
         0, 2, 2
     ]
-    sleep.assert_called_once_with(17.0)
+    sleep.assert_called_once()
+    assert 0 < sleep.call_args.args[0] <= 60
 
 
 def test_get_all_stops_after_max_consecutive_throttles(monkeypatch):

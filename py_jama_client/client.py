@@ -11,6 +11,8 @@ import logging
 import math
 import ssl
 import time
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
 
 import httpx
 import urllib3
@@ -39,6 +41,28 @@ __DEBUG__ = False
 urllib3.disable_warnings()
 
 py_jama_client_logger = logging.getLogger("py_jama_client")
+
+
+def _retry_after_seconds(value: str | None, now: datetime | None = None) -> float:
+    if not value:
+        return 30.0
+
+    try:
+        delay = float(value)
+    except ValueError:
+        try:
+            retry_at = parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            return 30.0
+
+        current_time = now or datetime.now(timezone.utc)
+        if retry_at.tzinfo is None:
+            retry_at = retry_at.replace(tzinfo=timezone.utc)
+        if current_time.tzinfo is None:
+            current_time = current_time.replace(tzinfo=timezone.utc)
+        return max(0.0, (retry_at - current_time).total_seconds())
+
+    return max(0.0, delay) if math.isfinite(delay) else 30.0
 
 
 class JamaClient:
@@ -265,8 +289,10 @@ class JamaClient:
                 throttle_waits += 1
                 if throttle_waits > MAX_THROTTLE_WAITS:
                     raise
-                retry_after = (err.headers or {}).get("Retry-After") or 30
-                time.sleep(float(retry_after))
+                retry_after = _retry_after_seconds(
+                    (err.headers or {}).get("Retry-After")
+                )
+                time.sleep(retry_after)
                 continue
             throttle_waits = 0
 

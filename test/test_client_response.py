@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from unittest.mock import Mock
 
@@ -35,7 +35,7 @@ def test_client_combination(get_example_client_response):
 
 
 def test_retry_after_seconds_parses_delta_and_http_date_values():
-    now = datetime(2026, 1, 1, tzinfo=timezone.utc)
+    now = datetime(2026, 1, 1, tzinfo=UTC)
     future = format_datetime(now + timedelta(seconds=27), usegmt=True)
     past = format_datetime(now - timedelta(seconds=27), usegmt=True)
 
@@ -62,7 +62,7 @@ def test_too_many_requests_exception_includes_response_headers():
 def test_get_all_honors_retry_after(monkeypatch):
     client = JamaClient.__new__(JamaClient)
     throttled = TooManyRequestsException("throttled")
-    retry_at = datetime.now(timezone.utc) + timedelta(minutes=1)
+    retry_at = datetime.now(UTC) + timedelta(minutes=1)
     throttled.headers = {
         "Retry-After": format_datetime(retry_at, usegmt=True)
     }

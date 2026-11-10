@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from unittest.mock import Mock
 
@@ -123,7 +123,7 @@ def test_get_page_lastid_does_not_mutate_params():
 def test_get_all_lastid_honors_retry_after(monkeypatch):
     api = RelationshipsAPI(Mock())
     throttled = TooManyRequestsException("throttled")
-    retry_at = datetime.now(timezone.utc) + timedelta(minutes=1)
+    retry_at = datetime.now(UTC) + timedelta(minutes=1)
     throttled.headers = {
         "Retry-After": format_datetime(retry_at, usegmt=True)
     }

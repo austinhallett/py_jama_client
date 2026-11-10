@@ -11,7 +11,7 @@ import logging
 import math
 import ssl
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
 
 import httpx
@@ -55,11 +55,11 @@ def _retry_after_seconds(value: str | None, now: datetime | None = None) -> floa
         except (TypeError, ValueError, OverflowError):
             return 30.0
 
-        current_time = now or datetime.now(timezone.utc)
+        current_time = now or datetime.now(UTC)
         if retry_at.tzinfo is None:
-            retry_at = retry_at.replace(tzinfo=timezone.utc)
+            retry_at = retry_at.replace(tzinfo=UTC)
         if current_time.tzinfo is None:
-            current_time = current_time.replace(tzinfo=timezone.utc)
+            current_time = current_time.replace(tzinfo=UTC)
         return max(0.0, (retry_at - current_time).total_seconds())
 
     return max(0.0, delay) if math.isfinite(delay) else 30.0

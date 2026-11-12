@@ -27,6 +27,7 @@ be queried and the first one will be used.
 - `ABSTRACT_ITEM_ID`
 - `ABSTRACT_ITEM_VERSION`
 - `BASELINE_ID`
+- `BASELINE_VERSIONED_ITEM_ID`
 - `ITEM_TYPE_ID`
 - `PROJECT_ID`
 - `RELATIONSHIP_ID`

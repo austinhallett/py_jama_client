@@ -16,10 +16,11 @@ class UnauthorizedTokenException(CoreException):
 class APIException(Exception):
     """This is the base class for all exceptions raised by the JamaClient"""
 
-    def __init__(self, message, status_code=None, reason=None):
+    def __init__(self, message, status_code=None, reason=None, headers=None):
         super().__init__(message)
         self.status_code = status_code
         self.reason = reason
+        self.headers = headers
 
 
 class UnauthorizedException(APIException):

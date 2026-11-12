@@ -51,6 +51,137 @@ def get_test_jama_client():
     yield client
 
 
+@pytest.fixture(scope="function")
+def bounded_live_pages(monkeypatch, get_test_jama_client):
+    page_size = 5
+    result_limit = 12
+    page_sizes = {
+        "offset": [],
+        "last_id": [],
+        "offset_total": None,
+        "last_id_total": None,
+    }
+    offset_remaining = [result_limit]
+    last_id_remaining = {}
+    client = get_test_jama_client
+    get_all = client.get_all
+    get_page = client.get_page
+    get_all_lastid = RelationshipsAPI.get_all_lastid
+    get_page_lastid = RelationshipsAPI.get_page_lastid
+
+    def bounded_get_all(
+        resource,
+        params=None,
+        allowed_results_per_page=50,
+        **kwargs,
+    ):
+        return get_all(
+            resource,
+            params=params,
+            allowed_results_per_page=page_size,
+            **kwargs,
+        )
+
+    def bounded_get_all_lastid(
+        api,
+        resource_path,
+        params=None,
+        allowed_results_per_page=50,
+        **kwargs,
+    ):
+        if api.client is not client:
+            return get_all_lastid(
+                api,
+                resource_path,
+                params=params,
+                allowed_results_per_page=allowed_results_per_page,
+                **kwargs,
+            )
+        return get_all_lastid(
+            api,
+            resource_path,
+            params=params,
+            allowed_results_per_page=page_size,
+            **kwargs,
+        )
+
+    def limit_page(page, remaining):
+        page.data = page.data[:remaining]
+        return remaining - len(page.data)
+
+    def get_limited_page(
+        resource,
+        start_at,
+        params=None,
+        allowed_results_per_page=50,
+        **kwargs,
+    ):
+        if start_at == 0:
+            offset_remaining[0] = result_limit
+        page = get_page(
+            resource,
+            start_at,
+            params=params,
+            allowed_results_per_page=page_size,
+            **kwargs,
+        )
+        if start_at == 0:
+            page_sizes["offset_total"] = (
+                (page.meta.get("pageInfo") or {}).get("totalResults")
+            )
+        offset_remaining[0] = limit_page(page, offset_remaining[0])
+        page_sizes["offset"].append(len(page.data))
+        if len(page.data) < page_size:
+            page_info = page.meta.setdefault("pageInfo", {})
+            page_info["startIndex"] = start_at
+            page_info["totalResults"] = start_at + len(page.data)
+        return page
+
+    def get_limited_page_lastid(
+        api,
+        resource_path,
+        last_id,
+        params=None,
+        allowed_results_per_page=50,
+        **kwargs,
+    ):
+        if api.client is not client:
+            return get_page_lastid(
+                api,
+                resource_path,
+                last_id,
+                params=params,
+                allowed_results_per_page=allowed_results_per_page,
+                **kwargs,
+            )
+
+        api_key = id(api)
+        if last_id == 0:
+            last_id_remaining[api_key] = result_limit
+        remaining = last_id_remaining.get(api_key, result_limit)
+        page = get_page_lastid(
+            api,
+            resource_path,
+            last_id,
+            params=params,
+            allowed_results_per_page=page_size,
+            **kwargs,
+        )
+        if last_id == 0:
+            page_sizes["last_id_total"] = (
+                (page.meta.get("pageInfo") or {}).get("totalResults")
+            )
+        last_id_remaining[api_key] = limit_page(page, remaining)
+        page_sizes["last_id"].append(len(page.data))
+        return page
+
+    monkeypatch.setattr(client, "get_all", bounded_get_all)
+    monkeypatch.setattr(client, "get_page", get_limited_page)
+    monkeypatch.setattr(RelationshipsAPI, "get_all_lastid", bounded_get_all_lastid)
+    monkeypatch.setattr(RelationshipsAPI, "get_page_lastid", get_limited_page_lastid)
+    return page_sizes
+
+
 @pytest.fixture(scope="session")
 def get_example_client_response():
     return ClientResponse(
@@ -200,8 +331,8 @@ def real_baseline(get_test_jama_client, real_project):
 
 @pytest.fixture(scope="session")
 def real_baseline_versioned_item(get_test_jama_client, real_baseline):
-    if "BASELINE_ID" in os.environ:
-        return os.environ.get("BASELINE_ID")
+    if "BASELINE_VERSIONED_ITEM_ID" in os.environ:
+        return os.environ.get("BASELINE_VERSIONED_ITEM_ID")
     baselines_api = BaselinesAPI(get_test_jama_client)
     baseline_versioned_items = baselines_api.get_baseline_versioned_items(
         baseline_id=real_baseline
@@ -254,7 +385,12 @@ def real_relationship(get_test_jama_client, real_project):
     if "RELATIONSHIP_ID" in os.environ:
         return os.environ.get("RELATIONSHIP_ID")
     relationships_api = RelationshipsAPI(get_test_jama_client)
-    relationships = relationships_api.get_relationships(project_id=real_project).data
+    relationships = relationships_api.get_page_lastid(
+        "relationships",
+        last_id=0,
+        params={"project": real_project},
+        allowed_results_per_page=5,
+    ).data
     if relationships == []:
         raise ValueError(
             """

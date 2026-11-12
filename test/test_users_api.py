@@ -1,6 +1,7 @@
 import pytest
 
 from py_jama_client.apis.users_api import UsersAPI
+from py_jama_client.exceptions import UnauthorizedException
 
 
 @pytest.fixture(scope="function")
@@ -16,17 +17,24 @@ def test_get_current_user(users_api):
 
 def test_get_current_user_favorite_filters(users_api):
     filters = users_api.get_current_user_favorite_filters()
-    assert filters.data is not None
+    if not filters.data:
+        pytest.skip("The current user has no favorite filters.")
+    assert filters.data
 
 
-def test_get_users(users_api):
-    response = users_api.get_users()
-    assert response.data is not None
+def test_get_users(users_api, current_user):
+    try:
+        response = users_api.get_users()
+    except UnauthorizedException as error:
+        if error.reason and "permission" in error.reason.lower():
+            pytest.skip("Current credentials cannot list users.")
+        raise
+    assert current_user in response.data
 
 
-def test_get_users_by_project(users_api, real_project):
+def test_get_users_by_project(users_api, real_project, current_user):
     response = users_api.get_users(params={"project": real_project})
-    assert response.data is not None
+    assert current_user in response.data
 
 
 def test_get_users_by_username(users_api, real_project, current_user):

@@ -11,10 +11,18 @@ Example usage:
 
 import json
 import logging
+import time
 
-from py_jama_client.client import JamaClient
-from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
-from py_jama_client.exceptions import APIException, CoreException
+from py_jama_client.client import JamaClient, _retry_after_seconds
+from py_jama_client.constants import (
+    DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+    MAX_THROTTLE_WAITS,
+)
+from py_jama_client.exceptions import (
+    APIException,
+    CoreException,
+    TooManyRequestsException,
+)
 from py_jama_client.response import ClientResponse
 
 py_jama_client_logger = logging.getLogger("py_jama_client")
@@ -97,39 +105,55 @@ class RelationshipsAPI:
                 "Allowed results per page must be between 1 and 50")
 
         last_id = 0
-        total_results = float("inf")
+        throttle_waits = 0
+        omit_count = (
+            params is not None
+            and str(params.get("omitCount", "")).lower() == "true"
+        )
 
         data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated]
-        while len(data) < total_results:
-            page = self.get_page_lastid(
-                resource_path,
-                last_id,
-                params=params,
-                allowed_results_per_page=allowed_results_per_page,
-                **kwargs,
-            )
+        while True:
+            try:
+                page = self.get_page_lastid(
+                    resource_path,
+                    last_id,
+                    params=params,
+                    allowed_results_per_page=allowed_results_per_page,
+                    **kwargs,
+                )
+            except TooManyRequestsException as err:
+                throttle_waits += 1
+                if throttle_waits > MAX_THROTTLE_WAITS:
+                    raise
+                retry_after = _retry_after_seconds(
+                    (err.headers or {}).get("Retry-After")
+                )
+                time.sleep(retry_after)
+                continue
+            throttle_waits = 0
 
             meta.update(page.meta)
             links.update(page.links)
 
-            for item_type_key in page.linked:
-                if item_type_key not in linked:
-                    linked[item_type_key] = {}
-                linked[item_type_key] = {
-                    **linked[item_type_key],
-                    **page.linked[item_type_key],
-                }
-            if page.data:
-                last_id = page.data[-1]["id"]
-            else:
+            for item_type_key, page_items in page.linked.items():
+                linked.setdefault(item_type_key, {}).update(page_items)
+            if not page.data:
                 break
-            page_info = page.meta.get("pageInfo")
-            if page_info:
-                total_results = page_info.get("totalResults", total_results)
-            else:
-                total_results = 0
-                break
+            last_id = page.data[-1]["id"]
             data.extend(page.data)
+            total_results = (page.meta.get("pageInfo") or {}).get("totalResults")
+            if (
+                not omit_count
+                and isinstance(total_results, int)
+                and total_results > 0
+                and len(data) >= total_results
+            ):
+                break
+            if len(page.data) < allowed_results_per_page:
+                break
+
+        if omit_count:
+            meta.setdefault("pageInfo", {})["totalResults"] = len(data)
 
         return ClientResponse(meta, links, linked, data)
 
@@ -153,6 +177,7 @@ class RelationshipsAPI:
         if params is None:
             params = pagination
         else:
+            params = params.copy()
             params.update(pagination)
 
         try:

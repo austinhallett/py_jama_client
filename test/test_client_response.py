@@ -1,11 +1,17 @@
+import logging
 from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from unittest.mock import Mock
 
 import pytest
 
-from py_jama_client.client import JamaClient
-from py_jama_client.constants import DEFAULT_RETRY_AFTER_SECONDS, MAX_THROTTLE_WAITS
+from py_jama_client.client import JamaClient, bound_retry_after
+from py_jama_client.constants import (
+    DEFAULT_RETRY_AFTER_SECONDS,
+    MAX_RETRY_AFTER_SECONDS,
+    MAX_THROTTLE_WAITS,
+    MIN_RETRY_AFTER_SECONDS,
+)
 from py_jama_client.exceptions import TooManyRequestsException, _parse_retry_after
 from py_jama_client.response import ClientResponse
 
@@ -98,6 +104,54 @@ def test_too_many_requests_exception_retry_after_is_fixed_when_raised(monkeypatc
     assert 50 < retry_after <= 60
 
 
+def test_too_many_requests_exception_measures_retry_after_from_server_date(
+    monkeypatch,
+):
+    server_now = datetime(2026, 1, 1, tzinfo=UTC)
+    headers = {
+        "Date": format_datetime(server_now, usegmt=True),
+        "Retry-After": format_datetime(
+            server_now + timedelta(seconds=20), usegmt=True
+        ),
+    }
+
+    class SkewedDatetime:
+        @staticmethod
+        def now(tz=None):
+            return server_now + timedelta(minutes=5)
+
+    monkeypatch.setattr("py_jama_client.exceptions.datetime", SkewedDatetime)
+
+    throttled = TooManyRequestsException("throttled", headers=headers)
+    assert throttled.retry_after == 20.0
+
+
+def test_too_many_requests_exception_uses_local_clock_with_unusable_date():
+    retry_at = datetime.now(UTC) + timedelta(minutes=1)
+    throttled = TooManyRequestsException(
+        "throttled",
+        headers={
+            "Date": "not a date",
+            "Retry-After": format_datetime(retry_at, usegmt=True),
+        },
+    )
+
+    assert throttled.retry_after is not None
+    assert 50 < throttled.retry_after <= 60
+
+
+def test_bound_retry_after_clamps_to_min_and_max(caplog):
+    assert bound_retry_after(0.0) == MIN_RETRY_AFTER_SECONDS
+    assert bound_retry_after(42.0) == 42.0
+    with caplog.at_level(logging.WARNING, logger="py_jama_client"):
+        assert bound_retry_after(MAX_RETRY_AFTER_SECONDS + 1) == MAX_RETRY_AFTER_SECONDS
+    assert "Retry-After" in caplog.text
+
+
+def test_bound_retry_after_defaults_without_retry_after():
+    assert bound_retry_after(None) == DEFAULT_RETRY_AFTER_SECONDS
+
+
 def test_too_many_requests_exception_retry_after_is_none_without_usable_header():
     assert TooManyRequestsException("throttled").retry_after is None
     assert TooManyRequestsException("throttled", headers={}).retry_after is None
@@ -109,7 +163,7 @@ def test_too_many_requests_exception_retry_after_is_none_without_usable_header()
     ).retry_after is None
 
 
-def test_get_all_honors_retry_after(monkeypatch):
+def test_get_all_honors_retry_after(monkeypatch, caplog):
     client = JamaClient.__new__(JamaClient)
     # Kept above the default so a fallback to it cannot pass the test
     expected_wait = DEFAULT_RETRY_AFTER_SECONDS + 60
@@ -135,6 +189,7 @@ def test_get_all_honors_retry_after(monkeypatch):
     sleep = Mock()
     monkeypatch.setattr("time.sleep", sleep)
 
+    caplog.set_level(logging.INFO, logger="py_jama_client")
     response = client.get_all(
         "items", params={}, allowed_results_per_page=2
     )
@@ -145,6 +200,7 @@ def test_get_all_honors_retry_after(monkeypatch):
     ]
     sleep.assert_called_once()
     assert expected_wait - 10 < sleep.call_args.args[0] <= expected_wait
+    assert "Throttled" in caplog.text
 
 
 def test_get_all_stops_after_max_consecutive_throttles(monkeypatch):

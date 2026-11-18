@@ -13,7 +13,7 @@ import json
 import logging
 import time
 
-from py_jama_client.client import JamaClient, _throttle_wait
+from py_jama_client.client import JamaClient, bound_retry_after
 from py_jama_client.constants import (
     DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     MAX_THROTTLE_WAITS,
@@ -125,7 +125,9 @@ class RelationshipsAPI:
                 throttle_waits += 1
                 if throttle_waits > MAX_THROTTLE_WAITS:
                     raise
-                time.sleep(_throttle_wait(err))
+                wait = bound_retry_after(err.retry_after)
+                py_jama_client_logger.info(f"Throttled (429); waiting {wait:.1f}s")
+                time.sleep(wait)
                 continue
             throttle_waits = 0
 

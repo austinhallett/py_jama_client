@@ -2,6 +2,17 @@ import math
 from datetime import UTC, datetime
 from email.utils import parsedate_to_datetime
 
+import httpx
+
+
+def _parse_http_date(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return parsedate_to_datetime(value)
+    except (TypeError, ValueError, OverflowError):
+        return None
+
 
 def _parse_retry_after(
     value: str | None, now: datetime | None = None
@@ -12,9 +23,8 @@ def _parse_retry_after(
     try:
         delay = float(value)
     except ValueError:
-        try:
-            retry_at = parsedate_to_datetime(value)
-        except (TypeError, ValueError, OverflowError):
+        retry_at = _parse_http_date(value)
+        if retry_at is None:
             return None
 
         current_time = now or datetime.now(UTC)
@@ -63,20 +73,19 @@ class TooManyRequestsException(APIException):
     requests response.
 
     Attributes:
-        retry_after: Seconds the server asked the client to wait, measured
-            from when the exception was created, or None if the response
-            carried no usable Retry-After header.
+        retry_after: Retry-After in seconds as of creation (dates measured
+            from the Date header), or None if absent or unparseable.
     """
 
     def __init__(self, message, status_code=None, reason=None, headers=None):
         super().__init__(
             message, status_code=status_code, reason=reason, headers=headers
         )
-        value = next(
-            (v for k, v in (headers or {}).items() if k.lower() == "retry-after"),
-            None,
+        lookup = httpx.Headers(headers or {})
+        self.retry_after: float | None = _parse_retry_after(
+            lookup.get("retry-after"),
+            now=_parse_http_date(lookup.get("date")),
         )
-        self.retry_after: float | None = _parse_retry_after(value)
 
 
 

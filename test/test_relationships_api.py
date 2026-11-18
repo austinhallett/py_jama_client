@@ -1,3 +1,4 @@
+import logging
 from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from unittest.mock import Mock
@@ -120,7 +121,7 @@ def test_get_page_lastid_does_not_mutate_params():
     }
 
 
-def test_get_all_lastid_honors_retry_after(monkeypatch):
+def test_get_all_lastid_honors_retry_after(monkeypatch, caplog):
     api = RelationshipsAPI(Mock())
     # Kept above the default so a fallback to it cannot pass the test
     expected_wait = DEFAULT_RETRY_AFTER_SECONDS + 60
@@ -146,6 +147,7 @@ def test_get_all_lastid_honors_retry_after(monkeypatch):
     sleep = Mock()
     monkeypatch.setattr("time.sleep", sleep)
 
+    caplog.set_level(logging.INFO, logger="py_jama_client")
     response = api.get_all_lastid(
         "relationships", params={"project": 1}, allowed_results_per_page=2
     )
@@ -156,6 +158,7 @@ def test_get_all_lastid_honors_retry_after(monkeypatch):
     ]
     sleep.assert_called_once()
     assert expected_wait - 10 < sleep.call_args.args[0] <= expected_wait
+    assert "Throttled" in caplog.text
 
 
 def test_get_all_lastid_stops_after_max_consecutive_throttles(monkeypatch):

@@ -4,9 +4,9 @@ from unittest.mock import Mock
 
 import pytest
 
-from py_jama_client.client import JamaClient, _retry_after_seconds
-from py_jama_client.constants import MAX_THROTTLE_WAITS
-from py_jama_client.exceptions import TooManyRequestsException
+from py_jama_client.client import JamaClient
+from py_jama_client.constants import DEFAULT_RETRY_AFTER_SECONDS, MAX_THROTTLE_WAITS
+from py_jama_client.exceptions import TooManyRequestsException, _parse_retry_after
 from py_jama_client.response import ClientResponse
 
 
@@ -34,16 +34,16 @@ def test_client_combination(get_example_client_response):
     assert combined_response.data[2]["id"] == 1
 
 
-def test_retry_after_seconds_parses_delta_and_http_date_values():
+def test_parse_retry_after_parses_delta_and_http_date_values():
     now = datetime(2026, 1, 1, tzinfo=UTC)
     future = format_datetime(now + timedelta(seconds=27), usegmt=True)
     past = format_datetime(now - timedelta(seconds=27), usegmt=True)
 
-    assert _retry_after_seconds("17", now) == 17.0
-    assert _retry_after_seconds(future, now) == 27.0
-    assert _retry_after_seconds(past, now) == 0.0
-    assert _retry_after_seconds("invalid", now) == 30.0
-    assert _retry_after_seconds(None, now) == 30.0
+    assert _parse_retry_after("17", now) == 17.0
+    assert _parse_retry_after(future, now) == 27.0
+    assert _parse_retry_after(past, now) == 0.0
+    assert _parse_retry_after("invalid", now) is None
+    assert _parse_retry_after(None, now) is None
 
 
 def test_too_many_requests_exception_includes_response_headers():
@@ -57,15 +57,66 @@ def test_too_many_requests_exception_includes_response_headers():
         JamaClient.handle_response_status(response)
 
     assert exc_info.value.headers["Retry-After"] == "17"
+    assert exc_info.value.retry_after == 17.0
+
+
+def test_too_many_requests_exception_retry_after_parses_header():
+    def throttled(headers):
+        return TooManyRequestsException("throttled", headers=headers)
+
+    retry_at = datetime.now(UTC) + timedelta(minutes=1)
+    retried_at = datetime.now(UTC) - timedelta(minutes=1)
+
+    assert throttled({"Retry-After": "17"}).retry_after == 17.0
+    assert throttled({"retry-after": "17"}).retry_after == 17.0
+    future_wait = throttled(
+        {"Retry-After": format_datetime(retry_at, usegmt=True)}
+    ).retry_after
+    assert future_wait is not None
+    assert 50 < future_wait <= 60
+    assert throttled(
+        {"Retry-After": format_datetime(retried_at, usegmt=True)}
+    ).retry_after == 0.0
+
+
+def test_too_many_requests_exception_retry_after_is_fixed_when_raised(monkeypatch):
+    retry_at = datetime.now(UTC) + timedelta(minutes=1)
+    throttled = TooManyRequestsException(
+        "throttled", headers={"Retry-After": format_datetime(retry_at, usegmt=True)}
+    )
+    later = datetime.now(UTC) + timedelta(seconds=30)
+
+    class LaterDatetime:
+        @staticmethod
+        def now(tz=None):
+            return later
+
+    monkeypatch.setattr("py_jama_client.exceptions.datetime", LaterDatetime)
+
+    retry_after = throttled.retry_after
+    assert retry_after is not None
+    assert 50 < retry_after <= 60
+
+
+def test_too_many_requests_exception_retry_after_is_none_without_usable_header():
+    assert TooManyRequestsException("throttled").retry_after is None
+    assert TooManyRequestsException("throttled", headers={}).retry_after is None
+    assert TooManyRequestsException(
+        "throttled", headers={"Retry-After": "invalid"}
+    ).retry_after is None
+    assert TooManyRequestsException(
+        "throttled", headers={"Retry-After": "nan"}
+    ).retry_after is None
 
 
 def test_get_all_honors_retry_after(monkeypatch):
     client = JamaClient.__new__(JamaClient)
-    throttled = TooManyRequestsException("throttled")
-    retry_at = datetime.now(UTC) + timedelta(minutes=1)
-    throttled.headers = {
-        "Retry-After": format_datetime(retry_at, usegmt=True)
-    }
+    # Kept above the default so a fallback to it cannot pass the test
+    expected_wait = DEFAULT_RETRY_AFTER_SECONDS + 60
+    retry_at = datetime.now(UTC) + timedelta(seconds=expected_wait)
+    throttled = TooManyRequestsException(
+        "throttled", headers={"Retry-After": format_datetime(retry_at, usegmt=True)}
+    )
     client.get_page = Mock(side_effect=[
         ClientResponse(
             {"pageInfo": {"startIndex": 0, "totalResults": 3}},
@@ -93,7 +144,7 @@ def test_get_all_honors_retry_after(monkeypatch):
         0, 2, 2
     ]
     sleep.assert_called_once()
-    assert 0 < sleep.call_args.args[0] <= 60
+    assert expected_wait - 10 < sleep.call_args.args[0] <= expected_wait
 
 
 def test_get_all_stops_after_max_consecutive_throttles(monkeypatch):

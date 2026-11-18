@@ -11,8 +11,6 @@ import logging
 import math
 import ssl
 import time
-from datetime import UTC, datetime
-from email.utils import parsedate_to_datetime
 from threading import Lock
 
 import httpx
@@ -21,6 +19,7 @@ from httpx import Response
 
 from py_jama_client.constants import (
     DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+    DEFAULT_RETRY_AFTER_SECONDS,
     MAX_THROTTLE_WAITS,
 )
 from py_jama_client.exceptions import (
@@ -44,26 +43,12 @@ urllib3.disable_warnings()
 py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
-def _retry_after_seconds(value: str | None, now: datetime | None = None) -> float:
-    if not value:
-        return 30.0
-
-    try:
-        delay = float(value)
-    except ValueError:
-        try:
-            retry_at = parsedate_to_datetime(value)
-        except (TypeError, ValueError, OverflowError):
-            return 30.0
-
-        current_time = now or datetime.now(UTC)
-        if retry_at.tzinfo is None:
-            retry_at = retry_at.replace(tzinfo=UTC)
-        if current_time.tzinfo is None:
-            current_time = current_time.replace(tzinfo=UTC)
-        return max(0.0, (retry_at - current_time).total_seconds())
-
-    return max(0.0, delay) if math.isfinite(delay) else 30.0
+def _throttle_wait(err: TooManyRequestsException) -> float:
+    """Seconds to sleep after a 429: the server's Retry-After, or the
+    default when the response did not say."""
+    if err.retry_after is None:
+        return DEFAULT_RETRY_AFTER_SECONDS
+    return err.retry_after
 
 
 class JamaClient:
@@ -301,10 +286,7 @@ class JamaClient:
                 throttle_waits += 1
                 if throttle_waits > MAX_THROTTLE_WAITS:
                     raise
-                retry_after = _retry_after_seconds(
-                    (err.headers or {}).get("Retry-After")
-                )
-                time.sleep(retry_after)
+                time.sleep(_throttle_wait(err))
                 continue
             throttle_waits = 0
 

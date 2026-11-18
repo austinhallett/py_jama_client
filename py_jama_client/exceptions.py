@@ -1,3 +1,32 @@
+import math
+from datetime import UTC, datetime
+from email.utils import parsedate_to_datetime
+
+
+def _parse_retry_after(
+    value: str | None, now: datetime | None = None
+) -> float | None:
+    if not value:
+        return None
+
+    try:
+        delay = float(value)
+    except ValueError:
+        try:
+            retry_at = parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            return None
+
+        current_time = now or datetime.now(UTC)
+        if retry_at.tzinfo is None:
+            retry_at = retry_at.replace(tzinfo=UTC)
+        if current_time.tzinfo is None:
+            current_time = current_time.replace(tzinfo=UTC)
+        return max(0.0, (retry_at - current_time).total_seconds())
+
+    return max(0.0, delay) if math.isfinite(delay) else None
+
+
 class CoreException(Exception):
     """This is the base class for all exceptions raised by the Core"""
 
@@ -31,7 +60,23 @@ class UnauthorizedException(APIException):
 
 class TooManyRequestsException(APIException):
     """This exception is thrown whenever the api returns a 429 too many
-    requests response."""
+    requests response.
+
+    Attributes:
+        retry_after: Seconds the server asked the client to wait, measured
+            from when the exception was created, or None if the response
+            carried no usable Retry-After header.
+    """
+
+    def __init__(self, message, status_code=None, reason=None, headers=None):
+        super().__init__(
+            message, status_code=status_code, reason=reason, headers=headers
+        )
+        value = next(
+            (v for k, v in (headers or {}).items() if k.lower() == "retry-after"),
+            None,
+        )
+        self.retry_after: float | None = _parse_retry_after(value)
 
 
 

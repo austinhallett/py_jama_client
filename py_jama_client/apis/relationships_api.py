@@ -13,7 +13,7 @@ import json
 import logging
 import time
 
-from py_jama_client.client import JamaClient, _retry_after_seconds
+from py_jama_client.client import JamaClient, _throttle_wait
 from py_jama_client.constants import (
     DEFAULT_ALLOWED_RESULTS_PER_PAGE,
     MAX_THROTTLE_WAITS,
@@ -125,10 +125,7 @@ class RelationshipsAPI:
                 throttle_waits += 1
                 if throttle_waits > MAX_THROTTLE_WAITS:
                     raise
-                retry_after = _retry_after_seconds(
-                    (err.headers or {}).get("Retry-After")
-                )
-                time.sleep(retry_after)
+                time.sleep(_throttle_wait(err))
                 continue
             throttle_waits = 0
 

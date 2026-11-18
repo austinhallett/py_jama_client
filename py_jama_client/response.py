@@ -1,6 +1,7 @@
 __all__ = ["ClientResponse"]
 
 from dataclasses import dataclass
+from typing import Any
 
 from httpx import Response
 
@@ -10,7 +11,8 @@ class ClientResponse:
     meta: dict
     links: dict
     linked: dict
-    data: list
+    # A list for collection endpoints, a dict for single-resource endpoints
+    data: Any
 
     @classmethod
     def from_response(cls, response: Response):

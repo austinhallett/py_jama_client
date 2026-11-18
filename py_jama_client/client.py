@@ -96,23 +96,23 @@ class JamaClient:
             timeout: The timeout for the session
         """
         # Instance variables
-        self.__api_version = api_version
-        self.__host_name = host + self.__api_version
-        self.__credentials = credentials
-        self.__oauth = oauth
-        self.__verify = verify
-        self.__session = self.session_class(verify=verify, timeout=timeout)
+        self._api_version = api_version
+        self._host_name = host + self._api_version
+        self._credentials = credentials
+        self._oauth = oauth
+        self._verify = verify
+        self._session = self.session_class(verify=verify, timeout=timeout)
 
         # Setup OAuth if needed.
-        if self.__oauth:
-            self.__token_host = host + "/rest/oauth/token"
-            self.__token = None
-            self.__oauth_token_lock = Lock()
-            self.__get_fresh_token()
+        if self._oauth:
+            self._token_host = host + "/rest/oauth/token"
+            self._token = None
+            self._oauth_token_lock = Lock()
+            self._get_fresh_token()
 
     def get_available_endpoints(self):
         try:
-            response = self.__session.get(self.__host_name, auth=self.__credentials)
+            response = self._session.get(self._host_name, auth=self._credentials)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -121,48 +121,48 @@ class JamaClient:
 
     def close(self) -> None:
         """Method to close underlying session"""
-        self.__session.close()
+        self._session.close()
 
     def delete(self, resource: str, **kwargs):
         """This method will perform a delete operation on the specified
         resource"""
-        url = self.__host_name + resource
+        url = self._host_name + resource
 
-        if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
-            return self.__session.delete(url, **kwargs)
+        if self._oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self._session.delete(url, **kwargs)
 
-        return self.__session.delete(url, auth=self.__credentials, **kwargs)
+        return self._session.delete(url, auth=self._credentials, **kwargs)
 
     def get(self, resource: str, params: dict | None = None, **kwargs):
         """This method will perform a get operation on the specified
         resource"""
-        url = self.__host_name + resource
+        url = self._host_name + resource
 
-        if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
-            return self.__session.get(url, params=params, **kwargs)
+        if self._oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self._session.get(url, params=params, **kwargs)
 
-        return self.__session.get(url, auth=self.__credentials, params=params, **kwargs)
+        return self._session.get(url, auth=self._credentials, params=params, **kwargs)
 
     def patch(
         self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
     ):
         """This method will perform a patch operation to the specified
         resource"""
-        url = self.__host_name + resource
+        url = self._host_name + resource
 
-        if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
-            return self.__session.patch(
+        if self._oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self._session.patch(
                 url, params=params, data=data, json=json, **kwargs
             )
 
-        return self.__session.patch(
-            url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
+        return self._session.patch(
+            url, auth=self._credentials, params=params, data=data, json=json, **kwargs
         )
 
     def post(
@@ -170,17 +170,17 @@ class JamaClient:
     ):
         """This method will perform a post operation to the specified
         resource."""
-        url = self.__host_name + resource
+        url = self._host_name + resource
 
-        if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
-            return self.__session.post(
+        if self._oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self._session.post(
                 url, params=params, data=data, json=json, **kwargs
             )
 
-        return self.__session.post(
-            url, auth=self.__credentials, params=params, data=data, json=json, **kwargs
+        return self._session.post(
+            url, auth=self._credentials, params=params, data=data, json=json, **kwargs
         )
 
     def put(
@@ -188,32 +188,32 @@ class JamaClient:
     ):
         """This method will perform a put operation to the specified
         resource"""
-        url = self.__host_name + resource
+        url = self._host_name + resource
 
-        if self.__oauth:
-            self.__check_oauth_token()
-            kwargs["headers"] = self.__add_auth_header(**kwargs)
-            return self.__session.put(
+        if self._oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self._session.put(
                 url, data=data, params=params, json=json, **kwargs
             )
 
-        return self.__session.put(
-            url, auth=self.__credentials, data=data, params=params, json=json, **kwargs
+        return self._session.put(
+            url, auth=self._credentials, data=data, params=params, json=json, **kwargs
         )
 
-    def __check_oauth_token(self):
-        with self.__oauth_token_lock:
-            if self.__token is None:
-                self.__get_fresh_token()
+    def _check_oauth_token(self):
+        with self._oauth_token_lock:
+            if self._token is None:
+                self._get_fresh_token()
                 return
 
-            time_elapsed = time.time() - self.__token_acquired_at
-            time_remaining = self.__token_expires_in - time_elapsed
+            time_elapsed = time.time() - self._token_acquired_at
+            time_remaining = self._token_expires_in - time_elapsed
             if time_remaining < 60:
                 # if less than a minute remains, just get another token.
-                self.__get_fresh_token()
+                self._get_fresh_token()
 
-    def __get_fresh_token(self):
+    def _get_fresh_token(self):
         """This method will fetch a new oauth bearer token from the oauth
         token server."""
         data = {"grant_type": "client_credentials"}
@@ -225,10 +225,10 @@ class JamaClient:
         # Post to the token server, check if authorized
         try:
             response = httpx.post(
-                self.__token_host,
-                auth=self.__credentials,
+                self._token_host,
+                auth=self._credentials,
                 data=data,
-                verify=self.__verify,
+                verify=self._verify,
             )
             response.raise_for_status()
         except httpx.HTTPError as err:
@@ -237,25 +237,25 @@ class JamaClient:
         # If success get relevant data
         if response.status_code in [200, 201]:
             response_json = response.json()
-            self.__token = response_json["access_token"]
-            self.__token_expires_in = response_json["expires_in"]
-            self.__token_acquired_at = math.floor(time_before_request)
+            self._token = response_json["access_token"]
+            self._token_expires_in = response_json["expires_in"]
+            self._token_acquired_at = math.floor(time_before_request)
 
         else:
             py_jama_client_logger.error("Failed to retrieve OAuth Token")
 
-    def __add_auth_header(self, **kwargs):
+    def _add_auth_header(self, **kwargs):
         headers = kwargs.get("headers")
         if headers is None:
             headers = {}
-        headers["Authorization"] = "Bearer " + self.__token
+        headers["Authorization"] = "Bearer " + self._token
         return headers
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc, tb):
-        self.__session.close()
+        self._session.close()
 
     def get_all(
         self,

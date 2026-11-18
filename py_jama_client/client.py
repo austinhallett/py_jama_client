@@ -236,15 +236,24 @@ class JamaClient:
 
         # If success get relevant data
         if response.status_code in [200, 201]:
-            response_json = response.json()
-            self._token = response_json["access_token"]
-            self._token_expires_in = response_json["expires_in"]
+            try:
+                response_json = response.json()
+                self._token = response_json["access_token"]
+                self._token_expires_in = response_json["expires_in"]
+            except (ValueError, KeyError, TypeError) as err:
+                raise UnauthorizedTokenException(
+                    f"Unable to fetch token: unusable response body: {err!r}"
+                )
             self._token_acquired_at = math.floor(time_before_request)
 
         else:
             py_jama_client_logger.error("Failed to retrieve OAuth Token")
+            raise UnauthorizedTokenException(
+                f"Unable to fetch token: unexpected status {response.status_code}"
+            )
 
     def _add_auth_header(self, **kwargs):
+        assert self._token is not None
         headers = kwargs.get("headers")
         if headers is None:
             headers = {}

@@ -42,8 +42,8 @@ def get_test_jama_client():
     ssl_context.verify_mode = ssl.CERT_NONE
 
     client = JamaClient(
-        host=os.getenv("HOST"),
-        credentials=(os.getenv("CLIENT_ID"), os.getenv("CLIENT_SECRET")),
+        host=os.environ["HOST"],
+        credentials=(os.environ["CLIENT_ID"], os.environ["CLIENT_SECRET"]),
         verify=ssl_context,
         oauth=(os.getenv("OAUTH", "false").lower() in {"true", "yes", "on", "1"}),
     )
@@ -282,7 +282,7 @@ def real_abstract_item(get_test_jama_client, real_project, real_item_type):
         return os.environ.get("ABSTRACT_ITEM_ID")
     abstract_items_api = AbstractItemsAPI(get_test_jama_client)
     abstract_items = abstract_items_api.get_abstract_items(
-        project=(real_project,), item_type=(real_item_type,)
+        project=[real_project], item_type=[real_item_type]
     ).data
     if abstract_items == []:
         raise ValueError(

@@ -1,3 +1,4 @@
+import logging
 from datetime import UTC, datetime, timedelta
 from email.utils import format_datetime
 from unittest.mock import Mock
@@ -5,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 
 from py_jama_client.apis.relationships_api import RelationshipsAPI
-from py_jama_client.constants import MAX_THROTTLE_WAITS
+from py_jama_client.constants import DEFAULT_RETRY_AFTER_SECONDS, MAX_THROTTLE_WAITS
 from py_jama_client.exceptions import TooManyRequestsException
 from py_jama_client.response import ClientResponse
 
@@ -120,13 +121,14 @@ def test_get_page_lastid_does_not_mutate_params():
     }
 
 
-def test_get_all_lastid_honors_retry_after(monkeypatch):
+def test_get_all_lastid_honors_retry_after(monkeypatch, caplog):
     api = RelationshipsAPI(Mock())
-    throttled = TooManyRequestsException("throttled")
-    retry_at = datetime.now(UTC) + timedelta(minutes=1)
-    throttled.headers = {
-        "Retry-After": format_datetime(retry_at, usegmt=True)
-    }
+    # Kept above the default so a fallback to it cannot pass the test
+    expected_wait = DEFAULT_RETRY_AFTER_SECONDS + 60
+    retry_at = datetime.now(UTC) + timedelta(seconds=expected_wait)
+    throttled = TooManyRequestsException(
+        "throttled", headers={"Retry-After": format_datetime(retry_at, usegmt=True)}
+    )
     api.get_page_lastid = Mock(side_effect=[
         ClientResponse(
             {"pageInfo": {"startIndex": 0, "totalResults": 3}},
@@ -145,6 +147,7 @@ def test_get_all_lastid_honors_retry_after(monkeypatch):
     sleep = Mock()
     monkeypatch.setattr("time.sleep", sleep)
 
+    caplog.set_level(logging.INFO, logger="py_jama_client")
     response = api.get_all_lastid(
         "relationships", params={"project": 1}, allowed_results_per_page=2
     )
@@ -154,7 +157,8 @@ def test_get_all_lastid_honors_retry_after(monkeypatch):
         0, 2, 2
     ]
     sleep.assert_called_once()
-    assert 0 < sleep.call_args.args[0] <= 60
+    assert expected_wait - 10 < sleep.call_args.args[0] <= expected_wait
+    assert "Throttled" in caplog.text
 
 
 def test_get_all_lastid_stops_after_max_consecutive_throttles(monkeypatch):

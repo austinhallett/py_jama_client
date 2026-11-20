@@ -4,15 +4,13 @@ Core Jama Connect Client API class
 This module contains core classes for interacting with the Jama Connect API
 """
 
-__all__ = ["JamaClient"]
+__all__ = ["JamaClient", "bound_retry_after"]
 
 import json
 import logging
 import math
 import ssl
 import time
-from datetime import UTC, datetime
-from email.utils import parsedate_to_datetime
 from threading import Lock
 
 import httpx
@@ -21,7 +19,10 @@ from httpx import Response
 
 from py_jama_client.constants import (
     DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+    DEFAULT_RETRY_AFTER_SECONDS,
+    MAX_RETRY_AFTER_SECONDS,
     MAX_THROTTLE_WAITS,
+    MIN_RETRY_AFTER_SECONDS,
 )
 from py_jama_client.exceptions import (
     AlreadyExistsException,
@@ -44,26 +45,17 @@ urllib3.disable_warnings()
 py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
-def _retry_after_seconds(value: str | None, now: datetime | None = None) -> float:
-    if not value:
-        return 30.0
-
-    try:
-        delay = float(value)
-    except ValueError:
-        try:
-            retry_at = parsedate_to_datetime(value)
-        except (TypeError, ValueError, OverflowError):
-            return 30.0
-
-        current_time = now or datetime.now(UTC)
-        if retry_at.tzinfo is None:
-            retry_at = retry_at.replace(tzinfo=UTC)
-        if current_time.tzinfo is None:
-            current_time = current_time.replace(tzinfo=UTC)
-        return max(0.0, (retry_at - current_time).total_seconds())
-
-    return max(0.0, delay) if math.isfinite(delay) else 30.0
+def bound_retry_after(seconds: float | None) -> float:
+    """Wait for a 429: Retry-After clamped to [MIN, MAX], or the default."""
+    if seconds is None:
+        return DEFAULT_RETRY_AFTER_SECONDS
+    if seconds > MAX_RETRY_AFTER_SECONDS:
+        py_jama_client_logger.warning(
+            f"Server asked to wait {seconds:.0f}s (Retry-After); "
+            f"waiting {MAX_RETRY_AFTER_SECONDS:.0f}s instead"
+        )
+        return MAX_RETRY_AFTER_SECONDS
+    return max(MIN_RETRY_AFTER_SECONDS, seconds)
 
 
 class JamaClient:
@@ -301,10 +293,9 @@ class JamaClient:
                 throttle_waits += 1
                 if throttle_waits > MAX_THROTTLE_WAITS:
                     raise
-                retry_after = _retry_after_seconds(
-                    (err.headers or {}).get("Retry-After")
-                )
-                time.sleep(retry_after)
+                wait = bound_retry_after(err.retry_after)
+                py_jama_client_logger.info(f"Throttled (429); waiting {wait:.1f}s")
+                time.sleep(wait)
                 continue
             throttle_waits = 0
 

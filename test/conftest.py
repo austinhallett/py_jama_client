@@ -5,7 +5,6 @@ import pytest
 
 from py_jama_client.apis.abstract_items_api import AbstractItemsAPI
 from py_jama_client.apis.baselines_api import BaselinesAPI
-from py_jama_client.apis.item_types_api import ItemTypesAPI
 from py_jama_client.apis.projects_api import ProjectsAPI
 from py_jama_client.apis.relationships_api import RelationshipsAPI
 from py_jama_client.apis.releases_api import ReleasesAPI
@@ -277,21 +276,10 @@ def get_example_client_response():
 
 
 @pytest.fixture(scope="session")
-def real_abstract_item(get_test_jama_client, real_project, real_item_type):
+def real_abstract_item(request):
     if "ABSTRACT_ITEM_ID" in os.environ:
         return os.environ.get("ABSTRACT_ITEM_ID")
-    abstract_items_api = AbstractItemsAPI(get_test_jama_client)
-    abstract_items = abstract_items_api.get_abstract_items(
-        project=[real_project], item_type=[real_item_type]
-    ).data
-    if abstract_items == []:
-        raise ValueError(
-            """
-                Unable to identify a viable abstract item for sample testing
-            """
-        )
-    else:
-        return abstract_items[0]["id"]
+    return request.getfixturevalue("real_item")[1]
 
 
 @pytest.fixture(scope="session")
@@ -365,19 +353,31 @@ def real_project(get_test_jama_client):
 
 
 @pytest.fixture(scope="session")
-def real_item_type(get_test_jama_client):
+def real_item_type(request):
     if "ITEM_TYPE_ID" in os.environ:
         return os.environ.get("ITEM_TYPE_ID")
-    item_types_api = ItemTypesAPI(get_test_jama_client)
-    item_types = item_types_api.get_item_types().data
-    if item_types == []:
-        raise ValueError(
-            """
-                Unable to identify a viable item type for sample testing
-            """
-        )
-    else:
-        return item_types[0]["id"]
+    return request.getfixturevalue("real_item")[0]
+
+
+@pytest.fixture(scope="session")
+def real_item(get_test_jama_client, real_project):
+    params = {"project": real_project}
+    if "ITEM_TYPE_ID" in os.environ:
+        params["itemType"] = os.environ["ITEM_TYPE_ID"]
+    start_at = 0
+    while page := get_test_jama_client.get_page(
+        "abstractitems", start_at, params=params
+    ).data:
+        # Excludes attachments, test plans, test runs, etc.
+        for abstract_item in page:
+            if abstract_item.get("type") == "items":
+                return abstract_item["itemType"], abstract_item["id"]
+        start_at += len(page)
+    raise ValueError(
+        """
+            Unable to identify a viable item for sample testing
+        """
+    )
 
 
 @pytest.fixture(scope="session")
@@ -438,7 +438,12 @@ def real_release(get_test_jama_client, real_project):
     if "RELEASE_ID" in os.environ:
         return os.environ.get("RELEASE_ID")
     projects_api = ReleasesAPI(get_test_jama_client)
-    releases = projects_api.get_releases(real_project).data
+    # Inactive releases 404 on GET releases/{id}
+    releases = [
+        release
+        for release in projects_api.get_releases(real_project).data
+        if release.get("active")
+    ]
     if releases == []:
         raise ValueError(
             """

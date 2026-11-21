@@ -217,10 +217,10 @@ class AttachmentsAPI:
     ):
         """
         Get the snapshot of the attachment at the specified version
-        GET: /attachments/{attachmentId}/versions/{versionNum}/versionedItem
+        GET: /attachments/{attachmentId}/versions/{versionNum}/versioneditem
         """
         resource_path = (
-            f"{self.resource_path}/{attachment_id}/versions/{version_num}/versionedItem"
+            f"{self.resource_path}/{attachment_id}/versions/{version_num}/versioneditem"
         )
         try:
             response = self.client.get(resource_path, params, **kwargs)

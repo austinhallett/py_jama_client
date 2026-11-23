@@ -11,6 +11,8 @@ Example usage:
 
 import logging
 
+from py_jama_client.apis._include import with_include
+from py_jama_client.apis._path import segment
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
@@ -36,8 +38,9 @@ class ActivitiesAPI:
         date: list[str] | None = None,
         delete_events: bool | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -45,6 +48,7 @@ class ActivitiesAPI:
         GET /activities/
 
         Args:
+            include: links to include as full objects in the linked map
             project_id: Project resource id
             event_type: Event type to filter on. More than one event type can
                 be chosen
@@ -67,20 +71,19 @@ class ActivitiesAPI:
                 - "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
             delete_events: Get item delete events only
         """
-        req_params: dict = {"project": project_id}
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
+        params = with_include(params, include)
+        params = {**(params or {}), "project": project_id}
 
         if event_type is not None:
+            params.update({"eventType": event_type})
+        if object_type is not None:
             params.update({"objectType": object_type})
         if item_type is not None:
-            params.update({"objectType": object_type})
+            params.update({"itemType": item_type})
         if date is not None:
             params.update({"date": date})
         if delete_events is not None:
-            params.update({"delete": delete_events})
+            params.update({"deleteEvents": delete_events})
 
         return self.client.get_all(
             self.resource_path,
@@ -92,8 +95,9 @@ class ActivitiesAPI:
     def get_activity(
         self,
         activity_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -101,9 +105,11 @@ class ActivitiesAPI:
         GET /activities/{activityId}
 
         Args:
+            include: links to include as full objects in the linked map
             activity_id: (int) activity resource id
         """
-        resource_path = f"{self.resource_path}/{activity_id}"
+        params = with_include(params, include)
+        resource_path = f"{self.resource_path}/{segment(activity_id)}"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
@@ -116,8 +122,9 @@ class ActivitiesAPI:
         self,
         activity_id: int,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -125,9 +132,11 @@ class ActivitiesAPI:
         GET: /activities/{activityId}/affecteditems
 
         Args:
+            include: links to include as full objects in the linked map
             activity_id: (int) activity resource id
         """
-        resource_path = f"{self.resource_path}/{activity_id}/affecteditems"
+        params = with_include(params, include)
+        resource_path = f"{self.resource_path}/{segment(activity_id)}/affecteditems"
         return self.client.get_all(
             resource_path,
             params,
@@ -138,7 +147,7 @@ class ActivitiesAPI:
     def restore_activity_items(
         self,
         activity_id: int,
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -149,7 +158,7 @@ class ActivitiesAPI:
         Args:
             activity_id: (int) activity resource id
         """
-        resource_path = f"{self.resource_path}/{activity_id}/restore"
+        resource_path = f"{self.resource_path}/{segment(activity_id)}/restore"
         try:
             response = self.client.post(
                 resource_path,
@@ -167,8 +176,10 @@ class ActivitiesAPI:
         filter_term: str | None = None,
         project_id: int | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        *args,
+        *,
         params: dict | None = None,
+        object_type: int | None = None,
+        object_id: int | None = None,
         **kwargs,
     ):
         """
@@ -182,13 +193,29 @@ class ActivitiesAPI:
                                 for matching.
             project_id: (int) Filter by Project ID. User must be at least
                         Project Administrator
+            object_type: (int) Filter by object type code, together with
+                         object_id; cannot be combined with project_id. The
+                         server rejects a non-integer with 400; it may need
+                         more than Project Administrator rights (401)
+            object_id: (int) Filter by the ID of an object of object_type
+
+        Raises:
+            ValueError: if only one of object_type and object_id is given, or
+                they are combined with project_id
         """
-        if params is None:
-            params = {}
+        if (object_type is None) != (object_id is None):
+            raise ValueError("object_type and object_id must be given together")
+        if object_type is not None and project_id is not None:
+            raise ValueError(
+                "project_id cannot be combined with object_type and object_id"
+            )
+        params = dict(params or {})
         if filter_term is not None:
             params.update({"filterTerm": filter_term})
         if project_id is not None:
             params.update({"projectId": project_id})
+        if object_type is not None:
+            params.update({"objectType": object_type, "objectId": object_id})
 
         resource_path = f"{self.resource_path}/adminActivity"
         return self.client.get_all(

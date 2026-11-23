@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "test": "test/test_categories_api.py::test_delete_category_docs",
+  "source": "docs",
+  "recorded": "2026-11-21",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/categories/1",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

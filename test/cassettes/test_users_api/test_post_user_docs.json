@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_post_user_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/users",
+        "query": [],
+        "body": {
+          "json": {
+            "username": "example",
+            "password": "Example password 1",
+            "firstName": "Example",
+            "lastName": "User",
+            "email": "example-email",
+            "phone": null,
+            "title": null,
+            "location": null,
+            "licenseType": "NAMED"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": 0,
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

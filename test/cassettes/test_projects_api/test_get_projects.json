@@ -1,0 +1,454 @@
+{
+  "version": 1,
+  "test": "test/test_projects_api.py::test_get_projects",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120184756",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/projects",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 00:47:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 277
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.projectManager": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.fields.projectManager}"
+              },
+              "data.fields.projectGroup": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.projectGroup}"
+              },
+              "data.fields.statusId": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.statusId}"
+              }
+            },
+            "data": [
+              {
+                "id": 219,
+                "isFolder": true,
+                "createdDate": "2017-12-22T15:13:58.000+0000",
+                "modifiedDate": "2018-01-05T13:17:51.000+0000",
+                "createdBy": 217,
+                "modifiedBy": 217,
+                "fields": {
+                  "name": "Project 219",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 215,
+                "isFolder": true,
+                "createdDate": "2017-10-27T16:06:03.000+0000",
+                "modifiedDate": "2018-01-11T13:37:34.000+0000",
+                "createdBy": 217,
+                "modifiedBy": 217,
+                "fields": {
+                  "name": "Project 215",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 190,
+                "isFolder": true,
+                "createdDate": "2016-10-13T14:17:22.000+0000",
+                "modifiedDate": "2016-10-13T14:18:47.000+0000",
+                "createdBy": 175,
+                "modifiedBy": 175,
+                "fields": {
+                  "projectManager": 119,
+                  "statusId": 298,
+                  "text1": "",
+                  "name": "Project 190",
+                  "description": "",
+                  "projectGroup": 296
+                },
+                "type": "projects"
+              },
+              {
+                "id": 54,
+                "isFolder": true,
+                "createdDate": "2013-05-23T13:54:50.000+0000",
+                "modifiedDate": "2013-05-23T13:54:50.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 54",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 49,
+                "isFolder": true,
+                "createdDate": "2013-03-05T11:13:15.000+0000",
+                "modifiedDate": "2013-03-05T11:13:15.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 49",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/projects",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 00:47:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 277
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.projectGroup": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.projectGroup}"
+              },
+              "data.parent": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.parent}"
+              },
+              "data.fields.statusId": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.statusId}"
+              }
+            },
+            "data": [
+              {
+                "id": 149,
+                "parent": 83,
+                "isFolder": true,
+                "createdDate": "2015-04-30T09:14:10.000+0000",
+                "modifiedDate": "2015-04-30T09:14:10.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 149",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 201,
+                "isFolder": true,
+                "createdDate": "2017-03-27T19:59:40.000+0000",
+                "modifiedDate": "2017-03-27T20:00:48.000+0000",
+                "createdBy": 175,
+                "modifiedBy": 175,
+                "fields": {
+                  "name": "Project 201",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 113,
+                "parent": 83,
+                "isFolder": true,
+                "createdDate": "2014-07-29T10:41:00.000+0000",
+                "modifiedDate": "2014-07-29T10:41:00.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 113",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 172,
+                "parent": 83,
+                "isFolder": true,
+                "createdDate": "2016-03-16T11:13:09.000+0000",
+                "modifiedDate": "2016-03-16T11:13:26.000+0000",
+                "createdBy": 169,
+                "modifiedBy": 169,
+                "fields": {
+                  "name": "Project 172",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 95,
+                "isFolder": true,
+                "createdDate": "2014-01-30T16:17:13.000+0000",
+                "modifiedDate": "2014-01-30T16:17:13.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 95",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/projects",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 00:47:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 277
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.projectGroup": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.projectGroup}"
+              },
+              "data.parent": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.parent}"
+              },
+              "data.fields.statusId": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.statusId}"
+              }
+            },
+            "data": [
+              {
+                "id": 67,
+                "isFolder": true,
+                "createdDate": "2013-06-11T14:39:26.000+0000",
+                "modifiedDate": "2013-06-11T14:39:26.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 67",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 170,
+                "parent": 83,
+                "isFolder": true,
+                "createdDate": "2016-03-15T13:24:07.000+0000",
+                "modifiedDate": "2016-03-15T13:24:07.000+0000",
+                "createdBy": 169,
+                "modifiedBy": 169,
+                "fields": {
+                  "name": "Project 170",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 178,
+                "parent": 83,
+                "isFolder": true,
+                "createdDate": "2016-03-31T11:14:41.000+0000",
+                "modifiedDate": "2018-01-18T15:59:52.000+0000",
+                "createdBy": 169,
+                "modifiedBy": 217,
+                "fields": {
+                  "name": "Project 178",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 98,
+                "parent": 83,
+                "isFolder": true,
+                "createdDate": "2014-04-02T09:23:18.000+0000",
+                "modifiedDate": "2014-04-02T09:23:18.000+0000",
+                "createdBy": 11,
+                "modifiedBy": 11,
+                "fields": {
+                  "name": "Project 98",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              },
+              {
+                "id": 267,
+                "isFolder": true,
+                "createdDate": "2019-07-10T20:15:32.000+0000",
+                "modifiedDate": "2019-07-10T20:16:07.000+0000",
+                "createdBy": 217,
+                "modifiedBy": 217,
+                "fields": {
+                  "name": "Project 267",
+                  "description": "",
+                  "projectGroup": 296,
+                  "statusId": 298,
+                  "text1": ""
+                },
+                "type": "projects"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

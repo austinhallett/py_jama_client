@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "test": "test/test_items_writes_api.py::test_put_item_lock",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120232337",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_item_lock",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:51 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744473"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744473",
+              "id": 744473
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/744473/lock",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:51 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {},
+            "data": {
+              "locked": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/items/744473/lock",
+        "query": [],
+        "body": {
+          "json": {
+            "locked": true
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/744473/lock",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.lockedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.lockedBy}"
+              }
+            },
+            "data": {
+              "locked": true,
+              "lastLockedDate": "2026-11-21T05:23:52.000+0000",
+              "lockedBy": 21
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/items/744473/lock",
+        "query": [],
+        "body": {
+          "json": {
+            "locked": false
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/744473/lock",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {},
+            "data": {
+              "locked": false,
+              "lastLockedDate": "2026-11-21T05:23:53.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744473",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

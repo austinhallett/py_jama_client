@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "test": "test/test_releases_api.py::test_get_release",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/releases/1206",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:10 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": {
+              "id": 1206,
+              "name": "MockRelease",
+              "description": "Generic fixture release for characterization tests",
+              "project": 375,
+              "releaseDate": "2026-01-01T08:00:00.000+0000",
+              "active": true,
+              "archived": false,
+              "itemCount": 0,
+              "type": "releases"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

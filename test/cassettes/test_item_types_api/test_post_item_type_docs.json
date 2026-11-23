@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "test": "test/test_item_types_api.py::test_post_item_type_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/itemtypes",
+        "query": [],
+        "body": {
+          "json": {
+            "typeKey": "EXMPL",
+            "display": "Example item type",
+            "displayPlural": "Example item types",
+            "description": "Example description",
+            "image": "example-image",
+            "category": "CORE",
+            "widgets": [
+              {
+                "name": "ACTIVITIES",
+                "synchronize": true
+              }
+            ]
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": 101,
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

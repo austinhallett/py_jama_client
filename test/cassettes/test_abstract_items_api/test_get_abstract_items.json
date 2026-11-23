@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "test": "test/test_abstract_items_api.py::test_get_abstract_items",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/abstractitems",
+        "query": [
+          [
+            "itemType",
+            "24"
+          ],
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:39 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 5
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.release": {
+                "type": "releases",
+                "href": "https://jama.example.com/rest/v1/releases/{data.fields.release}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743391,
+                "documentKey": "MOCK-REQ-3076",
+                "globalId": "1020619",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T20:58:26.000+0000",
+                "modifiedDate": "2026-11-18T23:25:22.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Wallmount Mounting",
+                  "documentKey": "MOCK-REQ-3076",
+                  "globalId": "1020619",
+                  "description": "<p>Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted at a 45 degree downward angle into drywall.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 3,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939539318,
+                  "sequence": "1.1.1.1",
+                  "parent": {
+                    "item": 743390
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:04:36.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743392,
+                "documentKey": "MOCK-REQ-3077",
+                "globalId": "1020620",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T20:58:42.000+0000",
+                "modifiedDate": "2026-11-18T23:25:23.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting",
+                  "documentKey": "MOCK-REQ-3077",
+                  "globalId": "1020620",
+                  "description": "<p>Tabletop Widgets shall be able to stand firmly on four feet with no wobble.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 3,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939540391,
+                  "sequence": "1.1.1.2",
+                  "parent": {
+                    "item": 743390
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:01:41.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743498,
+                "documentKey": "MOCK-REQ-3085",
+                "globalId": "1020620",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T23:25:26.000+0000",
+                "modifiedDate": "2026-11-18T23:25:28.000+0000",
+                "lastActivityDate": "2026-11-18T23:25:28.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting (synced copy)",
+                  "documentKey": "MOCK-REQ-3085",
+                  "globalId": "1020620",
+                  "description": "<p>Copy of the tabletop mounting requirement, kept in sync.</p>",
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 2,
+                  "globalSortOrder": 939540927,
+                  "sequence": "1.1.1.3",
+                  "parent": {
+                    "item": 743390
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743397,
+                "documentKey": "MOCK-REQ-3079",
+                "globalId": "1020623",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T21:06:18.000+0000",
+                "modifiedDate": "2026-11-18T23:25:24.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:30.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "US Regulatory",
+                  "documentKey": "MOCK-REQ-3079",
+                  "globalId": "1020623",
+                  "description": "<p>US Wallmount &amp; Tabletop Hardware shall meet all US regulatory requirements.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939542537,
+                  "sequence": "1.1.2.1",
+                  "parent": {
+                    "item": 743395
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743398,
+                "documentKey": "MOCK-REQ-3080",
+                "globalId": "1020624",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T21:07:14.000+0000",
+                "modifiedDate": "2026-11-18T23:25:25.000+0000",
+                "lastActivityDate": "2026-11-18T23:25:25.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "EU Regulatory",
+                  "documentKey": "MOCK-REQ-3080",
+                  "globalId": "1020624",
+                  "description": "<p>&nbsp;</p>\n\n<p>EU Wallmount &amp; Tabletop Hardware shall meet all EU regulatory requirements.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939543610,
+                  "sequence": "1.1.2.2",
+                  "parent": {
+                    "item": 743395
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

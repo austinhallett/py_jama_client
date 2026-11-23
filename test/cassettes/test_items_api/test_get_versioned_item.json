@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_versioned_item",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743391/versions/3/versioneditem",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.release": {
+                "type": "releases",
+                "href": "https://jama.example.com/rest/v1/releases/{data.fields.release}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": {
+              "id": 743391,
+              "documentKey": "MOCK-REQ-3076",
+              "globalId": "1020619",
+              "itemType": 24,
+              "project": 375,
+              "createdDate": "2026-11-18T20:58:26.000+0000",
+              "modifiedDate": "2026-11-18T23:25:22.000+0000",
+              "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "name": "Wallmount Mounting",
+                "documentKey": "MOCK-REQ-3076",
+                "globalId": "1020619",
+                "description": "<p>Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted at a 45 degree downward angle into drywall.</p>\n",
+                "release": 1200,
+                "priority": 281,
+                "status": 561,
+                "createdDate": "2026-11-18"
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET"
+                  ]
+                }
+              },
+              "version": 3,
+              "currentVersion": 3,
+              "type": "versioneditems"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

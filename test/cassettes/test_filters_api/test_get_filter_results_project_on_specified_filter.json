@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "test": "test/test_filters_api.py::test_get_filter_results_project_on_specified_filter",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120174522",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters/3235/results",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 400,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:45:27 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Bad Request",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "This filter already specifies a project. Remove the \"project\" query parameter from your request."
+            }
+          }
+        }
+      }
+    }
+  ]
+}

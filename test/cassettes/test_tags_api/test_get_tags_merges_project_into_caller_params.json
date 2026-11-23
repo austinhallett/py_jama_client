@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "test": "test/test_tags_api.py::test_get_tags_merges_project_into_caller_params",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120233936",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/tags",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:36 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              }
+            },
+            "links": {
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": [
+              {
+                "id": 1784,
+                "name": "OurOS",
+                "project": 375
+              },
+              {
+                "id": 1785,
+                "name": "TheirOS",
+                "project": 375
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

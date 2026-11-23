@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "test": "test/test_attachments_api.py::test_get_attachment_lock",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120185502",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/attachments/743504/lock",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 00:55:08 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {},
+            "data": {
+              "locked": false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

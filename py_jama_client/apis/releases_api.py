@@ -10,9 +10,10 @@ Example usage:
 """
 
 import datetime
-import json
 import logging
 
+from py_jama_client.apis._include import with_include
+from py_jama_client.apis._path import segment
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
@@ -32,8 +33,9 @@ class ReleasesAPI:
     def get_releases(
         self,
         project_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -41,6 +43,7 @@ class ReleasesAPI:
         Get all releases in the project with the specified ID
 
         Args:
+            include: links to include as full objects in the linked map
             project_id: the api project id of a project
             allowed_results_per_page: number of results per page
 
@@ -48,38 +51,39 @@ class ReleasesAPI:
 
         docs: https://rest.jamasoftware.com/#operation_getReleases
         """
-        req_params = {"project": project_id}
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
+        params = with_include(params, include)
+        params = {**(params or {}), "project": project_id}
 
         return self.client.get_all(
             self.resource_path,
             params,
             allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
         )
 
     def get_release(
         self,
         release_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
         Get the release with the specified ID
 
         Args:
+            include: links to include as full objects in the linked map
             release_id: the api release id of a release
 
         Returns: the client response
 
         docs: https://rest.jamasoftware.com/#operation_getRelease
         """
-        resource_path = f"releases/{release_id}"
+        params = with_include(params, include)
+        resource_path = f"releases/{segment(release_id)}"
         try:
-            response = self.client.get(resource_path, params)
+            response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err)) from err
@@ -92,7 +96,7 @@ class ReleasesAPI:
         release_date: datetime.datetime,
         project_id: int,
         description: str = "",
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -115,13 +119,11 @@ class ReleasesAPI:
             "releaseDate": self.date_to_str(release_date),
             "project": project_id,
         }
-        headers = {"content-type": "application/json"}
         try:
             response = self.client.post(
                 self.resource_path,
                 params,
-                data=json.dumps(body),
-                headers=headers,
+                json=body,
                 **kwargs,
             )
         except CoreException as err:
@@ -137,7 +139,7 @@ class ReleasesAPI:
         release_date: datetime.datetime,
         project_id: int,
         description: str = "",
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -161,12 +163,9 @@ class ReleasesAPI:
             "releaseDate": self.date_to_str(release_date),
             "project": project_id,
         }
-        resource_path = f"{self.resource_path}/{release_id}"
-        headers = {"content-type": "application/json"}
+        resource_path = f"{self.resource_path}/{segment(release_id)}"
         try:
-            response = self.client.put(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
-            )
+            response = self.client.put(resource_path, params, json=body, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err)) from err

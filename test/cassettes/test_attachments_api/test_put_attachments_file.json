@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "test": "test/test_attachments_api.py::test_put_attachments_file",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121001009",
+  "interactions": [
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/attachments/744534/file",
+        "query": [],
+        "body": {
+          "multipart": {
+            "content_type": "multipart/form-data",
+            "parts": [
+              {
+                "name": "file",
+                "filename": "MockAttachment2.txt"
+              }
+            ]
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 06:10:12 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/attachments/744534",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 06:10:12 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": {
+              "id": 744534,
+              "documentKey": "MOCK-ATT-107",
+              "globalId": "1021144",
+              "itemType": 22,
+              "project": 375,
+              "createdDate": "2026-11-21T06:08:23.000+0000",
+              "modifiedDate": "2026-11-21T06:10:12.000+0000",
+              "lastActivityDate": "2026-11-21T06:10:12.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "attachment": 27448,
+                "globalId": "1021144",
+                "name": "MockAttachment2",
+                "description": "Scratch attachment for API tests."
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET"
+                  ]
+                }
+              },
+              "version": 2,
+              "fileName": "MockAttachment2.txt",
+              "mimeType": "text/plain",
+              "fileSize": 34,
+              "type": "attachments"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/attachments/744534/file",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 06:10:12 GMT"
+          ],
+          [
+            "content-type",
+            "application/octet-stream"
+          ]
+        ],
+        "body": {
+          "text": "Scratch attachment for API tests.\n"
+        }
+      }
+    }
+  ]
+}

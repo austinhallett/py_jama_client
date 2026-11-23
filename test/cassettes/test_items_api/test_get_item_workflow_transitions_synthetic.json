@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_item_workflow_transitions_synthetic",
+  "source": "synthetic",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/1/workflowtransitionoptions",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": "101",
+                "action": "Approve",
+                "newStatus": 2
+              },
+              {
+                "id": "102",
+                "action": "Reject",
+                "newStatus": 1
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

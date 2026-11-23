@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_delete_test_group",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans",
+        "query": [],
+        "body": {
+          "json": {
+            "fields": {
+              "name": "zz-char-test_delete_test_group"
+            },
+            "project": 375
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:25 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744087"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744087",
+              "id": 744087
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans/744087/testgroups",
+        "query": [],
+        "body": {
+          "json": {
+            "name": "zz-char-group"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:25 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744087/testgroups/17596"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744087/testgroups/17596",
+              "id": 17596
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744087/testgroups/17596",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744087/testgroups",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 1,
+                "totalResults": 1
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 17595,
+                "name": "Default Test Group"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744087/testgroups/17596",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "The test group with ID 17596 does not exist"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744087",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:27 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

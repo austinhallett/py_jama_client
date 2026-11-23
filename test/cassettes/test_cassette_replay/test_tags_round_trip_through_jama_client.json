@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "test": "test/test_cassette_replay.py::test_tags_round_trip_through_jama_client",
+  "source": "synthetic",
+  "recorded": "2026-11-19",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/tags",
+        "query": [["maxResults", "2"], ["project", "1"], ["startAt", "0"]]
+      },
+      "response": {
+        "status": 200,
+        "headers": [["content-type", "application/json"]],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "pageInfo": {"startIndex": 0, "resultCount": 2, "totalResults": 3}
+            },
+            "links": {},
+            "linked": {},
+            "data": [
+              {"id": 11, "name": "Tag A", "project": 1, "type": "tags"},
+              {"id": 12, "name": "Tag B", "project": 1, "type": "tags"}
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/tags",
+        "query": [["maxResults", "2"], ["project", "1"], ["startAt", "2"]]
+      },
+      "response": {
+        "status": 200,
+        "headers": [["content-type", "application/json"]],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "pageInfo": {"startIndex": 2, "resultCount": 1, "totalResults": 3}
+            },
+            "links": {},
+            "linked": {},
+            "data": [{"id": 13, "name": "Tag C", "project": 1, "type": "tags"}]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/tags",
+        "query": [],
+        "body": {"json": {"name": "Tag D", "project": 1}}
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          ["content-type", "application/json"],
+          ["location", "https://jama.example.com/rest/v1/tags/14"]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "id": 14,
+              "location": "https://jama.example.com/rest/v1/tags/14"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {"method": "GET", "path": "/rest/v1/tags/99", "query": []},
+      "response": {
+        "status": 404,
+        "headers": [["content-type", "application/json"]],
+        "body": {
+          "json": {
+            "meta": {"status": "Not Found", "message": "Tag 99 was not found"}
+          }
+        }
+      }
+    }
+  ]
+}

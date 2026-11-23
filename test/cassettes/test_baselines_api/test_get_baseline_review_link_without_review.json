@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_baselines_api.py::test_get_baseline_review_link_without_review",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171657",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/baselines/2653/reviewlink",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:17:00 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Review not found for this baseline"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

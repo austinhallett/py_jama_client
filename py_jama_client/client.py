@@ -6,6 +6,8 @@ This module contains core classes for interacting with the Jama Connect API
 
 __all__ = ["JamaClient", "bound_retry_after"]
 
+import contextlib
+import functools
 import json
 import logging
 import math
@@ -14,7 +16,6 @@ import time
 from threading import Lock
 
 import httpx
-import urllib3
 from httpx import Response
 
 from py_jama_client.constants import (
@@ -39,9 +40,6 @@ from py_jama_client.response import ClientResponse
 
 __DEBUG__ = False
 
-# disable warnings for ssl verification
-urllib3.disable_warnings()
-
 py_jama_client_logger = logging.getLogger("py_jama_client")
 
 
@@ -56,6 +54,20 @@ def bound_retry_after(seconds: float | None) -> float:
         )
         return MAX_RETRY_AFTER_SECONDS
     return max(MIN_RETRY_AFTER_SECONDS, seconds)
+
+
+def transport_errors_as_core(method):
+    """Raise httpx transport errors (timeouts, refused connections) as
+    CoreException, which the API classes turn into APIException."""
+
+    @functools.wraps(method)
+    def wrapper(*args, **kwargs):
+        try:
+            return method(*args, **kwargs)
+        except httpx.TransportError as err:
+            raise CoreException(str(err)) from err
+
+    return wrapper
 
 
 class JamaClient:
@@ -92,7 +104,6 @@ class JamaClient:
         self._host_name = host + self._api_version
         self._credentials = credentials
         self._oauth = oauth
-        self._verify = verify
         self._session = self.session_class(verify=verify, timeout=timeout)
 
         # Setup OAuth if needed.
@@ -100,11 +111,16 @@ class JamaClient:
             self._token_host = host + "/rest/oauth/token"
             self._token = None
             self._oauth_token_lock = Lock()
-            self._get_fresh_token()
+            try:
+                self._get_fresh_token()
+            except BaseException:
+                with contextlib.suppress(Exception):
+                    self.close()
+                raise
 
     def get_available_endpoints(self):
         try:
-            response = self._session.get(self._host_name, auth=self._credentials)
+            response = self.get("")
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -115,6 +131,7 @@ class JamaClient:
         """Method to close underlying session"""
         self._session.close()
 
+    @transport_errors_as_core
     def delete(self, resource: str, **kwargs):
         """This method will perform a delete operation on the specified
         resource"""
@@ -127,6 +144,23 @@ class JamaClient:
 
         return self._session.delete(url, auth=self._credentials, **kwargs)
 
+    @transport_errors_as_core
+    def delete_with_body(self, resource: str, body, **kwargs):
+        """This method will perform a delete operation with a JSON request
+        body on the specified resource; httpx's delete shortcut cannot send
+        one"""
+        url = self._host_name + resource
+
+        if self._oauth:
+            self._check_oauth_token()
+            kwargs["headers"] = self._add_auth_header(**kwargs)
+            return self._session.request("DELETE", url, json=body, **kwargs)
+
+        return self._session.request(
+            "DELETE", url, auth=self._credentials, json=body, **kwargs
+        )
+
+    @transport_errors_as_core
     def get(self, resource: str, params: dict | None = None, **kwargs):
         """This method will perform a get operation on the specified
         resource"""
@@ -139,6 +173,7 @@ class JamaClient:
 
         return self._session.get(url, auth=self._credentials, params=params, **kwargs)
 
+    @transport_errors_as_core
     def patch(
         self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
     ):
@@ -157,6 +192,7 @@ class JamaClient:
             url, auth=self._credentials, params=params, data=data, json=json, **kwargs
         )
 
+    @transport_errors_as_core
     def post(
         self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
     ):
@@ -175,6 +211,7 @@ class JamaClient:
             url, auth=self._credentials, params=params, data=data, json=json, **kwargs
         )
 
+    @transport_errors_as_core
     def put(
         self, resource: str, params: dict | None = None, data=None, json=None, **kwargs
     ):
@@ -185,9 +222,7 @@ class JamaClient:
         if self._oauth:
             self._check_oauth_token()
             kwargs["headers"] = self._add_auth_header(**kwargs)
-            return self._session.put(
-                url, data=data, params=params, json=json, **kwargs
-            )
+            return self._session.put(url, data=data, params=params, json=json, **kwargs)
 
         return self._session.put(
             url, auth=self._credentials, data=data, params=params, json=json, **kwargs
@@ -216,11 +251,10 @@ class JamaClient:
 
         # Post to the token server, check if authorized
         try:
-            response = httpx.post(
+            response = self._session.post(
                 self._token_host,
                 auth=self._credentials,
                 data=data,
-                verify=self._verify,
             )
             response.raise_for_status()
         except httpx.HTTPError as err:
@@ -246,9 +280,7 @@ class JamaClient:
 
     def _add_auth_header(self, **kwargs):
         assert self._token is not None
-        headers = kwargs.get("headers")
-        if headers is None:
-            headers = {}
+        headers = dict(kwargs.get("headers") or {})
         headers["Authorization"] = "Bearer " + self._token
         return headers
 
@@ -306,15 +338,13 @@ class JamaClient:
                 linked.setdefault(item_type_key, {}).update(page_items)
             if not page.data:
                 break
+            data.extend(page.data)
             page_info = page.meta.get("pageInfo")
             if page_info:
-                start_index = (page_info.get("startIndex", 0)
-                               + allowed_results_per_page)
+                start_index = page_info.get("startIndex", start_index) + len(page.data)
                 total_results = page_info.get("totalResults", total_results)
             else:
-                total_results = 0
                 break
-            data.extend(page.data)
 
         return ClientResponse(meta, links, linked, data)
 
@@ -369,10 +399,15 @@ class JamaClient:
 
             try:
                 response_json = json.loads(response.text)
-                response_message = response_json.get("meta").get("message")
-
             except json.JSONDecodeError:
-                pass
+                response_json = None
+            meta = (
+                response_json.get("meta") if isinstance(response_json, dict) else None
+            )
+            if isinstance(meta, dict):
+                message = meta.get("message")
+                if isinstance(message, str) and message:
+                    response_message = message
 
             # Log the error
             py_jama_client_logger.error(
@@ -430,9 +465,7 @@ class JamaClient:
             )
 
         # Catch anything unexpected
-        py_jama_client_logger.error(
-            f"{status} error. {response.reason_phrase}"
-        )
+        py_jama_client_logger.error(f"{status} error. {response.reason_phrase}")
         raise APIException(
             f"{status} error", status_code=status, reason=response.reason_phrase
         )

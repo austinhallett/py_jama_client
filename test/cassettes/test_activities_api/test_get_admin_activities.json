@@ -1,0 +1,316 @@
+{
+  "version": 1,
+  "test": "test/test_activities_api.py::test_get_admin_activities",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121203919",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities/adminActivity",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "projectId",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 02:39:20 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 65
+              }
+            },
+            "links": {
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976150,
+                "date": "2026-11-22T01:59:20.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Release added",
+                "eventType": "UPDATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"added\",\"targetType\":\"release\",\"targetObject\":\"MockRelease2\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1976108,
+                "date": "2026-11-21T05:39:41.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Tag added",
+                "eventType": "CREATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"added\",\"targetType\":\"tag\",\"targetObject\":\"zz-char-test_get_tag_items_of_scratch_tag\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1976106,
+                "date": "2026-11-21T05:39:39.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Tag added",
+                "eventType": "CREATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"added\",\"targetType\":\"tag\",\"targetObject\":\"zz-char-test_delete_tag\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1976104,
+                "date": "2026-11-21T05:39:39.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Tag modified",
+                "eventType": "UPDATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[{\"field\":\"generalized\",\"initial\":\"zz-char-test_put_tag\",\"updated\":\"zz-char-test_put_tag-renamed\",\"eventTypeId\":null}],\"children\":[]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1976102,
+                "date": "2026-11-21T05:39:38.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Tag added",
+                "eventType": "CREATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"added\",\"targetType\":\"tag\",\"targetObject\":\"zz-char-test_put_tag\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities/adminActivity",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "projectId",
+            "375"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 02:39:20 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 65
+              }
+            },
+            "links": {
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976100,
+                "date": "2026-11-21T05:39:37.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Tag added",
+                "eventType": "CREATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"added\",\"targetType\":\"tag\",\"targetObject\":\"zz-char-test_post_tag\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1974259,
+                "date": "2026-11-19T23:16:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Release added",
+                "eventType": "UPDATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"added\",\"targetType\":\"release\",\"targetObject\":\"MockRelease\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1973676,
+                "date": "2026-11-19T00:19:41.000+0000",
+                "user": 291,
+                "userName": "user",
+                "action": "Categories added",
+                "eventType": "CREATE",
+                "details": "{\"verb\":\"added\",\"targetType\":\"category\",\"targetObject\":\"MOCK-Category\",\"changes\":[{\"field\":\"generalized\",\"initial\":\"generalized\",\"updated\":\"\",\"eventTypeId\":null}],\"children\":[]}",
+                "objectType": "CATEGORY"
+              },
+              {
+                "id": 1973563,
+                "date": "2026-11-18T23:34:26.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Project indexed",
+                "details": "{\"verb\":\"indexed\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1973559,
+                "date": "2026-11-18T23:30:29.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Project Cleanup",
+                "eventType": "UPDATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"completed\",\"targetType\":\"project clean up\",\"targetObject\":\"\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities/adminActivity",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "projectId",
+            "375"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 02:39:21 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 65
+              }
+            },
+            "links": {
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              }
+            },
+            "data": [
+              {
+                "id": 1973532,
+                "date": "2026-11-18T21:56:25.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Release deleted",
+                "eventType": "UPDATE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"deleted\",\"targetType\":\"release\",\"targetObject\":\"generalized\",\"changes\":[],\"children\":[]}]}",
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 1973531,
+                "date": "2026-11-18T21:55:42.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Project Permission deleted",
+                "eventType": "DELETE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"removed\",\"targetType\":\"project permissions for user group\",\"targetObject\":\"generalized\",\"changes\":[],\"children\":[]}]}"
+              },
+              {
+                "id": 1973529,
+                "date": "2026-11-18T21:55:29.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Project Permission deleted",
+                "eventType": "DELETE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"removed\",\"targetType\":\"project permissions for user\",\"targetObject\":\"generalized\",\"changes\":[],\"children\":[]}]}"
+              },
+              {
+                "id": 1973526,
+                "date": "2026-11-18T21:53:31.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Project Attachment deleted",
+                "eventType": "DELETE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"deleted\",\"targetType\":\"attachment\",\"targetObject\":\"generalized\",\"changes\":[],\"children\":[]}]}"
+              },
+              {
+                "id": 1973524,
+                "date": "2026-11-18T21:53:18.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Project Attachment deleted",
+                "eventType": "DELETE",
+                "details": "{\"verb\":\"edited\",\"targetType\":\"project\",\"targetObject\":\"MOCK_Widgets\",\"changes\":[],\"children\":[{\"verb\":\"deleted\",\"targetType\":\"attachment\",\"targetObject\":\"generalized\",\"changes\":[],\"children\":[]}]}"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

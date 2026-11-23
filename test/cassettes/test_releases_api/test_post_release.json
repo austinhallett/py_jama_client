@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "test": "test/test_releases_api.py::test_post_release",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121195918",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/releases",
+        "query": [],
+        "body": {
+          "json": {
+            "name": "MockRelease2",
+            "description": "Scratch release for API tests.",
+            "releaseDate": "2026-01-01",
+            "project": 375
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 01:59:20 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/releases/1207"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/releases/1207",
+              "id": 1207
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/releases/1207",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 01:59:20 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": {
+              "id": 1207,
+              "name": "MockRelease2",
+              "description": "Scratch release for API tests.",
+              "project": 375,
+              "releaseDate": "2026-01-01T08:00:00.000+0000",
+              "active": true,
+              "archived": false,
+              "itemCount": 0,
+              "type": "releases"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

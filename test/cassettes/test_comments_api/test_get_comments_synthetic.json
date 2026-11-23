@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "test": "test/test_comments_api.py::test_get_comments_synthetic",
+  "source": "synthetic",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/comments",
+        "query": [
+          [
+            "maxResults",
+            "2"
+          ],
+          [
+            "rootCommentsOnly",
+            "true"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 3
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 201,
+                "body": {
+                  "text": "Comment text 1"
+                },
+                "location": {
+                  "project": 7
+                },
+                "commentType": "GENERAL",
+                "status": "OPEN",
+                "createdBy": 1,
+                "modifiedBy": 1,
+                "deleted": false,
+                "createdDate": "2026-01-01T00:00:00.000+0000",
+                "type": "comments"
+              },
+              {
+                "id": 203,
+                "body": {
+                  "text": "Comment text 3"
+                },
+                "location": {
+                  "project": 7
+                },
+                "commentType": "GENERAL",
+                "status": "OPEN",
+                "createdBy": 1,
+                "modifiedBy": 1,
+                "deleted": false,
+                "createdDate": "2026-01-01T00:00:00.000+0000",
+                "type": "comments"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/comments",
+        "query": [
+          [
+            "maxResults",
+            "2"
+          ],
+          [
+            "rootCommentsOnly",
+            "true"
+          ],
+          [
+            "startAt",
+            "2"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 2,
+                "resultCount": 1,
+                "totalResults": 3
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 204,
+                "body": {
+                  "text": "Comment text 4"
+                },
+                "location": {
+                  "project": 7
+                },
+                "commentType": "GENERAL",
+                "status": "OPEN",
+                "createdBy": 1,
+                "modifiedBy": 1,
+                "deleted": false,
+                "createdDate": "2026-01-01T00:00:00.000+0000",
+                "type": "comments"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

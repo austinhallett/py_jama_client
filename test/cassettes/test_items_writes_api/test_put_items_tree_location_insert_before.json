@@ -1,0 +1,713 @@
+{
+  "version": 1,
+  "test": "test/test_items_writes_api.py::test_put_items_tree_location_insert_before",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120222540",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_items_tree_location_insert_before-source-parent",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744345"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744345",
+              "id": 744345
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_items_tree_location_insert_before-target-parent",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:54 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744346"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744346",
+              "id": 744346
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 744346
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_items_tree_location_insert_before-first",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:55 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744347"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744347",
+              "id": 744347
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 744346
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_items_tree_location_insert_before-second",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:56 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744348"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744348",
+              "id": 744348
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 744345
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_items_tree_location_insert_before-moved-a",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744349"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744349",
+              "id": 744349
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 744345
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_items_tree_location_insert_before-moved-b",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:58 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744350"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744350",
+              "id": 744350
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/items/treeLocation",
+        "query": [],
+        "body": {
+          "json": {
+            "itemIds": [
+              744349,
+              744350
+            ],
+            "parentItemId": 744346,
+            "insertBeforeItemId": 744348
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:59 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/744346/children",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:59 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 4,
+                "totalResults": 4
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 744347,
+                "documentKey": "MOCK-REQ-3135",
+                "globalId": "1021053",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-21T04:25:55.000+0000",
+                "modifiedDate": "2026-11-21T04:25:55.000+0000",
+                "lastActivityDate": "2026-11-21T04:25:55.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "zz-char-test_put_items_tree_location_insert_before-first",
+                  "documentKey": "MOCK-REQ-3135",
+                  "globalId": "1021053",
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-20"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": -1,
+                  "sequence": "1.1.1.1.4.1",
+                  "parent": {
+                    "item": 744346
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 744350,
+                "documentKey": "MOCK-REQ-3138",
+                "globalId": "1021056",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-21T04:25:58.000+0000",
+                "modifiedDate": "2026-11-21T04:25:58.000+0000",
+                "lastActivityDate": "2026-11-21T04:25:59.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "zz-char-test_put_items_tree_location_insert_before-moved-b",
+                  "documentKey": "MOCK-REQ-3138",
+                  "globalId": "1021056",
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-20"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": -1,
+                  "sequence": "1.1.1.1.4.2",
+                  "parent": {
+                    "item": 744346
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 744349,
+                "documentKey": "MOCK-REQ-3137",
+                "globalId": "1021055",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-21T04:25:57.000+0000",
+                "modifiedDate": "2026-11-21T04:25:57.000+0000",
+                "lastActivityDate": "2026-11-21T04:25:59.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "zz-char-test_put_items_tree_location_insert_before-moved-a",
+                  "documentKey": "MOCK-REQ-3137",
+                  "globalId": "1021055",
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-20"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 2,
+                  "globalSortOrder": -1,
+                  "sequence": "1.1.1.1.4.3",
+                  "parent": {
+                    "item": 744346
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 744348,
+                "documentKey": "MOCK-REQ-3136",
+                "globalId": "1021054",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-21T04:25:56.000+0000",
+                "modifiedDate": "2026-11-21T04:25:56.000+0000",
+                "lastActivityDate": "2026-11-21T04:25:56.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "zz-char-test_put_items_tree_location_insert_before-second",
+                  "documentKey": "MOCK-REQ-3136",
+                  "globalId": "1021054",
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-20"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 3,
+                  "globalSortOrder": -1,
+                  "sequence": "1.1.1.1.4.4",
+                  "parent": {
+                    "item": 744346
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744350",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:26:00 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744349",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:26:01 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744348",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:26:02 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744347",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:26:03 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744346",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:26:03 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744345",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:26:04 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

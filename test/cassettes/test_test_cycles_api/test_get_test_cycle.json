@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "test": "test/test_test_cycles_api.py::test_get_test_cycle",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120220035",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testcycles/744061",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:00:36 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.fields.testPlan": {
+                "type": "testplans",
+                "href": "https://jama.example.com/rest/v1/testplans/{data.fields.testPlan}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": {
+              "id": 744061,
+              "documentKey": "MOCK-TSTCY-11",
+              "globalId": "1020844",
+              "itemType": 36,
+              "project": 375,
+              "createdDate": "2026-11-21T02:29:39.000+0000",
+              "modifiedDate": "2026-11-21T02:29:39.000+0000",
+              "lastActivityDate": "2026-11-21T02:29:39.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "documentKey": "MOCK-TSTCY-11",
+                "globalId": "1020844",
+                "name": "Cycle 1",
+                "testPlan": 744060,
+                "startDate": "2026-11-23",
+                "endDate": "2026-12-04",
+                "project": 375
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                }
+              },
+              "version": 1,
+              "type": "testcycles"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

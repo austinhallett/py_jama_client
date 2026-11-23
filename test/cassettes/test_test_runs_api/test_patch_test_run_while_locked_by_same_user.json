@@ -1,0 +1,554 @@
+{
+  "version": 1,
+  "test": "test/test_test_runs_api.py::test_patch_test_run_while_locked_by_same_user",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120221151",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans",
+        "query": [],
+        "body": {
+          "json": {
+            "fields": {
+              "name": "zz-char-test_patch_test_run_while_locked_by_same_user"
+            },
+            "project": 375
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744226"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744226",
+              "id": 744226
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans/744226/testgroups",
+        "query": [],
+        "body": {
+          "json": {
+            "name": "zz-char-group"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744226/testgroups/17688"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744226/testgroups/17688",
+              "id": 17688
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans/744226/testgroups/17688/testcases",
+        "query": [],
+        "body": {
+          "json": {
+            "testCase": 743405
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744226/testgroups/17688/testcases/743405"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744226/testgroups/17688/testcases/743405",
+              "id": 743405
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans/744226/testcycles",
+        "query": [],
+        "body": {
+          "json": {
+            "fields": {
+              "name": "zz-char-cycle",
+              "startDate": "2026-01-05",
+              "endDate": "2026-01-30"
+            },
+            "testRunGenerationConfig": {
+              "testGroupsToInclude": [
+                17688
+              ]
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:54 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testcycles/744227"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testcycles/744227",
+              "id": 744227
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testcycles/744227/testruns",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:55 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 1,
+                "totalResults": 1
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.fields.testPlan": {
+                "type": "testplans",
+                "href": "https://jama.example.com/rest/v1/testplans/{data.fields.testPlan}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.fields.testCycle": {
+                "type": "testcycles",
+                "href": "https://jama.example.com/rest/v1/testcycles/{data.fields.testCycle}"
+              },
+              "data.fields.testCase": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fields.testCase}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.testGroup": {
+                "type": "testcycletestgroups",
+                "href": "https://jama.example.com/rest/v1/testcycles/{data.testGroup[0]}/testgroup/{data.testGroup[1]}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 744228,
+                "documentKey": "MOCK-TSTRN-278",
+                "globalId": "1020985",
+                "itemType": 37,
+                "project": 375,
+                "createdDate": "2026-11-21T04:12:54.000+0000",
+                "modifiedDate": "2026-11-21T04:12:54.000+0000",
+                "lastActivityDate": "2026-11-21T04:12:54.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Wallmount Mounting",
+                  "documentKey": "MOCK-TSTRN-278",
+                  "globalId": "1020985",
+                  "testRunStatus": "NOT_RUN",
+                  "forcePassed": false,
+                  "description": "<p><span style=\"color:#3498db\">Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted 1.5 mm into 12.5 mm drywall at a 45 degree downward angle.</span></p>\n",
+                  "testRunSteps": [
+                    {
+                      "action": "<p>Hang wallmount widget on test drywall with nail as described</p>\n",
+                      "expectedResult": "<p>It stays.</p>\n",
+                      "notes": "",
+                      "status": "NOT_RUN"
+                    }
+                  ],
+                  "modifiedDate": "2026-11-20",
+                  "project": 375,
+                  "testPlan": 744226,
+                  "testRunSetName": "zz-char-group",
+                  "testCase": 743405,
+                  "testCycle": 744227
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH"
+                    ]
+                  }
+                },
+                "version": 1,
+                "testCaseVersionNumber": 4,
+                "testCaseCurrentVersionNumber": 4,
+                "sortOrderFromTestGroup": 0,
+                "testGroup": [
+                  744227,
+                  17688
+                ],
+                "type": "testruns"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/testruns/744228/lock",
+        "query": [],
+        "body": {
+          "json": {
+            "locked": true
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:55 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PATCH",
+        "path": "/rest/v1/testruns/744228",
+        "query": [],
+        "body": {
+          "json": [
+            {
+              "op": "add",
+              "path": "/fields/actualResults",
+              "value": "zz-char"
+            }
+          ]
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:56 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testruns/744228",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.fields.testPlan": {
+                "type": "testplans",
+                "href": "https://jama.example.com/rest/v1/testplans/{data.fields.testPlan}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.fields.testCycle": {
+                "type": "testcycles",
+                "href": "https://jama.example.com/rest/v1/testcycles/{data.fields.testCycle}"
+              },
+              "data.fields.testCase": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fields.testCase}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.testGroup": {
+                "type": "testcycletestgroups",
+                "href": "https://jama.example.com/rest/v1/testcycles/{data.testGroup[0]}/testgroup/{data.testGroup[1]}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": {
+              "id": 744228,
+              "documentKey": "MOCK-TSTRN-278",
+              "globalId": "1020985",
+              "itemType": 37,
+              "project": 375,
+              "createdDate": "2026-11-21T04:12:54.000+0000",
+              "modifiedDate": "2026-11-21T04:12:56.000+0000",
+              "lastActivityDate": "2026-11-21T04:12:56.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "name": "Wallmount Mounting",
+                "documentKey": "MOCK-TSTRN-278",
+                "globalId": "1020985",
+                "testRunStatus": "NOT_RUN",
+                "forcePassed": false,
+                "description": "<p><span style=\"color:#3498db\">Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted 1.5 mm into 12.5 mm drywall at a 45 degree downward angle.</span></p>\n",
+                "testRunSteps": [
+                  {
+                    "action": "<p>Hang wallmount widget on test drywall with nail as described</p>\n",
+                    "expectedResult": "<p>It stays.</p>\n",
+                    "notes": "",
+                    "status": "NOT_RUN"
+                  }
+                ],
+                "actualResults": "zz-char",
+                "modifiedDate": "2026-11-20",
+                "project": 375,
+                "testPlan": 744226,
+                "testRunSetName": "zz-char-group",
+                "testCase": 743405,
+                "testCycle": 744227,
+                "executionDate": "2026-11-20"
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET",
+                    "PUT",
+                    "PATCH"
+                  ]
+                }
+              },
+              "version": 2,
+              "testCaseVersionNumber": 4,
+              "testCaseCurrentVersionNumber": 4,
+              "sortOrderFromTestGroup": 0,
+              "testGroup": [
+                744227,
+                17688
+              ],
+              "type": "testruns"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/testruns/744228/lock",
+        "query": [],
+        "body": {
+          "json": {
+            "locked": false
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744226",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:58 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

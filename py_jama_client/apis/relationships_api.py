@@ -9,10 +9,11 @@ Example usage:
     >>> relationships = relationships_api.get_relationships(project_id=82)
 """
 
-import json
 import logging
 import time
 
+from py_jama_client.apis._include import with_include, with_query
+from py_jama_client.apis._path import segment
 from py_jama_client.client import JamaClient, bound_retry_after
 from py_jama_client.constants import (
     DEFAULT_ALLOWED_RESULTS_PER_PAGE,
@@ -39,8 +40,9 @@ class RelationshipsAPI:
     def get_relationships(
         self,
         project_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -48,27 +50,28 @@ class RelationshipsAPI:
         Returns a list of all relationships of a specified project
 
         Args:
+            include: links to include as full objects in the linked map
             project_id: the api project id of a project
             allowed_results_per_page: number of results per page
 
         Returns: a list of dictionary objects that represents a relationships
 
         """
+        params = with_include(params, include)
         resource_path = "relationships"
 
-        req_params = {"project": project_id}
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
+        params = {**(params or {}), "project": project_id}
 
         # Minimal request to check if lastId is required
         response = self.client.get(
             resource_path,
             params=params | {"maxResults": 1, "omitCount": "true"},
-            **kwargs)
-        if (response.status_code == 400
-                and "lastId parameter is now required" in response.text):
+            **kwargs,
+        )
+        if (
+            response.status_code == 400
+            and "lastId parameter is now required" in response.text
+        ):
             last_id_required = True
         else:
             last_id_required = False
@@ -78,12 +81,14 @@ class RelationshipsAPI:
                 resource_path,
                 params,
                 allowed_results_per_page=allowed_results_per_page,
+                **kwargs,
             )
         else:
             return self.client.get_all(
                 resource_path,
                 params,
                 allowed_results_per_page=allowed_results_per_page,
+                **kwargs,
             )
 
     def get_all_lastid(
@@ -101,14 +106,12 @@ class RelationshipsAPI:
         """
 
         if allowed_results_per_page < 1 or allowed_results_per_page > 50:
-            raise ValueError(
-                "Allowed results per page must be between 1 and 50")
+            raise ValueError("Allowed results per page must be between 1 and 50")
 
         last_id = 0
         throttle_waits = 0
         omit_count = (
-            params is not None
-            and str(params.get("omitCount", "")).lower() == "true"
+            params is not None and str(params.get("omitCount", "")).lower() == "true"
         )
 
         data, meta, links, linked = [], {}, {}, {}  # type: ignore[var-annotated]
@@ -170,8 +173,7 @@ class RelationshipsAPI:
         Pass any needed parameters along
         The response object will be returned
         """
-        pagination = {"lastId": last_id,
-                      "maxResults": allowed_results_per_page}
+        pagination = {"lastId": last_id, "maxResults": allowed_results_per_page}
 
         if params is None:
             params = pagination
@@ -190,22 +192,25 @@ class RelationshipsAPI:
     def get_relationship(
         self,
         relationship_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
         Returns a specific relationship object of a specified relationship ID
 
         Args:
+            include: links to include as full objects in the linked map
             relationship_id: the api project id of a relationship
 
         Returns: a dictionary object that represents a relationship
 
         """
-        resource_path = f"relationships/{relationship_id}"
+        params = with_include(params, include)
+        resource_path = f"relationships/{segment(relationship_id)}"
         try:
-            response = self.client.get(resource_path, params)
+            response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -217,7 +222,7 @@ class RelationshipsAPI:
         from_item: int,
         to_item: int,
         relationship_type: int | None = None,
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -238,13 +243,11 @@ class RelationshipsAPI:
         if relationship_type is not None:
             body["relationshipType"] = relationship_type
         resource_path = "relationships/"
-        headers = {"content-type": "application/json"}
         try:
             response = self.client.post(
                 resource_path,
                 params,
-                data=json.dumps(body),
-                headers=headers,
+                json=body,
                 **kwargs,
             )
         except CoreException as err:
@@ -259,7 +262,7 @@ class RelationshipsAPI:
         from_item: int,
         to_item: int,
         relationship_type: int | None = None,
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -274,15 +277,9 @@ class RelationshipsAPI:
         body = {"fromItem": from_item, "toItem": to_item}
         if relationship_type is not None:
             body["relationshipType"] = relationship_type
-        resource_path = f"relationships/{relationship_id}"
-        headers = {"content-type": "application/json"}
+        resource_path = f"relationships/{segment(relationship_id)}"
         try:
-            response = self.client.put(
-                resource_path, params,
-                data=json.dumps(body),
-                headers=headers,
-                **kwargs
-            )
+            response = self.client.put(resource_path, params, json=body, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -299,7 +296,7 @@ class RelationshipsAPI:
         Returns: The success status code.
 
         """
-        resource_path = f"relationships/{relationship_id}"
+        resource_path = f"relationships/{segment(relationship_id)}"
         try:
             response = self.client.delete(resource_path)
         except CoreException as err:
@@ -319,7 +316,7 @@ class RelationshipsAPI:
         Returns: The success status code.
 
         """
-        resource_path = f"relationships/{relationship_id}/suspect"
+        resource_path = f"relationships/{segment(relationship_id)}/suspect"
         try:
             response = self.client.delete(resource_path)
         except CoreException as err:
@@ -348,15 +345,16 @@ class RelationshipsAPI:
                  associated rules
 
         """
-        resource_path = f"relationshiprulesets/{relationship_id}"
+        resource_path = f"relationshiprulesets/{segment(relationship_id)}"
         response = self.client.get(resource_path)
         JamaClient.handle_response_status(response)
         return ClientResponse.from_response(response)
 
     def get_relationship_types(
         self,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -365,35 +363,49 @@ class RelationshipsAPI:
         projects of the Jama Connect instance.
 
         Args:
+            include: links to include as full objects in the linked map
             allowed_results_per_page: Number of results per page
 
         Returns: An array of dictionary objects
 
         """
+        params = with_include(params, include)
         resource_path = "relationshiptypes/"
         return self.client.get_all(
-            resource_path, allowed_results_per_page=allowed_results_per_page
+            resource_path,
+            params,
+            allowed_results_per_page=allowed_results_per_page,
+            **kwargs,
         )
 
     def get_relationship_type(
         self,
         relationship_type_id: int,
-        *args,
+        *,
         params: dict | None = None,
-        **kwargs
+        include: list[str] | None = None,
+        timestamp: str | None = None,
+        **kwargs,
     ):
         """
         Gets relationship type information for a specific relationship type id.
 
         Args:
+            include: links to include as full objects in the linked map
             relationship_type_id: The api id of the item type to fetch
+            timestamp: get the relationship type at this date and time, in
+                ISO8601 format (milliseconds or seconds) -
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ" or "yyyy-MM-dd'T'HH:mm:ssZ"
+                (sent as timestamp; overrides the same key in params)
 
         Returns: JSON object
 
         """
-        resource_path = f"relationshiptypes/{relationship_type_id}"
+        params = with_include(params, include)
+        params = with_query(params, timestamp=timestamp)
+        resource_path = f"relationshiptypes/{segment(relationship_type_id)}"
         try:
-            response = self.client.get(resource_path, params)
+            response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))

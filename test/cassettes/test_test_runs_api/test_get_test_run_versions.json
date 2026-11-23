@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "test": "test/test_test_runs_api.py::test_get_test_run_versions",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120221151",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testruns/744062/versions",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:11:58 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 1,
+                "totalResults": 1
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.item": {
+                "type": "testruns",
+                "href": "https://jama.example.com/rest/v1/testruns/{data.item}"
+              },
+              "data.versionedItem": {
+                "type": "versionedtestruns",
+                "href": "https://jama.example.com/rest/v1/testruns/{data.versionedItem[0]}/versions/{data.versionedItem[1]}/versioneditem"
+              }
+            },
+            "data": [
+              {
+                "item": 744062,
+                "versionNumber": 1,
+                "versionedItem": [
+                  744062,
+                  1
+                ],
+                "changeDetails": "Initial Creation",
+                "createdDate": "2026-11-21T02:29:39.000+0000",
+                "createdBy": 21,
+                "userName": "user21",
+                "type": "version"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "version": 1,
+  "test": "test/test_filters_api.py::test_get_filters",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120174522",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:45:23 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 59
+              }
+            },
+            "links": {
+              "data.filterQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.itemType}"
+              },
+              "data.filterQuery.rule.rules.rules.subQuery.rule.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.subQuery.rule.rules.itemType}"
+              },
+              "data.author": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.author}"
+              },
+              "data.filterQuery.rule.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 277,
+                "name": "Filter 277",
+                "author": 11,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 278,
+                "name": "Filter 278",
+                "author": 11,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2490,
+                "name": "Filter 2490",
+                "author": 17,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 281,
+                "name": "Filter 281",
+                "author": 11,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 276,
+                "name": "Filter 276",
+                "author": 11,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:45:23 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 59
+              }
+            },
+            "links": {
+              "data.specifiedProject": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.specifiedProject}"
+              },
+              "data.filterQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.itemType}"
+              },
+              "data.filterQuery.rule.rules.rules.subQuery.rule.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.subQuery.rule.rules.itemType}"
+              },
+              "data.author": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.author}"
+              },
+              "data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType}"
+              },
+              "data.filterQuery.rule.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 280,
+                "name": "Filter 280",
+                "author": 11,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3178,
+                "name": "Filter 3178",
+                "author": 45,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3205,
+                "name": "Filter 3205",
+                "author": 435,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3189,
+                "name": "Filter 3189",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3193,
+                "name": "Filter 3193",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:45:23 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 59
+              }
+            },
+            "links": {
+              "data.specifiedProject": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.specifiedProject}"
+              },
+              "data.filterQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.itemType}"
+              },
+              "data.author": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.author}"
+              },
+              "data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 3190,
+                "name": "Filter 3190",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3191,
+                "name": "Filter 3191",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3194,
+                "name": "Filter 3194",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3195,
+                "name": "Filter 3195",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3192,
+                "name": "Filter 3192",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

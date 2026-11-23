@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "test": "test/test_items_writes_api.py::test_post_item_duplicate_item_with_children",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120222426",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_post_item_duplicate_item_with_children-parent",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:21 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744324"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744324",
+              "id": 744324
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 744324
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_post_item_duplicate_item_with_children-child",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:22 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744325"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744325",
+              "id": 744325
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items/744324/duplicate",
+        "query": [],
+        "body": {
+          "json": {
+            "includeTags": false,
+            "includeAttachments": false,
+            "includeLinks": false
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:22 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Internal Server Error",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Creating a duplicate of an item with children is not supported",
+              "exception": {
+                "class": "org.apache.commons.lang3.NotImplementedException",
+                "message": "Creating a duplicate of an item with children is not supported"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744325",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:23 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744324",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:24 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

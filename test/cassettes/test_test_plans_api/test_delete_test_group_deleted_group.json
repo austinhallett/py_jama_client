@@ -1,0 +1,159 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_delete_test_group_deleted_group",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204915",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans",
+        "query": [],
+        "body": {
+          "json": {
+            "fields": {
+              "name": "zz-char-test_delete_test_group_deleted_group"
+            },
+            "project": 375
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:49:24 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744099"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744099",
+              "id": 744099
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans/744099/testgroups",
+        "query": [],
+        "body": {
+          "json": {
+            "name": "zz-char-group"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:49:25 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744099/testgroups/17611"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744099/testgroups/17611",
+              "id": 17611
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744099/testgroups/17611",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:49:25 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744099/testgroups/17611",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:49:25 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "The test group with ID 17611 does not exist"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744099",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:49:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,66 +1,148 @@
-import os
-import ssl
+import json
+from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
+from jama_cassette import (
+    ReplayTransport,
+    SwitchTransport,
+    cassette_path,
+    harness_client,
+    load_cassette,
+)
 
-from py_jama_client.apis.abstract_items_api import AbstractItemsAPI
-from py_jama_client.apis.baselines_api import BaselinesAPI
-from py_jama_client.apis.projects_api import ProjectsAPI
+from py_jama_client.apis.items_api import ItemsAPI
 from py_jama_client.apis.relationships_api import RelationshipsAPI
-from py_jama_client.apis.releases_api import ReleasesAPI
-from py_jama_client.apis.tags_api import TagsAPI
-from py_jama_client.apis.users_api import UsersAPI
-from py_jama_client.client import JamaClient
+from py_jama_client.apis.test_plans_api import TestPlansAPI
+from py_jama_client.exceptions import ResourceNotFoundException
 from py_jama_client.response import ClientResponse
 
+CASSETTES = Path(__file__).parent / "cassettes"
+MANIFEST_NAME = "_fixtures.json"
+TRANSPORT_PLUGIN = "jama_transport"
 
-@pytest.fixture(autouse=True, scope="session")
-def connection_env_vars():
-    needed_evs = ["CLIENT_ID", "CLIENT_SECRET", "HOST"]
-    missing_evs = [ev for ev in needed_evs if ev not in os.environ]
-    if len(missing_evs) > 0:
-        bulleted_ev_list = "    - " + "\n                    - ".join(missing_evs)
-        if len(missing_evs) > 1:
-            singular_or_plural = "s"
-        else:
-            singular_or_plural = ""
-        raise ValueError(
-            f"""
-                Please set the following environment variable{singular_or_plural}
-                to run tests properly:
-                {bulleted_ev_list}
-            """
-        )
+
+def pytest_addoption(parser):
+    parser.getgroup("jama").addoption(
+        "--jama-cassette-dir",
+        default=str(CASSETTES),
+        help="where cassettes are read",
+    )
+
+
+@pytest.hookimpl(wrapper=True)
+def pytest_runtest_makereport(item, call):
+    report = yield
+    setattr(item, f"rep_{report.when}", report)
+    return report
+
+
+def _read_manifest(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict):
+        raise TypeError("manifest is not a JSON object")
+    return manifest
+
+
+def _plugin(config):
+    """Tests replay their cassettes unless a plugin registered as
+    `jama_transport` provides the client, each test's transport and fixture
+    values; it is told when each test finishes."""
+    return config.pluginmanager.get_plugin(TRANSPORT_PLUGIN)
 
 
 @pytest.fixture(scope="session")
-def get_test_jama_client():
-    ssl_context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
-    ssl_context.options |= 0x4  # OP_LEGACY_SERVER_CONNECT
-    ssl_context.check_hostname = False
-    ssl_context.verify_mode = ssl.CERT_NONE
+def jama_switch():
+    switch = SwitchTransport()
+    yield switch
+    switch.close()
 
-    client = JamaClient(
-        host=os.environ["HOST"],
-        credentials=(os.environ["CLIENT_ID"], os.environ["CLIENT_SECRET"]),
-        verify=ssl_context,
-        oauth=(os.getenv("OAUTH", "false").lower() in {"true", "yes", "on", "1"}),
+
+@pytest.fixture(scope="session")
+def resolved(request):
+    """resolved(name): a fixture value such as a project id, from the manifest
+    (`_fixtures.json` in the cassette dir)."""
+    manifest_path = (
+        Path(request.config.getoption("--jama-cassette-dir")) / MANIFEST_NAME
     )
+    manifest = _read_manifest(manifest_path)
+    plugin = _plugin(request.config)
 
+    def resolve(name: str):
+        if plugin:
+            return plugin.resolve(name, manifest.get(name))
+        if name not in manifest:
+            pytest.fail(f"{name} missing from {manifest_path}")
+        return manifest[name]
+
+    return resolve
+
+
+@pytest.fixture(autouse=True)
+def jama_cassette(request):
+    """Replay the HTTP traffic of every test that uses the Jama client,
+    including its fixtures' setup and teardown."""
+    if "get_test_jama_client" not in request.fixturenames:
+        yield
+        return
+    switch = request.getfixturevalue("jama_switch")
+    node = request.node
+    callspec = getattr(node, "callspec", None)
+    path = cassette_path(
+        Path(request.config.getoption("--jama-cassette-dir")),
+        request.path.stem,
+        getattr(node, "originalname", node.name),
+        callspec.id if callspec else None,
+    )
+    plugin = _plugin(request.config)
+    if plugin:
+        transport = plugin.transport(node, path)
+    else:
+        if not path.exists():
+            pytest.fail(f"missing cassette {path}")
+        transport = ReplayTransport(load_cassette(path)["interactions"])
+        request.getfixturevalue("monkeypatch").setattr(
+            "py_jama_client.client.time.sleep", lambda seconds: None
+        )
+    switch.current = transport
+    try:
+        yield
+    finally:
+        switch.current = None
+    call, setup = getattr(node, "rep_call", None), getattr(node, "rep_setup", None)
+    if call is not None and not call.failed:
+        skipped = call.skipped
+    elif call is None and setup is not None and setup.skipped:
+        skipped = True
+    else:
+        return
+    if plugin:
+        plugin.finished(node, path, transport, skipped)
+    else:
+        transport.assert_all_used()
+
+
+@pytest.fixture(scope="session")
+def get_test_jama_client(request, jama_switch):
+    plugin = _plugin(request.config)
+    client = plugin.client(jama_switch) if plugin else harness_client(jama_switch)
     yield client
+    client.close()
 
 
 @pytest.fixture(scope="function")
-def bounded_live_pages(monkeypatch, get_test_jama_client):
+def bounded_pages(monkeypatch, get_test_jama_client):
     page_size = 5
-    result_limit = 12
     page_sizes = {
+        "result_limit": 12,
         "offset": [],
         "last_id": [],
         "offset_total": None,
         "last_id_total": None,
     }
-    offset_remaining = [result_limit]
+    offset_remaining = [page_sizes["result_limit"]]
     last_id_remaining = {}
     client = get_test_jama_client
     get_all = client.get_all
@@ -116,7 +198,7 @@ def bounded_live_pages(monkeypatch, get_test_jama_client):
         **kwargs,
     ):
         if start_at == 0:
-            offset_remaining[0] = result_limit
+            offset_remaining[0] = page_sizes["result_limit"]
         page = get_page(
             resource,
             start_at,
@@ -125,8 +207,8 @@ def bounded_live_pages(monkeypatch, get_test_jama_client):
             **kwargs,
         )
         if start_at == 0:
-            page_sizes["offset_total"] = (
-                (page.meta.get("pageInfo") or {}).get("totalResults")
+            page_sizes["offset_total"] = (page.meta.get("pageInfo") or {}).get(
+                "totalResults"
             )
         offset_remaining[0] = limit_page(page, offset_remaining[0])
         page_sizes["offset"].append(len(page.data))
@@ -156,8 +238,8 @@ def bounded_live_pages(monkeypatch, get_test_jama_client):
 
         api_key = id(api)
         if last_id == 0:
-            last_id_remaining[api_key] = result_limit
-        remaining = last_id_remaining.get(api_key, result_limit)
+            last_id_remaining[api_key] = page_sizes["result_limit"]
+        remaining = last_id_remaining.get(api_key, page_sizes["result_limit"])
         page = get_page_lastid(
             api,
             resource_path,
@@ -167,8 +249,8 @@ def bounded_live_pages(monkeypatch, get_test_jama_client):
             **kwargs,
         )
         if last_id == 0:
-            page_sizes["last_id_total"] = (
-                (page.meta.get("pageInfo") or {}).get("totalResults")
+            page_sizes["last_id_total"] = (page.meta.get("pageInfo") or {}).get(
+                "totalResults"
             )
         last_id_remaining[api_key] = limit_page(page, remaining)
         page_sizes["last_id"].append(len(page.data))
@@ -192,23 +274,21 @@ def get_example_client_response():
         links={
             "data.itemType": {
                 "type": "itemtypes",
-                "href": (
-                    "https://silabs.jamacloud.com/rest/v1/itemtypes/{data.itemType}"
-                ),
+                "href": ("https://jama.example.com/rest/v1/itemtypes/{data.itemType}"),
             },
             "data.location.parent.project": {
                 "type": "projects",
                 "href": (
-                    "https://silabs.jamacloud.com/rest/v1/projects/"
+                    "https://jama.example.com/rest/v1/projects/"
                     "{data.location.parent.project}"
                 ),
             },
-            "data.fields.verification_method$141": {
+            "data.fields.status": {
                 "type": "picklistoptions",
                 "href": (
-                    "https://silabs.jamacloud.com/rest/v1/"
+                    "https://jama.example.com/rest/v1/"
                     "picklistoptions/"
-                    "{data.fields.verification_method$141}"
+                    "{data.fields.status}"
                 ),
             },
         },
@@ -216,7 +296,7 @@ def get_example_client_response():
         data=[
             {
                 "id": 50621,
-                "documentKey": "SYSSEC-CMP-122",
+                "documentKey": "PRJ-CMP-122",
                 "globalId": "GID-81458",
                 "itemType": 30,
                 "project": 82,
@@ -226,7 +306,7 @@ def get_example_client_response():
                 "createdBy": 1,
                 "modifiedBy": 1,
                 "fields": {
-                    "documentKey": "SYSSEC-CMP-122",
+                    "documentKey": "PRJ-CMP-122",
                     "globalId": "GID-81458",
                     "name": "Security Requirments",
                     "description": "",
@@ -243,7 +323,7 @@ def get_example_client_response():
             },
             {
                 "id": 47639,
-                "documentKey": "SYSSEC-SET-210",
+                "documentKey": "PRJ-SET-210",
                 "globalId": "GID-80070",
                 "itemType": 31,
                 "project": 82,
@@ -255,10 +335,9 @@ def get_example_client_response():
                 "fields": {
                     "setKey": "DOC",
                     "globalId": "GID-80070",
-                    "documentKey": "SYSSEC-SET-210",
+                    "documentKey": "PRJ-SET-210",
                     "name": "Documentation",
                     "description": "",
-                    "document_status$31": 566,
                 },
                 "resources": {"self": {"allowed": ["GET", "PUT", "PATCH", "DELETE"]}},
                 "location": {
@@ -276,186 +355,154 @@ def get_example_client_response():
 
 
 @pytest.fixture(scope="session")
-def real_abstract_item(request):
-    if "ABSTRACT_ITEM_ID" in os.environ:
-        return os.environ.get("ABSTRACT_ITEM_ID")
-    return request.getfixturevalue("real_item")[1]
+def real_abstract_item(resolved):
+    return resolved("real_abstract_item")
 
 
 @pytest.fixture(scope="session")
-def real_abstract_item_version(get_test_jama_client, real_abstract_item):
-    if "ABSTRACT_ITEM_VERSION" in os.environ:
-        return os.environ.get("ABSTRACT_ITEM_VERSION")
-    abstract_items_api = AbstractItemsAPI(get_test_jama_client)
-    abstract_item_versions = abstract_items_api.get_abstract_item_versions(
-        item_id=real_abstract_item
-    ).data
-    if abstract_item_versions == []:
-        raise ValueError(
-            """
-                Unable to identify a viable abstract item for sample
-                version testing
-            """
-        )
-    else:
-        return abstract_item_versions[0]["versionNumber"]
+def real_attached_item(resolved):
+    return resolved("real_attached_item")
 
 
 @pytest.fixture(scope="session")
-def real_baseline(get_test_jama_client, real_project):
-    if "BASELINE_ID" in os.environ:
-        return os.environ.get("BASELINE_ID")
-    baselines_api = BaselinesAPI(get_test_jama_client)
-    baselines = baselines_api.get_baselines(project_id=real_project).data
-    if baselines == []:
-        raise ValueError(
-            """
-                Unable to identify a viable baseline for sample testing
-            """
-        )
-    else:
-        return baselines[0]["id"]
+def real_abstract_item_version(resolved):
+    return resolved("real_abstract_item_version")
 
 
 @pytest.fixture(scope="session")
-def real_baseline_versioned_item(get_test_jama_client, real_baseline):
-    if "BASELINE_VERSIONED_ITEM_ID" in os.environ:
-        return os.environ.get("BASELINE_VERSIONED_ITEM_ID")
-    baselines_api = BaselinesAPI(get_test_jama_client)
-    baseline_versioned_items = baselines_api.get_baseline_versioned_items(
-        baseline_id=real_baseline
-    ).data
-    if baseline_versioned_items == []:
-        raise ValueError(
-            """
-                Unable to identify a viable baseline for sample testing
-            """
-        )
-    else:
-        return baseline_versioned_items[0]["id"]
+def real_baseline(resolved):
+    return resolved("real_baseline")
 
 
 @pytest.fixture(scope="session")
-def real_project(get_test_jama_client):
-    if "PROJECT_ID" in os.environ:
-        return os.environ.get("PROJECT_ID")
-    projects_api = ProjectsAPI(get_test_jama_client)
-    projects = projects_api.get_projects().data
-    if projects == []:
-        raise ValueError(
-            """
-                Unable to identify a viable project for sample testing
-            """
-        )
-    else:
-        # return 350
-        return projects[0]["id"]
+def real_baseline_versioned_item(resolved):
+    return resolved("real_baseline_versioned_item")
 
 
 @pytest.fixture(scope="session")
-def real_item_type(request):
-    if "ITEM_TYPE_ID" in os.environ:
-        return os.environ.get("ITEM_TYPE_ID")
-    return request.getfixturevalue("real_item")[0]
+def real_project(resolved):
+    return resolved("real_project")
 
 
 @pytest.fixture(scope="session")
-def real_item(get_test_jama_client, real_project):
-    params = {"project": real_project}
-    if "ITEM_TYPE_ID" in os.environ:
-        params["itemType"] = os.environ["ITEM_TYPE_ID"]
-    start_at = 0
-    while page := get_test_jama_client.get_page(
-        "abstractitems", start_at, params=params
-    ).data:
-        # Excludes attachments, test plans, test runs, etc.
-        for abstract_item in page:
-            if abstract_item.get("type") == "items":
-                return abstract_item["itemType"], abstract_item["id"]
-        start_at += len(page)
-    raise ValueError(
-        """
-            Unable to identify a viable item for sample testing
-        """
-    )
+def real_item_type(resolved):
+    return resolved("real_item_type")
 
 
 @pytest.fixture(scope="session")
-def real_relationship(get_test_jama_client, real_project):
-    if "RELATIONSHIP_ID" in os.environ:
-        return os.environ.get("RELATIONSHIP_ID")
-    relationships_api = RelationshipsAPI(get_test_jama_client)
-    relationships = relationships_api.get_page_lastid(
-        "relationships",
-        last_id=0,
-        params={"project": real_project},
-        allowed_results_per_page=5,
-    ).data
-    if relationships == []:
-        raise ValueError(
-            """
-                Unable to identify a viable relationship for sample testing
-            """
-        )
-    else:
-        return relationships[0]["id"]
+def real_relationship(resolved):
+    return resolved("real_relationship")
 
 
 @pytest.fixture(scope="session")
-def real_relationship_type(get_test_jama_client):
-    if "RELATIONSHIP_TYPE_ID" in os.environ:
-        return os.environ.get("RELATIONSHIP_TYPE_ID")
-    relationships_api = RelationshipsAPI(get_test_jama_client)
-    relationship_types = relationships_api.get_relationship_types().data
-    if relationship_types == []:
-        raise ValueError(
-            """
-                Unable to identify a viable relationship type for sample testing
-            """
-        )
-    else:
-        return relationship_types[0]["id"]
+def real_relationship_type(resolved):
+    return resolved("real_relationship_type")
 
 
 @pytest.fixture(scope="session")
-def real_tag(get_test_jama_client, real_project):
-    if "TAG_ID" in os.environ:
-        return os.environ.get("TAG_ID")
-    tags_api = TagsAPI(get_test_jama_client)
-    tags = tags_api.get_tags(project_id=real_project).data
-    if tags == []:
-        raise ValueError(
-            """
-                Unable to identify a viable tag for sample testing
-            """
-        )
-    else:
-        return tags[0]["id"]
+def real_tag(resolved):
+    return resolved("real_tag")
 
 
 @pytest.fixture(scope="session")
-def real_release(get_test_jama_client, real_project):
-    if "RELEASE_ID" in os.environ:
-        return os.environ.get("RELEASE_ID")
-    projects_api = ReleasesAPI(get_test_jama_client)
-    # Inactive releases 404 on GET releases/{id}
-    releases = [
-        release
-        for release in projects_api.get_releases(real_project).data
-        if release.get("active")
-    ]
-    if releases == []:
-        raise ValueError(
-            """
-                Unable to identify a viable release for sample testing
-            """
-        )
-    else:
-        return releases[0]["id"]
+def real_release(resolved):
+    return resolved("real_release")
 
 
 @pytest.fixture(scope="session")
-def current_user(get_test_jama_client):
-    users_api = UsersAPI(get_test_jama_client)
-    user = users_api.get_current_user().data
-    yield user
+def real_attachment(resolved):
+    return resolved("real_attachment")
+
+
+@pytest.fixture(scope="session")
+def real_scratch_attachment(resolved):
+    return resolved("real_scratch_attachment")
+
+
+@pytest.fixture(scope="session")
+def real_filter(resolved):
+    return resolved("real_filter")
+
+
+@pytest.fixture(scope="session")
+def current_user(resolved, get_test_jama_client):
+    return resolved("current_user")
+
+
+@pytest.fixture(scope="session")
+def real_test_case(resolved):
+    return resolved("real_test_case")
+
+
+@pytest.fixture(scope="session")
+def real_test_plan(resolved):
+    return resolved("real_test_plan")
+
+
+@pytest.fixture(scope="session")
+def real_test_cycle(resolved):
+    return resolved("real_test_cycle")
+
+
+@pytest.fixture(scope="session")
+def real_test_run(resolved):
+    return resolved("real_test_run")
+
+
+@pytest.fixture(scope="session")
+def real_comment(resolved):
+    return resolved("real_comment")
+
+
+@pytest.fixture(scope="function")
+def scratch_test_plan(request, get_test_jama_client, real_project):
+    """A throwaway test plan, deleted on teardown even if the test failed or
+    already deleted it."""
+    test_plans_api = TestPlansAPI(get_test_jama_client)
+    plan_id = test_plans_api.post_test_plan(
+        real_project, {"name": f"zz-char-{request.node.name}"}
+    ).meta["id"]
+    try:
+        yield plan_id
+    finally:
+        try:
+            test_plans_api.delete_test_plan(plan_id)
+        except ResourceNotFoundException:
+            pass
+
+
+@pytest.fixture(scope="function")
+def scratch_item(
+    request, get_test_jama_client, real_project, real_item_type, real_abstract_item
+):
+    """Factory for throwaway items under the fixture item or under another
+    scratch item; every item it created or tracked is deleted on teardown
+    (newest first, so children go before parents), even if the test failed."""
+    items_api = ItemsAPI(get_test_jama_client)
+    created = []
+    status = 561
+
+    def create(suffix="", parent=None):
+        # 561 is MOCK's "Draft" option of the REQ status picklist.
+        name = f"zz-char-{request.node.name}" + (f"-{suffix}" if suffix else "")
+        location = {"item": real_abstract_item if parent is None else parent}
+        item_id = items_api.post_item(
+            real_project,
+            real_item_type,
+            real_item_type,
+            location,
+            {"name": name, "status": status},
+        ).meta["id"]
+        created.append(item_id)
+        return item_id
+
+    yield SimpleNamespace(create=create, track=created.append, status=status)
+    failures = []
+    for item_id in reversed(created):
+        try:
+            items_api.delete_item(item_id)
+        except ResourceNotFoundException:
+            pass
+        except Exception as error:  # noqa: BLE001
+            failures.append((item_id, str(error)))
+    assert not failures, f"scratch items left behind: {failures}"

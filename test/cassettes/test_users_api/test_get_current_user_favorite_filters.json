@@ -1,0 +1,790 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_get_current_user_favorite_filters",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users/current/favoritefilters",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:11 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 50,
+                "totalResults": 65
+              }
+            },
+            "links": {
+              "data.specifiedProject": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.specifiedProject}"
+              },
+              "data.filterQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.itemType}"
+              },
+              "data.author": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.author}"
+              },
+              "data.filterQuery.rule.rules.rules.rules.rules.subQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.rules.rules.subQuery.rule.rules.rules.itemType}"
+              },
+              "data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 2063,
+                "name": "Filter 2063",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2910,
+                "name": "Filter 2910",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3189,
+                "name": "Filter 3189",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2921,
+                "name": "Filter 2921",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3193,
+                "name": "Filter 3193",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2911,
+                "name": "Filter 2911",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3190,
+                "name": "Filter 3190",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2919,
+                "name": "Filter 2919",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3191,
+                "name": "Filter 3191",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3194,
+                "name": "Filter 3194",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2922,
+                "name": "Filter 2922",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3195,
+                "name": "Filter 3195",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2924,
+                "name": "Filter 2924",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3192,
+                "name": "Filter 3192",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2920,
+                "name": "Filter 2920",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2925,
+                "name": "Filter 2925",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3196,
+                "name": "Filter 3196",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2926,
+                "name": "Filter 2926",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3197,
+                "name": "Filter 3197",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2933,
+                "name": "Filter 2933",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3198,
+                "name": "Filter 3198",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2934,
+                "name": "Filter 2934",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3199,
+                "name": "Filter 3199",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2791,
+                "name": "Filter 2791",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2909,
+                "name": "Filter 2909",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 3039,
+                "name": "Filter 3039",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2032,
+                "name": "Filter 2032",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 130,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2393,
+                "name": "Filter 2393",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 286,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2928,
+                "name": "Filter 2928",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3184,
+                "name": "Filter 3184",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2884,
+                "name": "Filter 2884",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2896,
+                "name": "Filter 2896",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3187,
+                "name": "Filter 3187",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3182,
+                "name": "Filter 3182",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2878,
+                "name": "Filter 2878",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3179,
+                "name": "Filter 3179",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2838,
+                "name": "Filter 2838",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2898,
+                "name": "Filter 2898",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3188,
+                "name": "Filter 3188",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2853,
+                "name": "Filter 2853",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3181,
+                "name": "Filter 3181",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2833,
+                "name": "Filter 2833",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3177,
+                "name": "Filter 3177",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2879,
+                "name": "Filter 2879",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3183,
+                "name": "Filter 3183",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2423,
+                "name": "Filter 2423",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 286,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2818,
+                "name": "Filter 2818",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2294,
+                "name": "Filter 2294",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 286,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2199,
+                "name": "Filter 2199",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 118,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 1974,
+                "name": "Filter 1974",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 93,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users/current/favoritefilters",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "50"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:12 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 50,
+                "resultCount": 15,
+                "totalResults": 65
+              }
+            },
+            "links": {
+              "data.specifiedProject": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.specifiedProject}"
+              },
+              "data.filterQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.itemType}"
+              },
+              "data.author": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.author}"
+              },
+              "data.filterQuery.rule.rules.rules.rules.rules.subQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.rules.rules.subQuery.rule.rules.rules.itemType}"
+              },
+              "data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.rules.subQuery.rule.rules.rules.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 2907,
+                "name": "Filter 2907",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2939,
+                "name": "Filter 2939",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2940,
+                "name": "Filter 2940",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2927,
+                "name": "Filter 2927",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2177,
+                "name": "Filter 2177",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3185,
+                "name": "Filter 3185",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2888,
+                "name": "Filter 2888",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2852,
+                "name": "Filter 2852",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3180,
+                "name": "Filter 3180",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2929,
+                "name": "Filter 2929",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2905,
+                "name": "Filter 2905",
+                "author": 21,
+                "projectScope": "CURRENT",
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2366,
+                "name": "Filter 2366",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 286,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              },
+              {
+                "id": 2778,
+                "name": "Filter 2778",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 350,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 3175,
+                "name": "Filter 3175",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 375,
+                "filterQuery": {},
+                "type": "filters",
+                "public": true
+              },
+              {
+                "id": 2938,
+                "name": "Filter 2938",
+                "author": 21,
+                "projectScope": "SPECIFIED",
+                "specifiedProject": 214,
+                "filterQuery": {},
+                "type": "filters",
+                "public": false
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

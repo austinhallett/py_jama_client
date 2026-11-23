@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_item_location",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120091745",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743391/location",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 15:17:50 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.parent.item}"
+              }
+            },
+            "data": {
+              "sortOrder": 0,
+              "globalSortOrder": 939539318,
+              "sequence": "1.1.1.1",
+              "parent": {
+                "item": 743390
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "version": 1,
+  "test": "test/test_items_writes_api.py::test_put_item_location_within_project_is_refused",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120222426",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_item_location_within_project_is_refused-parent",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:06 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744310"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744310",
+              "id": 744310
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 744310
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_put_item_location_within_project_is_refused-child",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:07 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744311"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744311",
+              "id": 744311
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/items/744311/location",
+        "query": [],
+        "body": {
+          "json": {
+            "parent": {
+              "project": 375
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:07 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Bad Request",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "This operation currently only supports moving items between projects."
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/744311/location",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:08 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.parent.item}"
+              }
+            },
+            "data": {
+              "sortOrder": 0,
+              "globalSortOrder": -1,
+              "sequence": "1.1.1.1.3.1",
+              "parent": {
+                "item": 744310
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744311",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:09 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744310",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:10 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

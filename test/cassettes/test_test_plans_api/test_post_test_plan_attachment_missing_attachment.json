@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_post_test_plan_attachment_missing_attachment",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans",
+        "query": [],
+        "body": {
+          "json": {
+            "fields": {
+              "name": "zz-char-test_post_test_plan_attachment_missing_attachment"
+            },
+            "project": 375
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:41 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744095"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744095",
+              "id": 744095
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans/744095/attachments",
+        "query": [],
+        "body": {
+          "json": {
+            "attachment": 2147483647
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:41 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Bad Request",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Attachment with ID \"2147483647\" does not exist"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744095",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:41 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

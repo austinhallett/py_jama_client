@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "test": "test/test_item_types_api.py::test_post_item_type_field_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/itemtypes/5/fields",
+        "query": [],
+        "body": {
+          "json": {
+            "name": "example_field",
+            "label": "Example field",
+            "fieldType": "INTEGER",
+            "readOnly": false,
+            "readOnlyAllowApiOverwrite": false,
+            "required": false,
+            "triggerSuspect": false,
+            "synchronize": false,
+            "pickList": 1,
+            "textType": "TEXTAREA",
+            "infotip": "Example infotip"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

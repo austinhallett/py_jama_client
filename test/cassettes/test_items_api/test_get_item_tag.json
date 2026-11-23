@@ -1,0 +1,230 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_item_tag",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120091424",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/tags",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 15:14:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              }
+            },
+            "links": {
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": [
+              {
+                "id": 1784,
+                "name": "OurOS",
+                "project": 375
+              },
+              {
+                "id": 1785,
+                "name": "TheirOS",
+                "project": 375
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/tags/1784/items",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 15:14:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 1,
+                "totalResults": 1
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743491,
+                "documentKey": "MOCK-FEAT-10",
+                "globalId": "1020644",
+                "itemType": 23,
+                "project": 375,
+                "createdDate": "2026-11-18T23:25:12.000+0000",
+                "modifiedDate": "2026-11-18T23:38:05.000+0000",
+                "lastActivityDate": "2026-11-18T23:38:05.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Remote Configuration",
+                  "globalId": "1020644",
+                  "documentKey": "MOCK-FEAT-10",
+                  "description": "<p>Allows widget configuration to be changed remotely, including per-widget settings.</p>\n",
+                  "priority": 281,
+                  "status": 561
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 3,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939574727,
+                  "sequence": "2.1.2",
+                  "parent": {
+                    "item": 743430
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T23:38:06.000+0000"
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743491/tags/1784",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 15:14:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": {
+              "id": 1784,
+              "name": "OurOS",
+              "project": 375
+            }
+          }
+        }
+      }
+    }
+  ]
+}

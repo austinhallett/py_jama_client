@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "test": "test/test_relationships_api.py::test_get_page_lastid",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationships",
+        "query": [
+          [
+            "maxResults",
+            "1"
+          ],
+          [
+            "project",
+            "375"
+          ]
+        ]
+      },
+      "response": {
+        "status": 400,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:07 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Bad Request",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "The lastId parameter is now required to call GET /relationships API endpoint."
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationships",
+        "query": [
+          [
+            "lastId",
+            "0"
+          ],
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:09 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 30
+              }
+            },
+            "links": {
+              "data.fromItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fromItem}"
+              },
+              "data.relationshipType": {
+                "type": "relationshiptypes",
+                "href": "https://jama.example.com/rest/v1/relationshiptypes/{data.relationshipType}"
+              },
+              "data.toItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.toItem}"
+              }
+            },
+            "data": [
+              {
+                "id": 194095,
+                "fromItem": 743398,
+                "toItem": 743359,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": true
+              },
+              {
+                "id": 194096,
+                "fromItem": 743398,
+                "toItem": 743361,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": true
+              },
+              {
+                "id": 194097,
+                "fromItem": 743398,
+                "toItem": 743364,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": true
+              },
+              {
+                "id": 194098,
+                "fromItem": 743398,
+                "toItem": 743365,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": true
+              },
+              {
+                "id": 194099,
+                "fromItem": 743398,
+                "toItem": 743360,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

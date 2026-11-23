@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "test": "test/test_activities_api.py::test_get_admin_activities_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities/adminActivity",
+        "query": [
+          [
+            "filterTerm",
+            "example"
+          ],
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "projectId",
+            "1"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": [
+              {
+                "id": 1,
+                "date": "2000-01-23T04:56:07.000+0000",
+                "item": 6,
+                "itemType": 5,
+                "userComment": "userComment",
+                "action": "action",
+                "details": "details",
+                "eventType": "CREATE",
+                "userName": "userName",
+                "user": 1,
+                "objectType": "PROJECT"
+              },
+              {
+                "id": 2,
+                "date": "2000-01-23T04:56:07.000+0000",
+                "item": 6,
+                "itemType": 5,
+                "userComment": "userComment",
+                "action": "action",
+                "details": "details",
+                "eventType": "CREATE",
+                "userName": "userName",
+                "user": 1,
+                "objectType": "PROJECT"
+              }
+            ],
+            "meta": {
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              },
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {}
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "test": "test/test_baselines_api.py::test_put_baseline",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121195142",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/baselines/2660",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 01:51:43 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.origin.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.origin.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": {
+              "id": 2660,
+              "baselineKey": "BASE-2660",
+              "name": "B2 - 11/21/2026",
+              "description": "",
+              "createdDate": "2026-11-22T01:49:57.000+0000",
+              "createdBy": 21,
+              "project": 375,
+              "origin": {
+                "item": 743390
+              },
+              "sourceName": "Folder: Mounting",
+              "source": 631,
+              "sourceKey": "BSRC-631",
+              "signed": false,
+              "type": "baselines"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/baselines/2660",
+        "query": [],
+        "body": {
+          "json": {
+            "source": 631,
+            "baselineOriginType": "ITEM",
+            "baselineOriginId": 743390,
+            "name": "zz-char baseline",
+            "description": "zz-char description",
+            "baselineStatusPickListOption": null
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 01:51:43 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/baselines/2660",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 01:51:44 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.origin.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.origin.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              }
+            },
+            "data": {
+              "id": 2660,
+              "baselineKey": "BASE-2660",
+              "name": "zz-char baseline",
+              "description": "zz-char description",
+              "createdDate": "2026-11-22T01:49:57.000+0000",
+              "createdBy": 21,
+              "project": 375,
+              "origin": {
+                "item": 743390
+              },
+              "sourceName": "Folder: Mounting",
+              "source": 631,
+              "sourceKey": "BSRC-631",
+              "signed": false,
+              "type": "baselines"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

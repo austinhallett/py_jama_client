@@ -2,39 +2,59 @@
 
 ## Adding New Endpoints
 
-If you would like to contribute additional endpoint please do the following:
+If you would like to contribute additional endpoints please do the following:
 
 1) Write the endpoint code in the appropriate API module (see other endpoint functions for desired syntax).
-2) Write a tests to show the endpoint works like expected
-3) Submit a pull request
+2) Write tests that show the endpoint works as expected, with a cassette for each (see below).
+3) Submit a pull request.
 
 ## Running tests
 
-Unit tests are run against a live Jama instance. To authenticate with the
-instance, credentials are pulled from the environment.
+```shell
+pip install -e ".[test]"
+pytest
+```
 
-At a minimum, you must define the following environment variables:
+The tests need no Jama instance and no credentials. Every test that uses the
+`get_test_jama_client` fixture replays the HTTP exchanges stored in its
+cassette, `test/cassettes/<test module>/<test name>.json` (parametrized tests
+add `[<parameter id>]`, with characters other than letters, digits, `_`, `.`
+and `-` replaced by `_`). A request the cassette does not hold, or a cassette
+interaction the test never requests, fails the test. CI runs the suite with a
+100% coverage gate on `py_jama_client/apis`.
 
-- `HOST`: the host url to a live Jama instance
-- `CLIENT_ID`: a username or client_id for a user with API access on the Jama instance
-- `CLIENT_SECRET`: the password or client_secret associated with the `CLIENT_ID`
-- `OAUTH`: (optional, default False) if `CLIENT_ID` and `CLIENT_SECRET` are for an API key, set oauth to `true`
+## Cassettes
 
-Optionally, the following environment variables can be defined. For each of the
-respective types, if an ID is not specified, all the instances of the item will
-be queried and the first one will be used.
+A cassette is a JSON file:
 
-- `ABSTRACT_ITEM_ID`
-- `ABSTRACT_ITEM_VERSION`
-- `BASELINE_ID`
-- `BASELINE_VERSIONED_ITEM_ID`
-- `ITEM_TYPE_ID`
-- `PROJECT_ID`
-- `RELATIONSHIP_ID`
-- `RELATIONSHIP_TYPE_ID`
-- `RELEASE_ID`
-- `TAG_ID`
+- `version`: the cassette format version (1)
+- `test`: the test's node id
+- `source`: where the exchanges come from: `live` (a Jama instance), `docs`
+  (examples in the Jama REST API documentation) or `synthetic` (written by hand)
+- `recorded`, `run_id`: when the file was produced
+- `interactions`: the exchanges, in order. Each has a `request` (`method`,
+  `path`, `query` as a list of `[name, value]` pairs, and a `body` unless it is
+  empty) and a `response` (`status`, `headers` as a list of `[name, value]`
+  pairs without `content-encoding`, `content-length` or `transfer-encoding`,
+  and a `body` unless it is empty). A body is `{"json": ...}`,
+  `{"text": ...}`, `{"base64": ...}` or, for uploads, `{"multipart": ...}`.
 
-All of these environment variables can be placed in a _`.env`_ file to
-be loaded automatically at runtime. This is especially useful for running tests
-from an IDE.
+The test's requests must match the interactions one by one, in order, on
+method, path, query (pairs compared sorted by name) and body; the host is
+ignored, and the OAuth token request is answered without an entry. Custom
+field keys (`name$123`) are dropped from the test's request before matching,
+so a cassette request must not contain them. `save_cassette` in
+`test/jama_cassette.py` writes the format; pass `source=` explicitly, since it
+defaults to `live`. For a new endpoint, write its cassette from the API
+documentation (`source: docs`) or by hand (`source: synthetic`), following the
+existing files.
+
+Values the tests share (object ids such as the project, items and test plans,
+plus the current user) are in `test/cassettes/_fixtures.json` and reach tests
+through fixtures such as `real_project`.
+
+`test/test_cassette_hygiene.py` scans every file under `test/` for instance
+data: e-mail addresses, hosts outside `example.com` and `.invalid`, custom
+field names, bearer tokens and base64 bodies that hide any of these. In `live`
+cassettes it also checks that object names, ids and users are generic, except
+for the objects named in `_fixtures.json`.

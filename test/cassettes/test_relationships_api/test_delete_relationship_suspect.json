@@ -1,0 +1,493 @@
+{
+  "version": 1,
+  "test": "test/test_relationships_api.py::test_delete_relationship_suspect",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120233921",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743405",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:22 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": {
+              "id": 743405,
+              "documentKey": "MOCK-TC-1476",
+              "globalId": "1020637",
+              "itemType": 26,
+              "project": 375,
+              "createdDate": "2026-11-18T21:20:40.000+0000",
+              "modifiedDate": "2026-11-21T04:12:32.000+0000",
+              "lastActivityDate": "2026-11-21T04:13:29.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "name": "Wallmount Mounting",
+                "documentKey": "MOCK-TC-1476",
+                "globalId": "1020637",
+                "priority": 281,
+                "status": 561,
+                "description": "<p><span style=\"color:#3498db\">Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted 1.5 mm into 12.5 mm drywall at a 45 degree downward angle.</span></p>\n",
+                "testCaseSteps": [
+                  {
+                    "action": "<p>Hang wallmount widget on test drywall with nail as described</p>\n",
+                    "expectedResult": "<p>It stays.</p>\n",
+                    "notes": ""
+                  }
+                ],
+                "testCaseStatus": "SCHEDULED",
+                "testRunResults": {
+                  "id": 0,
+                  "numPassed": 0,
+                  "numNotRun": 1,
+                  "numInProgress": 0,
+                  "numFailed": 0,
+                  "numBlocked": 0,
+                  "numNotApplicable": 0,
+                  "numTotalRuns": 1
+                }
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                }
+              },
+              "version": 4,
+              "location": {
+                "sortOrder": 0,
+                "globalSortOrder": 939552998,
+                "sequence": "1.2.1.1",
+                "parent": {
+                  "item": 743410
+                }
+              },
+              "lock": {
+                "locked": false,
+                "lastLockedDate": "2026-11-18T21:33:05.000+0000"
+              },
+              "type": "items"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_delete_relationship_suspect-from",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:23 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744527"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744527",
+              "id": 744527
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 26,
+            "childItemType": 26,
+            "location": {
+              "parent": {
+                "item": 743410
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_delete_relationship_suspect-to"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:24 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/items/744528"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/items/744528",
+              "id": 744528
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/relationships/",
+        "query": [],
+        "body": {
+          "json": {
+            "fromItem": 744527,
+            "toItem": 744528
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:25 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/relationships/194132"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/relationships/194132",
+              "id": 194132
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/items/744527",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391
+              }
+            },
+            "fields": {
+              "name": "zz-char-test_delete_relationship_suspect-from",
+              "status": 561,
+              "description": "zz-char-changed upstream"
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:26 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationships/194132",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:27 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.fromItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fromItem}"
+              },
+              "data.relationshipType": {
+                "type": "relationshiptypes",
+                "href": "https://jama.example.com/rest/v1/relationshiptypes/{data.relationshipType}"
+              },
+              "data.toItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.toItem}"
+              }
+            },
+            "data": {
+              "id": 194132,
+              "fromItem": 744527,
+              "toItem": 744528,
+              "relationshipType": 4,
+              "type": "relationships",
+              "suspect": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/relationships/194132/suspect",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:27 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationships/194132",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:28 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.fromItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fromItem}"
+              },
+              "data.relationshipType": {
+                "type": "relationshiptypes",
+                "href": "https://jama.example.com/rest/v1/relationshiptypes/{data.relationshipType}"
+              },
+              "data.toItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.toItem}"
+              }
+            },
+            "data": {
+              "id": 194132,
+              "fromItem": 744527,
+              "toItem": 744528,
+              "relationshipType": 4,
+              "type": "relationships",
+              "suspect": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/relationships/194132",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:28 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744528",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:29 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/items/744527",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:30 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

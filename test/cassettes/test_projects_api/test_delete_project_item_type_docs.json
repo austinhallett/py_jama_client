@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "test": "test/test_projects_api.py::test_delete_project_item_type_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/projects/5/itemtypes/6",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

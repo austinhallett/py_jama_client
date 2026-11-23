@@ -1,0 +1,302 @@
+{
+  "version": 1,
+  "test": "test/test_pick_lists_api.py::test_get_pick_list_options",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120232337",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/itemtypes/24",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:56 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.fields.pickList": {
+                "type": "picklists",
+                "href": "https://jama.example.com/rest/v1/picklists/{data.fields.pickList}"
+              }
+            },
+            "data": {
+              "id": 24,
+              "typeKey": "REQ",
+              "display": "Requirement",
+              "displayPlural": "Requirements",
+              "description": "",
+              "image": "https://jama.example.com/img/tree/website.png",
+              "widgets": [
+                {
+                  "name": "SYNCHRONIZED_ITEMS",
+                  "synchronize": false
+                },
+                {
+                  "name": "ATTACHMENTS",
+                  "synchronize": false
+                },
+                {
+                  "name": "RELATIONSHIPS",
+                  "synchronize": false
+                },
+                {
+                  "name": "TAGS",
+                  "synchronize": false
+                },
+                {
+                  "name": "HISTORY",
+                  "synchronize": false
+                },
+                {
+                  "name": "ACTIVITIES",
+                  "synchronize": false
+                },
+                {
+                  "name": "URLS",
+                  "synchronize": false
+                }
+              ],
+              "fields": [
+                {
+                  "id": 192,
+                  "name": "name",
+                  "label": "name",
+                  "fieldType": "STRING",
+                  "readOnly": false,
+                  "required": true,
+                  "triggerSuspect": true,
+                  "synchronize": true,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 193,
+                  "name": "documentKey",
+                  "label": "documentKey",
+                  "fieldType": "STRING",
+                  "readOnly": true,
+                  "readOnlyAllowApiOverwrite": false,
+                  "required": false,
+                  "triggerSuspect": true,
+                  "synchronize": false,
+                  "textType": "KEY",
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 508,
+                  "name": "globalId",
+                  "label": "globalId",
+                  "fieldType": "STRING",
+                  "readOnly": true,
+                  "readOnlyAllowApiOverwrite": false,
+                  "required": true,
+                  "triggerSuspect": false,
+                  "synchronize": false,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 194,
+                  "name": "description",
+                  "label": "description",
+                  "fieldType": "TEXT",
+                  "readOnly": false,
+                  "required": false,
+                  "triggerSuspect": true,
+                  "synchronize": true,
+                  "textType": "RICHTEXT",
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 195,
+                  "name": "assignedTo",
+                  "label": "assignedTo",
+                  "fieldType": "USER",
+                  "readOnly": false,
+                  "required": false,
+                  "triggerSuspect": false,
+                  "synchronize": false,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 196,
+                  "name": "release",
+                  "label": "release",
+                  "fieldType": "RELEASE",
+                  "readOnly": false,
+                  "required": false,
+                  "triggerSuspect": true,
+                  "synchronize": false,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 221,
+                  "name": "priority",
+                  "label": "priority",
+                  "fieldType": "LOOKUP",
+                  "readOnly": false,
+                  "required": false,
+                  "triggerSuspect": false,
+                  "synchronize": false,
+                  "pickList": 62,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 222,
+                  "name": "status",
+                  "label": "status",
+                  "fieldType": "LOOKUP",
+                  "readOnly": false,
+                  "required": true,
+                  "triggerSuspect": true,
+                  "synchronize": true,
+                  "pickList": 63,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                },
+                {
+                  "id": 451,
+                  "name": "createdDate",
+                  "label": "createdDate",
+                  "fieldType": "DATE",
+                  "readOnly": true,
+                  "readOnlyAllowApiOverwrite": false,
+                  "required": false,
+                  "triggerSuspect": false,
+                  "synchronize": false,
+                  "isInherited": false,
+                  "reqAdvisorEnabled": false
+                }
+              ],
+              "type": "itemtypes",
+              "system": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/picklists/63/options",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:56 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 4,
+                "totalResults": 4
+              }
+            },
+            "links": {
+              "data.pickList": {
+                "type": "picklists",
+                "href": "https://jama.example.com/rest/v1/picklists/{data.pickList}"
+              }
+            },
+            "data": [
+              {
+                "id": 561,
+                "name": "Option 561",
+                "description": "",
+                "value": "",
+                "active": true,
+                "archived": false,
+                "color": "9BDFFF",
+                "sortOrder": 1,
+                "pickList": 63,
+                "default": true,
+                "type": "picklistoptions"
+              },
+              {
+                "id": 292,
+                "name": "Option 292",
+                "description": "",
+                "value": "",
+                "active": true,
+                "archived": false,
+                "color": "FFFF66",
+                "sortOrder": 2,
+                "pickList": 63,
+                "default": false,
+                "type": "picklistoptions"
+              },
+              {
+                "id": 293,
+                "name": "Option 293",
+                "description": "",
+                "value": "",
+                "active": true,
+                "archived": false,
+                "color": "9CE78C",
+                "sortOrder": 3,
+                "pickList": 63,
+                "default": false,
+                "type": "picklistoptions"
+              },
+              {
+                "id": 528,
+                "name": "Option 528",
+                "description": "",
+                "value": "",
+                "active": true,
+                "archived": false,
+                "color": "99ADC2",
+                "sortOrder": 4,
+                "pickList": 63,
+                "default": false,
+                "type": "picklistoptions"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

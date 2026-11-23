@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_test_runs_api.py::test_get_test_run_version_unknown_version",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120221151",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testruns/744062/versions/9999",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:12:00 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "version was not found"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

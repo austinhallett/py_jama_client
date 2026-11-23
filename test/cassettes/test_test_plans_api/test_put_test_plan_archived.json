@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_put_test_plan_archived",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/testplans",
+        "query": [],
+        "body": {
+          "json": {
+            "fields": {
+              "name": "zz-char-test_put_test_plan_archived"
+            },
+            "project": 375
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:00 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ],
+          [
+            "location",
+            "https://jama.example.com/rest/v1/testplans/744079"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/testplans/744079",
+              "id": 744079
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/testplans/744079/archived",
+        "query": [],
+        "body": {
+          "json": {
+            "archived": true
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:01 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744079",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:01 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              },
+              "data.location.parent.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.location.parent.project}"
+              }
+            },
+            "data": {
+              "id": 744079,
+              "documentKey": "MOCK-TSTPL-20",
+              "globalId": "1020855",
+              "itemType": 35,
+              "project": 375,
+              "createdDate": "2026-11-21T02:48:00.000+0000",
+              "modifiedDate": "2026-11-21T02:48:01.000+0000",
+              "lastActivityDate": "2026-11-21T02:48:01.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "documentKey": "MOCK-TSTPL-20",
+                "globalId": "1020855",
+                "name": "zz-char-test_put_test_plan_archived",
+                "project": 375
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                }
+              },
+              "version": 1,
+              "archived": true,
+              "location": {
+                "sortOrder": 1,
+                "globalSortOrder": -1,
+                "sequence": "2",
+                "parent": {
+                  "project": 375
+                }
+              },
+              "type": "testplans"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/testplans/744079/archived",
+        "query": [],
+        "body": {
+          "json": {
+            "archived": false
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:01 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744079",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:02 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              },
+              "data.location.parent.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.location.parent.project}"
+              }
+            },
+            "data": {
+              "id": 744079,
+              "documentKey": "MOCK-TSTPL-20",
+              "globalId": "1020855",
+              "itemType": 35,
+              "project": 375,
+              "createdDate": "2026-11-21T02:48:00.000+0000",
+              "modifiedDate": "2026-11-21T02:48:02.000+0000",
+              "lastActivityDate": "2026-11-21T02:48:02.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "documentKey": "MOCK-TSTPL-20",
+                "globalId": "1020855",
+                "name": "zz-char-test_put_test_plan_archived",
+                "project": 375
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                }
+              },
+              "version": 1,
+              "archived": false,
+              "location": {
+                "sortOrder": 1,
+                "globalSortOrder": -1,
+                "sequence": "2",
+                "parent": {
+                  "project": 375
+                }
+              },
+              "type": "testplans"
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/testplans/744079",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:02 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

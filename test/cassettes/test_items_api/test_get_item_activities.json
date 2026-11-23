@@ -1,0 +1,362 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_item_activities",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121114039",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743391/activities",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 17:40:40 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 21
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1975866,
+                "item": 743391,
+                "date": "2026-11-21T04:39:12.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Comment added",
+                "eventType": "PUBLIC",
+                "details": "Please confirm the nail size for the wallmount widget.",
+                "objectType": "COMMENT",
+                "itemType": 24
+              },
+              {
+                "id": 1975016,
+                "date": "2026-11-21T02:35:31.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Item Sent for Review",
+                "eventType": "BATCH_CREATE",
+                "objectType": "REVISION_ITEM",
+                "itemType": 24,
+                "referenceId": 2544
+              },
+              {
+                "id": 1974958,
+                "date": "2026-11-21T02:22:59.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Item Sent for Review",
+                "eventType": "BATCH_CREATE",
+                "objectType": "REVISION_ITEM",
+                "itemType": 24,
+                "referenceId": 2543
+              },
+              {
+                "id": 1973670,
+                "item": 743391,
+                "date": "2026-11-18T23:48:29.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-TC-1476\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973656,
+                "item": 743391,
+                "date": "2026-11-18T23:48:24.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-PVAR-306\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743391/activities",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 17:40:41 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 21
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1973652,
+                "item": 743391,
+                "date": "2026-11-18T23:48:23.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-PVAR-305\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973654,
+                "item": 743391,
+                "date": "2026-11-18T23:48:23.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-PVAR-304\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973650,
+                "item": 743391,
+                "date": "2026-11-18T23:48:22.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-PVAR-310\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973646,
+                "item": 743391,
+                "date": "2026-11-18T23:48:21.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-PVAR-311\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973648,
+                "item": 743391,
+                "date": "2026-11-18T23:48:21.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship modified",
+                "eventType": "UPDATE",
+                "details": "\n<b>Field Changes:</b><br/>\n\t\t\tSuspect link cleared. Suspect changed  from \"Yes\"   to \"No\" \t\t\t\t<br/>\n\t\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-PVAR-312\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743391/activities",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 17:40:41 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 21
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1973550,
+                "item": 743391,
+                "date": "2026-11-18T23:25:22.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Modified",
+                "eventType": "UPDATE",
+                "details": "\"Release\" changed from \"\" to \"Hardware\"",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 743391
+              },
+              {
+                "id": 1973543,
+                "item": 743391,
+                "date": "2026-11-18T23:25:15.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship added",
+                "eventType": "CREATE",
+                "details": "\n\t<b>Relationship modified from:</b> MOCK-FEAT-10\n\t<br/>\n\t<br/>\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-FEAT-10\" --> \"MOCK-REQ-3076\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973353,
+                "item": 743391,
+                "date": "2026-11-18T21:20:40.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship added",
+                "eventType": "CREATE",
+                "details": "\n<b>Affected Relationship(s):</b><br/>\n\t\t\t\"MOCK-REQ-3076\" --> \"MOCK-REQ-3081\" \t\t<br/>\n\t",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973331,
+                "item": 743391,
+                "date": "2026-11-18T21:09:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship added",
+                "eventType": "CREATE",
+                "details": "<b>Relationship modified from:</b> MOCK-REQ-3076<br/><br/><b>Affected Relationship(s):</b><br/>\"MOCK-REQ-3076\" --> \"MOCK-PVAR-305\"<br/>",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              },
+              {
+                "id": 1973332,
+                "item": 743391,
+                "date": "2026-11-18T21:09:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Relationship added",
+                "eventType": "CREATE",
+                "details": "<b>Relationship modified from:</b> MOCK-REQ-3076<br/><br/><b>Affected Relationship(s):</b><br/>\"MOCK-REQ-3076\" --> \"MOCK-PVAR-304\"<br/>",
+                "objectType": "RELATIONSHIP",
+                "itemType": 24
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

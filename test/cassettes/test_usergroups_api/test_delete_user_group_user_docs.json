@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "test": "test/test_usergroups_api.py::test_delete_user_group_user_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/usergroups/11/users/9",
+        "query": []
+      },
+      "response": {
+        "status": 204,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ]
+      }
+    }
+  ]
+}

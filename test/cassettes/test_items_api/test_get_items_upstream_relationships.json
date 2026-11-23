@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_items_upstream_relationships",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationships/194095",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.fromItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fromItem}"
+              },
+              "data.relationshipType": {
+                "type": "relationshiptypes",
+                "href": "https://jama.example.com/rest/v1/relationshiptypes/{data.relationshipType}"
+              },
+              "data.toItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.toItem}"
+              }
+            },
+            "data": {
+              "id": 194095,
+              "fromItem": 743398,
+              "toItem": 743359,
+              "relationshipType": 4,
+              "type": "relationships",
+              "suspect": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743359/upstreamrelationships",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              }
+            },
+            "links": {
+              "data.fromItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fromItem}"
+              },
+              "data.relationshipType": {
+                "type": "relationshiptypes",
+                "href": "https://jama.example.com/rest/v1/relationshiptypes/{data.relationshipType}"
+              },
+              "data.toItem": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.toItem}"
+              }
+            },
+            "data": [
+              {
+                "id": 194095,
+                "fromItem": 743398,
+                "toItem": 743359,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": true
+              },
+              {
+                "id": 194111,
+                "fromItem": 743391,
+                "toItem": 743359,
+                "relationshipType": 4,
+                "type": "relationships",
+                "suspect": false
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

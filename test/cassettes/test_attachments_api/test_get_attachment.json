@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "test": "test/test_attachments_api.py::test_get_attachment",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120185502",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/attachments/743504",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 00:55:06 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": {
+              "id": 743504,
+              "documentKey": "MOCK-ATT-106",
+              "globalId": "1020647",
+              "itemType": 22,
+              "project": 375,
+              "createdDate": "2026-11-18T23:43:42.000+0000",
+              "modifiedDate": "2026-11-18T23:43:43.000+0000",
+              "lastActivityDate": "2026-11-18T23:43:43.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "attachment": 27418,
+                "globalId": "1020647",
+                "name": "MockAttachment",
+                "description": "Generic mock attachment for API tests."
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET"
+                  ]
+                }
+              },
+              "version": 2,
+              "fileName": "MockAttachment.txt",
+              "mimeType": "text/plain",
+              "fileSize": 52,
+              "type": "attachments"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

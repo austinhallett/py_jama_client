@@ -1,0 +1,303 @@
+{
+  "version": 1,
+  "test": "test/test_test_runs_api.py::test_get_test_runs_by_test_plan",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120221151",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testruns",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ],
+          [
+            "testPlan",
+            "744060"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:11:53 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 4,
+                "totalResults": 4
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.fields.testPlan": {
+                "type": "testplans",
+                "href": "https://jama.example.com/rest/v1/testplans/{data.fields.testPlan}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.fields.testCycle": {
+                "type": "testcycles",
+                "href": "https://jama.example.com/rest/v1/testcycles/{data.fields.testCycle}"
+              },
+              "data.fields.testCase": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.fields.testCase}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.testGroup": {
+                "type": "testcycletestgroups",
+                "href": "https://jama.example.com/rest/v1/testcycles/{data.testGroup[0]}/testgroup/{data.testGroup[1]}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 744062,
+                "documentKey": "MOCK-TSTRN-238",
+                "globalId": "1020845",
+                "itemType": 37,
+                "project": 375,
+                "createdDate": "2026-11-21T02:29:39.000+0000",
+                "modifiedDate": "2026-11-21T02:29:39.000+0000",
+                "lastActivityDate": "2026-11-21T02:29:39.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Wallmount Mounting",
+                  "documentKey": "MOCK-TSTRN-238",
+                  "globalId": "1020845",
+                  "testRunStatus": "NOT_RUN",
+                  "forcePassed": false,
+                  "description": "<p><span style=\"color:#3498db\">Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted 1.5 mm into 12.5 mm drywall at a 45 degree downward angle.</span></p>\n",
+                  "testRunSteps": [
+                    {
+                      "action": "<p>Hang wallmount widget on test drywall with nail as described</p>\n",
+                      "expectedResult": "<p>It stays.</p>\n",
+                      "notes": "",
+                      "status": "NOT_RUN"
+                    }
+                  ],
+                  "modifiedDate": "2026-11-20",
+                  "project": 375,
+                  "testPlan": 744060,
+                  "testRunSetName": "Mounting Tests",
+                  "testCase": 743405,
+                  "testCycle": 744061
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH"
+                    ]
+                  }
+                },
+                "version": 1,
+                "testCaseVersionNumber": 4,
+                "testCaseCurrentVersionNumber": 4,
+                "sortOrderFromTestGroup": 0,
+                "testGroup": [
+                  744061,
+                  17578
+                ],
+                "type": "testruns"
+              },
+              {
+                "id": 744063,
+                "documentKey": "MOCK-TSTRN-239",
+                "globalId": "1020846",
+                "itemType": 37,
+                "project": 375,
+                "createdDate": "2026-11-21T02:29:39.000+0000",
+                "modifiedDate": "2026-11-21T02:29:39.000+0000",
+                "lastActivityDate": "2026-11-21T02:29:39.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting",
+                  "documentKey": "MOCK-TSTRN-239",
+                  "globalId": "1020846",
+                  "testRunStatus": "NOT_RUN",
+                  "forcePassed": false,
+                  "description": "<p><span style=\"color:#3498db\">Tabletop Widgets shall be able to stand firmly on four feet with no wobble.</span></p>\n",
+                  "testRunSteps": [
+                    {
+                      "action": "<p>Set widget onto planar tabletop and attempt to make it wobble</p>\n",
+                      "expectedResult": "<p>No wobble</p>\n",
+                      "notes": "",
+                      "status": "NOT_RUN"
+                    }
+                  ],
+                  "modifiedDate": "2026-11-20",
+                  "project": 375,
+                  "testPlan": 744060,
+                  "testRunSetName": "Mounting Tests",
+                  "testCase": 743406,
+                  "testCycle": 744061
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH"
+                    ]
+                  }
+                },
+                "version": 1,
+                "testCaseVersionNumber": 4,
+                "testCaseCurrentVersionNumber": 4,
+                "sortOrderFromTestGroup": 1,
+                "testGroup": [
+                  744061,
+                  17578
+                ],
+                "type": "testruns"
+              },
+              {
+                "id": 744064,
+                "documentKey": "MOCK-TSTRN-240",
+                "globalId": "1020847",
+                "itemType": 37,
+                "project": 375,
+                "createdDate": "2026-11-21T02:29:39.000+0000",
+                "modifiedDate": "2026-11-21T02:29:39.000+0000",
+                "lastActivityDate": "2026-11-21T02:29:39.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "US Regulatory",
+                  "documentKey": "MOCK-TSTRN-240",
+                  "globalId": "1020847",
+                  "testRunStatus": "NOT_RUN",
+                  "forcePassed": false,
+                  "description": "<p><span style=\"color:#3498db\">US Wallmount &amp; Tabletop Hardware shall meet all US regulatory requirements.</span></p>\n",
+                  "testRunSteps": [
+                    {
+                      "action": "<p>Execute test plans for all US regulatory requirements</p>\n",
+                      "expectedResult": "<p>Pass</p>\n",
+                      "notes": "",
+                      "status": "NOT_RUN"
+                    }
+                  ],
+                  "modifiedDate": "2026-11-20",
+                  "project": 375,
+                  "testPlan": 744060,
+                  "testRunSetName": "Regulatory Tests",
+                  "testCase": 743408,
+                  "testCycle": 744061
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH"
+                    ]
+                  }
+                },
+                "version": 1,
+                "testCaseVersionNumber": 4,
+                "testCaseCurrentVersionNumber": 4,
+                "sortOrderFromTestGroup": 0,
+                "testGroup": [
+                  744061,
+                  17579
+                ],
+                "type": "testruns"
+              },
+              {
+                "id": 744065,
+                "documentKey": "MOCK-TSTRN-241",
+                "globalId": "1020848",
+                "itemType": 37,
+                "project": 375,
+                "createdDate": "2026-11-21T02:29:39.000+0000",
+                "modifiedDate": "2026-11-21T02:29:39.000+0000",
+                "lastActivityDate": "2026-11-21T02:29:39.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "EU Regulatory",
+                  "documentKey": "MOCK-TSTRN-241",
+                  "globalId": "1020848",
+                  "testRunStatus": "NOT_RUN",
+                  "forcePassed": false,
+                  "description": "<p><span style=\"color:#3498db\">EU Wallmount &amp; Tabletop Hardware shall meet all EU regulatory requirements.</span></p>\n",
+                  "testRunSteps": [
+                    {
+                      "action": "<p>Execute test plans for all EU regulatory requirements</p>\n",
+                      "expectedResult": "<p>Pass</p>\n",
+                      "notes": "",
+                      "status": "NOT_RUN"
+                    }
+                  ],
+                  "modifiedDate": "2026-11-20",
+                  "project": 375,
+                  "testPlan": 744060,
+                  "testRunSetName": "Regulatory Tests",
+                  "testCase": 743409,
+                  "testCycle": 744061
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH"
+                    ]
+                  }
+                },
+                "version": 1,
+                "testCaseVersionNumber": 4,
+                "testCaseCurrentVersionNumber": 4,
+                "sortOrderFromTestGroup": 1,
+                "testGroup": [
+                  744061,
+                  17579
+                ],
+                "type": "testruns"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

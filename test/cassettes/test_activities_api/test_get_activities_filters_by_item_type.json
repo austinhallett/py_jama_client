@@ -1,0 +1,783 @@
+{
+  "version": 1,
+  "test": "test/test_activities_api.py::test_get_activities_filters_by_item_type",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120233144",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:31:48 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 93328
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976015,
+                "item": 744473,
+                "date": "2026-11-21T05:23:53.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744473
+              },
+              {
+                "id": 1976014,
+                "item": 744473,
+                "date": "2026-11-21T05:23:51.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744473
+              },
+              {
+                "id": 1976013,
+                "item": 744470,
+                "date": "2026-11-21T05:23:50.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744470
+              },
+              {
+                "id": 1976012,
+                "item": 744470,
+                "date": "2026-11-21T05:23:49.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Modified",
+                "eventType": "UPDATE",
+                "details": "\"Name\" changed from \"zz-char-test_put_item\" to \"zz-char-test_put_item-renamed\", \"Description\" changed, \"Priority\" changed from \"Unassigned\" to \"\", \"Implementation Status\" changed from \"Unassigned\" to \"\", \"Test Notification\" changed from \"Unassigned\" to \"\", \"Source\" changed from \"Unassigned\" to \"\", \"Automated Test Status\" changed from \"Unknown\" to \"\"",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744470
+              },
+              {
+                "id": 1976011,
+                "item": 744470,
+                "date": "2026-11-21T05:23:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744470
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:31:48 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 93328
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976010,
+                "item": 744468,
+                "date": "2026-11-21T04:48:56.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744468
+              },
+              {
+                "id": 1976009,
+                "item": 744468,
+                "date": "2026-11-21T04:48:55.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Category management details",
+                "eventType": "BATCH_SUMMARY",
+                "details": "{\"verb\":\"managed\",\"targetType\":\"category\",\"targetObject\":null,\"changes\":[{\"verb\":\"applied\",\"targetType\":\"category\",\"count\":1,\"field\":\"\"},{\"verb\":\"unapplied\",\"targetType\":\"category\",\"count\":0,\"field\":\"\"}],\"children\":[{\"verb\":\"applied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories applied\",\"updated\":[\"Bootloader\"]}],\"children\":[]},{\"verb\":\"unapplied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories unapplied\",\"updated\":[]}],\"children\":[]}]}",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744468
+              },
+              {
+                "id": 1976008,
+                "item": 744468,
+                "date": "2026-11-21T04:48:54.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744468
+              },
+              {
+                "id": 1976007,
+                "item": 744466,
+                "date": "2026-11-21T04:48:52.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744466
+              },
+              {
+                "id": 1976006,
+                "item": 744466,
+                "date": "2026-11-21T04:48:51.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744466
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:31:49 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 93328
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976005,
+                "item": 744464,
+                "date": "2026-11-21T04:48:50.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744464
+              },
+              {
+                "id": 1976004,
+                "item": 744464,
+                "date": "2026-11-21T04:48:49.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744464
+              },
+              {
+                "id": 1976003,
+                "item": 744462,
+                "date": "2026-11-21T04:48:48.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744462
+              },
+              {
+                "id": 1976002,
+                "item": 744462,
+                "date": "2026-11-21T04:48:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Category management details",
+                "eventType": "BATCH_SUMMARY",
+                "details": "{\"verb\":\"managed\",\"targetType\":\"category\",\"targetObject\":null,\"changes\":[{\"verb\":\"applied\",\"targetType\":\"category\",\"count\":1,\"field\":\"\"},{\"verb\":\"unapplied\",\"targetType\":\"category\",\"count\":0,\"field\":\"\"}],\"children\":[{\"verb\":\"applied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories applied\",\"updated\":[\"Bootloader\"]}],\"children\":[]},{\"verb\":\"unapplied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories unapplied\",\"updated\":[]}],\"children\":[]}]}",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744462
+              },
+              {
+                "id": 1976001,
+                "item": 744462,
+                "date": "2026-11-21T04:48:46.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744462
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities",
+        "query": [
+          [
+            "itemType",
+            "24"
+          ],
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:31:49 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 25880
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976015,
+                "item": 744473,
+                "date": "2026-11-21T05:23:53.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744473
+              },
+              {
+                "id": 1976014,
+                "item": 744473,
+                "date": "2026-11-21T05:23:51.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744473
+              },
+              {
+                "id": 1976013,
+                "item": 744470,
+                "date": "2026-11-21T05:23:50.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744470
+              },
+              {
+                "id": 1976012,
+                "item": 744470,
+                "date": "2026-11-21T05:23:49.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Modified",
+                "eventType": "UPDATE",
+                "details": "\"Name\" changed from \"zz-char-test_put_item\" to \"zz-char-test_put_item-renamed\", \"Description\" changed, \"Priority\" changed from \"Unassigned\" to \"\", \"Implementation Status\" changed from \"Unassigned\" to \"\", \"Test Notification\" changed from \"Unassigned\" to \"\", \"Source\" changed from \"Unassigned\" to \"\", \"Automated Test Status\" changed from \"Unknown\" to \"\"",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744470
+              },
+              {
+                "id": 1976011,
+                "item": 744470,
+                "date": "2026-11-21T05:23:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744470
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities",
+        "query": [
+          [
+            "itemType",
+            "24"
+          ],
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:31:49 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 25880
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976010,
+                "item": 744468,
+                "date": "2026-11-21T04:48:56.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744468
+              },
+              {
+                "id": 1976009,
+                "item": 744468,
+                "date": "2026-11-21T04:48:55.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Category management details",
+                "eventType": "BATCH_SUMMARY",
+                "details": "{\"verb\":\"managed\",\"targetType\":\"category\",\"targetObject\":null,\"changes\":[{\"verb\":\"applied\",\"targetType\":\"category\",\"count\":1,\"field\":\"\"},{\"verb\":\"unapplied\",\"targetType\":\"category\",\"count\":0,\"field\":\"\"}],\"children\":[{\"verb\":\"applied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories applied\",\"updated\":[\"Bootloader\"]}],\"children\":[]},{\"verb\":\"unapplied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories unapplied\",\"updated\":[]}],\"children\":[]}]}",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744468
+              },
+              {
+                "id": 1976008,
+                "item": 744468,
+                "date": "2026-11-21T04:48:54.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744468
+              },
+              {
+                "id": 1976007,
+                "item": 744466,
+                "date": "2026-11-21T04:48:52.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744466
+              },
+              {
+                "id": 1976006,
+                "item": 744466,
+                "date": "2026-11-21T04:48:51.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744466
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities",
+        "query": [
+          [
+            "itemType",
+            "24"
+          ],
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:31:49 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 25880
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1976005,
+                "item": 744464,
+                "date": "2026-11-21T04:48:50.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744464
+              },
+              {
+                "id": 1976004,
+                "item": 744464,
+                "date": "2026-11-21T04:48:49.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744464
+              },
+              {
+                "id": 1976003,
+                "item": 744462,
+                "date": "2026-11-21T04:48:48.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Deleted item",
+                "eventType": "DELETE",
+                "details": "Item deleted.",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744462
+              },
+              {
+                "id": 1976002,
+                "item": 744462,
+                "date": "2026-11-21T04:48:47.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Category management details",
+                "eventType": "BATCH_SUMMARY",
+                "details": "{\"verb\":\"managed\",\"targetType\":\"category\",\"targetObject\":null,\"changes\":[{\"verb\":\"applied\",\"targetType\":\"category\",\"count\":1,\"field\":\"\"},{\"verb\":\"unapplied\",\"targetType\":\"category\",\"count\":0,\"field\":\"\"}],\"children\":[{\"verb\":\"applied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories applied\",\"updated\":[\"Bootloader\"]}],\"children\":[]},{\"verb\":\"unapplied\",\"targetType\":\"Category\",\"targetObject\":null,\"changes\":[{\"field\":\"Categories unapplied\",\"updated\":[]}],\"children\":[]}]}",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744462
+              },
+              {
+                "id": 1976001,
+                "item": 744462,
+                "date": "2026-11-21T04:48:46.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "ITEM",
+                "itemType": 24,
+                "referenceId": 744462
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

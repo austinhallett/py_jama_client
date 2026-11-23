@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "test": "test/test_filters_api.py::test_get_filter_results_missing_filter",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120174829",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters/2147483647/results",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:48:31 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Smart Filter with ID \"2147483647\" does not exist"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

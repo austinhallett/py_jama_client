@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_get_test_plan_collections_empty_on_fixture_plan[get_test_plan_attachments]",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744060/attachments",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:48:43 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 0,
+                "totalResults": 0
+              }
+            },
+            "links": {},
+            "data": []
+          }
+        }
+      }
+    }
+  ]
+}

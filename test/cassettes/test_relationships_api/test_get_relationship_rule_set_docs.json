@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "test": "test/test_relationships_api.py::test_get_relationship_rule_set_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationshiprulesets/9",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": {},
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "test": "test/test_categories_api.py::test_copy_category_path_docs",
+  "source": "docs",
+  "recorded": "2026-11-21",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/categorypaths/2/copy",
+        "query": [],
+        "body": {
+          "json": {
+            "destinationParentCategoryPathId": 3
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "location": "https://jama.example.com/rest/v1/categorypaths/4",
+              "id": 4
+            }
+          }
+        }
+      }
+    }
+  ]
+}

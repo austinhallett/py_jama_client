@@ -9,9 +9,10 @@ Example usage:
     >>> tags = tags_api.get_tags()
 """
 
-import json
 import logging
 
+from py_jama_client.apis._include import with_include
+from py_jama_client.apis._path import segment
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
@@ -31,14 +32,16 @@ class TagsAPI:
     def get_tags(
         self,
         project_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
         """
         Get all tags for the project with the specified id
         Args:
+            include: links to include as full objects in the linked map
             project: The API ID of the project to fetch tags for.
             allowed_results_per_page: Number of results per page
 
@@ -46,11 +49,8 @@ class TagsAPI:
         project.
 
         """
-        req_params = {"project": project_id}
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
+        params = with_include(params, include)
+        params = {**(params or {}), "project": project_id}
 
         return self.client.get_all(
             self.resource_path,
@@ -63,7 +63,7 @@ class TagsAPI:
         self,
         name: str,
         project: int,
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -76,13 +76,11 @@ class TagsAPI:
         Returns: the newly created Tag
         """
         body = {"name": name, "project": project}
-        headers = {"content-type": "application/json"}
         try:
             response = self.client.post(
                 self.resource_path,
                 params,
-                data=json.dumps(body),
-                headers=headers,
+                json=body,
                 **kwargs,
             )
         except CoreException as err:
@@ -94,20 +92,23 @@ class TagsAPI:
     def get_tag(
         self,
         tag_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
         Gets item tag information for a specific item tag id.
         Args:
+            include: links to include as full objects in the linked map
             item_tag_id: The api id of the item tag to fetch
 
         Returns: JSON object
         """
-        resource_path = f"tags/{tag_id}"
+        params = with_include(params, include)
+        resource_path = f"tags/{segment(tag_id)}"
         try:
-            response = self.client.get(resource_path, params)
+            response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -119,7 +120,7 @@ class TagsAPI:
         tag_id: int,
         name: str,
         project: int,
-        *args,
+        *,
         params: dict | None = None,
         **kwargs,
     ):
@@ -132,12 +133,9 @@ class TagsAPI:
             project: the project in which to update the tag
         """
         body = {"name": name, "project": project}
-        resource_path = f"tags/{tag_id}"
-        headers = {"content-type": "application/json"}
+        resource_path = f"tags/{segment(tag_id)}"
         try:
-            response = self.client.put(
-                resource_path, params, data=json.dumps(body), headers=headers, **kwargs
-            )
+            response = self.client.put(resource_path, params, json=body, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -152,7 +150,7 @@ class TagsAPI:
 
         Returns: The success status code.
         """
-        resource_path = f"tags/{tag_id}"
+        resource_path = f"tags/{segment(tag_id)}"
         try:
             response = self.client.delete(resource_path)
         except CoreException as err:
@@ -164,20 +162,23 @@ class TagsAPI:
     def get_tag_items(
         self,
         tag_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
         """
         Get all items that have the tag with the specified id
         Args:
+            include: links to include as full objects in the linked map
             allowed_results_per_page: Number of results per page
 
         Returns: A Json Array containing all items tagged with the specified
         tag id.
         """
-        resource_path = f"tags/{tag_id}/items"
+        params = with_include(params, include)
+        resource_path = f"tags/{segment(tag_id)}/items"
         return self.client.get_all(
             resource_path,
             params,

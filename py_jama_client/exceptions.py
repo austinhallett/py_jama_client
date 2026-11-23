@@ -14,9 +14,7 @@ def _parse_http_date(value: str | None) -> datetime | None:
         return None
 
 
-def _parse_retry_after(
-    value: str | None, now: datetime | None = None
-) -> float | None:
+def _parse_retry_after(value: str | None, now: datetime | None = None) -> float | None:
     if not value:
         return None
 
@@ -51,7 +49,6 @@ class UnauthorizedTokenException(CoreException):
     401 unauthorized response."""
 
 
-
 class APIException(Exception):
     """This is the base class for all exceptions raised by the JamaClient"""
 
@@ -65,7 +62,6 @@ class APIException(Exception):
 class UnauthorizedException(APIException):
     """This exception is thrown whenever the api returns a 401 unauthorized
     response."""
-
 
 
 class TooManyRequestsException(APIException):
@@ -88,11 +84,9 @@ class TooManyRequestsException(APIException):
         )
 
 
-
 class ResourceNotFoundException(APIException):
     """This exception is raised whenever the api returns a 404 not found
     response."""
-
 
 
 class AlreadyExistsException(APIException):
@@ -100,13 +94,10 @@ class AlreadyExistsException(APIException):
     message that the resource already exists."""
 
 
-
 class APIClientException(APIException):
     """This exception is thrown whenever a unknown 400 error is encountered."""
-
 
 
 class APIServerException(APIException):
     """This exception is thrown whenever an unknown 500 response is
     encountered."""
-

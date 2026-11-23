@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "test": "test/test_items_writes_api.py::test_post_item_workflow_transition_synthetic",
+  "source": "synthetic",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items/5/workflowtransitions",
+        "query": [],
+        "body": {
+          "json": {
+            "transitionId": "101",
+            "comment": "Approved"
+          }
+        }
+      },
+      "response": {
+        "status": 201,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Created",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

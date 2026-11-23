@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "test": "test/test_pick_lists_api.py::test_get_pick_list_options_missing_pick_list",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120232337",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/picklists/2147483647/options",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:56 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "This resource does not exist"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

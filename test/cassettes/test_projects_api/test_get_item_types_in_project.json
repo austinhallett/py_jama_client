@@ -1,0 +1,1305 @@
+{
+  "version": 1,
+  "test": "test/test_projects_api.py::test_get_item_types_in_project",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120184707",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/projects/375/itemtypes",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 00:47:09 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 11,
+                "totalResults": 11
+              }
+            },
+            "links": {
+              "data.fields.pickList": {
+                "type": "picklists",
+                "href": "https://jama.example.com/rest/v1/picklists/{data.fields.pickList}"
+              }
+            },
+            "data": [
+              {
+                "id": 30,
+                "typeKey": "CMP",
+                "display": "Component",
+                "displayPlural": "Components",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/component.png",
+                "category": "COMPONENT",
+                "widgets": [
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 239,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 514,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 240,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 241,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": true
+              },
+              {
+                "id": 31,
+                "typeKey": "SET",
+                "display": "Set",
+                "displayPlural": "Sets",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/set.png",
+                "category": "SET",
+                "widgets": [
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 242,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 515,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 295,
+                    "name": "setKey",
+                    "label": "setKey",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 243,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 244,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": true
+              },
+              {
+                "id": 32,
+                "typeKey": "FLD",
+                "display": "Folder",
+                "displayPlural": "Folders",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/section.png",
+                "category": "SECTION",
+                "widgets": [
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "URLS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 245,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 516,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 246,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 247,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": true
+              },
+              {
+                "id": 33,
+                "typeKey": "TXT",
+                "display": "Text",
+                "displayPlural": "Texts",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/text.png",
+                "category": "TEXT",
+                "widgets": [
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "URLS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 248,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 517,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 249,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 538,
+                    "name": "release",
+                    "label": "release",
+                    "fieldType": "RELEASE",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 250,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 24,
+                "typeKey": "REQ",
+                "display": "Requirement",
+                "displayPlural": "Requirements",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/website.png",
+                "widgets": [
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "URLS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 192,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 193,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 508,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 194,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 195,
+                    "name": "assignedTo",
+                    "label": "assignedTo",
+                    "fieldType": "USER",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 196,
+                    "name": "release",
+                    "label": "release",
+                    "fieldType": "RELEASE",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 221,
+                    "name": "priority",
+                    "label": "priority",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "pickList": 62,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 222,
+                    "name": "status",
+                    "label": "status",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "pickList": 63,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 451,
+                    "name": "createdDate",
+                    "label": "createdDate",
+                    "fieldType": "DATE",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 26,
+                "typeKey": "TC",
+                "display": "Test Case",
+                "displayPlural": "Test Cases",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/page_red.png",
+                "category": "TEST_CASE",
+                "widgets": [
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "URLS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 202,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 203,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 510,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 205,
+                    "name": "assignedTo",
+                    "label": "assignedTo",
+                    "fieldType": "USER",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 224,
+                    "name": "priority",
+                    "label": "priority",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "pickList": 62,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 537,
+                    "name": "status",
+                    "label": "status",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "pickList": 63,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 204,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "defaultTemplateId": 8,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 296,
+                    "name": "testCaseSteps",
+                    "label": "testCaseSteps",
+                    "fieldType": "STEPS",
+                    "readOnly": false,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "infotip": "",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 297,
+                    "name": "testCaseStatus",
+                    "label": "testCaseStatus",
+                    "fieldType": "TEST_CASE_STATUS",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 528,
+                    "name": "release",
+                    "label": "release",
+                    "fieldType": "RELEASE",
+                    "readOnly": false,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 597,
+                    "name": "testRunResults",
+                    "label": "testRunResults",
+                    "fieldType": "TEST_RUN_RESULTS",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 63,
+                "typeKey": "TYPE63",
+                "display": "Item Type 63",
+                "displayPlural": "Item Types 63",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/plugin.png",
+                "widgets": [
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "URLS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 548,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "infotip": "",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 549,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 550,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "infotip": "",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 551,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "textType": "RICHTEXT",
+                    "infotip": "",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 553,
+                    "name": "release",
+                    "label": "release",
+                    "fieldType": "RELEASE",
+                    "readOnly": false,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "infotip": "",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 23,
+                "typeKey": "TYPE23",
+                "display": "Item Type 23",
+                "displayPlural": "Item Types 23",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/website_blue.png",
+                "widgets": [
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": true
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 187,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 507,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 188,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 189,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 219,
+                    "name": "priority",
+                    "label": "priority",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "pickList": 62,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 220,
+                    "name": "status",
+                    "label": "status",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "pickList": 63,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 29,
+                "typeKey": "TYPE29",
+                "display": "Item Type 29",
+                "displayPlural": "Item Types 29",
+                "image": "https://jama.example.com/img/tree/book.png",
+                "widgets": [
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 233,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 513,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 234,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 235,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 236,
+                    "name": "assignedTo",
+                    "label": "assignedTo",
+                    "fieldType": "USER",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 237,
+                    "name": "release",
+                    "label": "release",
+                    "fieldType": "RELEASE",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 25,
+                "typeKey": "TYPE25",
+                "display": "Item Type 25",
+                "displayPlural": "Item Types 25",
+                "image": "https://jama.example.com/img/tree/edit.png",
+                "widgets": [
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 197,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 509,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 198,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "textType": "KEY",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 199,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 200,
+                    "name": "assignedTo",
+                    "label": "assignedTo",
+                    "fieldType": "USER",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 223,
+                    "name": "status",
+                    "label": "status",
+                    "fieldType": "LOOKUP",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "pickList": 63,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              },
+              {
+                "id": 61,
+                "typeKey": "TYPE61",
+                "display": "Item Type 61",
+                "displayPlural": "Item Types 61",
+                "description": "",
+                "image": "https://jama.example.com/img/tree/page.png",
+                "widgets": [
+                  {
+                    "name": "ATTACHMENTS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "ACTIVITIES",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "SYNCHRONIZED_ITEMS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "TAGS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "RELATIONSHIPS",
+                    "synchronize": false
+                  },
+                  {
+                    "name": "HISTORY",
+                    "synchronize": false
+                  }
+                ],
+                "fields": [
+                  {
+                    "id": 485,
+                    "name": "name",
+                    "label": "name",
+                    "fieldType": "STRING",
+                    "readOnly": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 526,
+                    "name": "globalId",
+                    "label": "globalId",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": true,
+                    "triggerSuspect": false,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 486,
+                    "name": "documentKey",
+                    "label": "documentKey",
+                    "fieldType": "STRING",
+                    "readOnly": true,
+                    "readOnlyAllowApiOverwrite": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": false,
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  },
+                  {
+                    "id": 487,
+                    "name": "description",
+                    "label": "description",
+                    "fieldType": "TEXT",
+                    "readOnly": false,
+                    "required": false,
+                    "triggerSuspect": true,
+                    "synchronize": true,
+                    "textType": "RICHTEXT",
+                    "isInherited": false,
+                    "reqAdvisorEnabled": false
+                  }
+                ],
+                "type": "itemtypes",
+                "system": false
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

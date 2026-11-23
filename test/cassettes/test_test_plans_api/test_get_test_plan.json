@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_get_test_plan",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744060",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:47:48 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.fields.project}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              },
+              "data.location.parent.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.location.parent.project}"
+              }
+            },
+            "data": {
+              "id": 744060,
+              "documentKey": "MOCK-TSTPL-15",
+              "globalId": "1020843",
+              "itemType": 35,
+              "project": 375,
+              "createdDate": "2026-11-21T02:29:35.000+0000",
+              "modifiedDate": "2026-11-21T02:29:35.000+0000",
+              "lastActivityDate": "2026-11-21T02:29:39.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "fields": {
+                "documentKey": "MOCK-TSTPL-15",
+                "globalId": "1020843",
+                "name": "Widget Verification Plan",
+                "project": 375
+              },
+              "resources": {
+                "self": {
+                  "allowed": [
+                    "GET",
+                    "PUT",
+                    "PATCH",
+                    "DELETE"
+                  ]
+                }
+              },
+              "version": 1,
+              "archived": false,
+              "location": {
+                "sortOrder": 0,
+                "globalSortOrder": 1073741823,
+                "sequence": "1",
+                "parent": {
+                  "project": 375
+                }
+              },
+              "type": "testplans"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

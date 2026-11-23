@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "test": "test/test_items_writes_api.py::test_post_item_location_naming_item_and_project_is_ambiguous",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120222426",
+  "interactions": [
+    {
+      "request": {
+        "method": "POST",
+        "path": "/rest/v1/items",
+        "query": [],
+        "body": {
+          "json": {
+            "project": 375,
+            "itemType": 24,
+            "childItemType": 24,
+            "location": {
+              "parent": {
+                "item": 743391,
+                "project": 375
+              }
+            },
+            "fields": {
+              "name": "zz-char-ambiguous-location",
+              "status": 561
+            }
+          }
+        }
+      },
+      "response": {
+        "status": 400,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:25:32 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Bad Request",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Item's parent location is ambiguous. You cannot set the parent as a project and an item"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

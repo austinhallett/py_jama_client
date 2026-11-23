@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "test": "test/test_baselines_api.py::test_get_baseline_review_link_synthetic",
+  "source": "synthetic",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/baselines/1/reviewlink",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK"
+            },
+            "data": {
+              "revisionId": 1,
+              "deleted": false,
+              "reviewKey": "REVIEW-1",
+              "readAccess": true,
+              "reviewName": "Review 1",
+              "url": "https://jama.example.com/perspective.req#/reviews/1"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

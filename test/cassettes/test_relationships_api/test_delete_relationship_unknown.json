@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_relationships_api.py::test_delete_relationship_unknown",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120233840",
+  "interactions": [
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/relationships/2147483647",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:39:09 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "The relationship with id 2147483647 was not found"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

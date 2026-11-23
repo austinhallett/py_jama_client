@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_comments_api.py::test_get_comment_unreadable_is_unauthorized",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120225356",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/comments/31607",
+        "query": []
+      },
+      "response": {
+        "status": 401,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:53:58 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Unauthorized",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "You do not have permission to access the comment with ID 31607"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

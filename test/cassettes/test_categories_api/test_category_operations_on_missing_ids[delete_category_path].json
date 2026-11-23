@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "test": "test/test_categories_api.py::test_category_operations_on_missing_ids[delete_category_path]",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121214933",
+  "interactions": [
+    {
+      "request": {
+        "method": "DELETE",
+        "path": "/rest/v1/categorypaths/2147483647",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 03:49:35 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "The requested resource does not exist.",
+              "errorCode": "CATEGORY_PATH_NOT_FOUND"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

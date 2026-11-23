@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "test": "test/test_activities_api.py::test_get_admin_activities_by_object_without_permission",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121204546",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/activities/adminActivity",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "objectId",
+            "375"
+          ],
+          [
+            "objectType",
+            "1"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 401,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 02:45:47 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Unauthorized",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "You don't have permission to perform this action."
+            }
+          }
+        }
+      }
+    }
+  ]
+}

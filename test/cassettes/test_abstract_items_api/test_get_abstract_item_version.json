@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "test": "test/test_abstract_items_api.py::test_get_abstract_item_version",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/abstractitems/743391/versions/3",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:40 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.item}"
+              },
+              "data.versionedItem": {
+                "type": "versioneditems",
+                "href": "https://jama.example.com/rest/v1/items/{data.versionedItem[0]}/versions/{data.versionedItem[1]}/versioneditem"
+              }
+            },
+            "data": {
+              "item": 743391,
+              "versionNumber": 3,
+              "versionedItem": [
+                743391,
+                3
+              ],
+              "changeDetails": "\"Release\" changed from \"\" to \"Hardware\"",
+              "createdDate": "2026-11-18T23:25:22.000+0000",
+              "createdBy": 21,
+              "userName": "user21",
+              "type": "version"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

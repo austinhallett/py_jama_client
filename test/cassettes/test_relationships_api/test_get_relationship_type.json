@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "test": "test/test_relationships_api.py::test_get_relationship_type",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/relationshiptypes/4",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:09 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {},
+            "data": {
+              "id": 4,
+              "name": "Related to",
+              "isDefault": true,
+              "type": "relationshiptypes"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

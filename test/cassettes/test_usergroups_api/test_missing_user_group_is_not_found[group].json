@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_usergroups_api.py::test_missing_user_group_is_not_found[group]",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121204838",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/usergroups/2147483647",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sun, 22 Nov 2026 02:48:40 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "group with id \"2147483647\" does not exist"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

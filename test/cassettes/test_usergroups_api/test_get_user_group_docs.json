@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "test": "test/test_usergroups_api.py::test_get_user_group_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/usergroups/11",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": {
+              "uid": "group1-uid",
+              "name": "Example group 1",
+              "description": "Example description 1",
+              "project": 7,
+              "id": 11,
+              "type": "usergroups"
+            },
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

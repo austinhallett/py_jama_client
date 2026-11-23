@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "test": "test/test_pick_lists_api.py::test_get_pick_lists",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120232337",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/picklists",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:55 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 15
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 62,
+                "name": "Pick List 62",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 33,
+                "name": "Pick List 33",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 31,
+                "name": "Pick List 31",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 34,
+                "name": "Pick List 34",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 63,
+                "name": "Pick List 63",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/picklists",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:55 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 15
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 833,
+                "name": "Pick List 833",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 160,
+                "name": "Pick List 160",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 138,
+                "name": "Pick List 138",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 385,
+                "name": "Pick List 385",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 260,
+                "name": "Pick List 260",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/picklists",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:23:55 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 15
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 1062,
+                "name": "Pick List 1062",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 1063,
+                "name": "Pick List 1063",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 1065,
+                "name": "Pick List 1065",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 1064,
+                "name": "Pick List 1064",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              },
+              {
+                "id": 1066,
+                "name": "Pick List 1066",
+                "description": "",
+                "pickListType": "Standard",
+                "type": "picklists"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

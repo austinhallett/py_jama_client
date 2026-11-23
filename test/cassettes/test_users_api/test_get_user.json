@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_get_user",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users/21",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:16 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {},
+            "data": {
+              "id": 21,
+              "username": "user21",
+              "firstName": "user21",
+              "lastName": "user21",
+              "email": "user21",
+              "phone": "user21",
+              "title": "",
+              "location": "",
+              "licenseType": "NAMED",
+              "active": true,
+              "uid": "",
+              "customData": [],
+              "type": "users"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "test": "test/test_comments_api.py::test_get_comment",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120225356",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/comments/31606",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:53:57 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.location.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.item}"
+              }
+            },
+            "data": {
+              "id": 31606,
+              "createdDate": "2026-11-21T04:33:56.000+0000",
+              "createdBy": 21,
+              "modifiedBy": 21,
+              "deleted": false,
+              "status": "OPEN",
+              "body": {
+                "text": "zz-char probe comment"
+              },
+              "commentType": "GENERAL",
+              "location": {
+                "item": 744366
+              },
+              "type": "comments"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

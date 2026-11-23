@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_get_test_group_test_case_unknown_test_case",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744060/testgroups",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:47:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 3,
+                "totalResults": 3
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 17577,
+                "name": "Default Test Group"
+              },
+              {
+                "id": 17578,
+                "name": "Mounting Tests"
+              },
+              {
+                "id": 17579,
+                "name": "Regulatory Tests"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744060/testgroups/17578/testcases/2147483647",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:47:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Item with ID \"2147483647\" does not exist"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

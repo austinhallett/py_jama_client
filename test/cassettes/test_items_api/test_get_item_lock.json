@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_item_lock",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items/743391/lock",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:58 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {},
+            "data": {
+              "locked": false,
+              "lastLockedDate": "2026-11-18T21:04:36.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

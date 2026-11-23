@@ -8,9 +8,10 @@ Example usage:
     >>> baselines = baselines_api.get_baselines(project_id=82)
 """
 
-import json
 import logging
 
+from py_jama_client.apis._include import with_include, with_query
+from py_jama_client.apis._path import segment
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
@@ -30,22 +31,29 @@ class BaselinesAPI:
     def get_baselines(
         self,
         project_id: int,
-        *args,
+        *,
         allowed_results_per_page=DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         params: dict | None = None,
+        include: list[str] | None = None,
+        source: int | None = None,
+        created_by: int | None = None,
         **kwargs,
     ) -> ClientResponse:
         """
         Get all baselines in the project with the specified ID
         GET: /baselines/
         Args:
+            include: links to include as full objects in the linked map
             project_id:  project resource id
+            source: only baselines created from the baseline source (such as a
+                release or filter) with this API ID (sent as source)
+            created_by: only baselines created by the user with this API ID
+                (sent as createdBy)
+            Each of these overrides the same key in params.
         """
-        req_params = {"project": project_id}
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
+        params = with_include(params, include)
+        params = {**(params or {}), "project": project_id}
+        params = with_query(params, source=source, createdBy=created_by)
 
         return self.client.get_all(
             self.resource_path,
@@ -57,8 +65,9 @@ class BaselinesAPI:
     def get_baseline(
         self,
         baseline_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -66,9 +75,11 @@ class BaselinesAPI:
         GET: /baselines/{baselineId}/
 
         Args:
+            include: links to include as full objects in the linked map
             baseline_id: the id of the baseline to fetch
         """
-        resource_path = f"{self.resource_path}/{baseline_id}"
+        params = with_include(params, include)
+        resource_path = f"{self.resource_path}/{segment(baseline_id)}"
 
         try:
             response = self.client.get(resource_path, params, **kwargs)
@@ -83,11 +94,10 @@ class BaselinesAPI:
         baseline_id: int,
         source: int,
         baseline_origin_type: str,
-        baseline_origin_id: str,
+        baseline_origin_id: int,
         name: str,
         description: str,
-        baseline_status_pick_list_option: int,
-        *args,
+        baseline_status_pick_list_option: int | None = None,
         **kwargs,
     ):
         """
@@ -96,8 +106,10 @@ class BaselinesAPI:
 
         Args:
             baseline_id: baseline resource id
+            baseline_status_pick_list_option: optional baseline status pick
+                list option id; None sends null, which the server accepts
         """
-        resource_path = f"{self.resource_path}/{baseline_id}"
+        resource_path = f"{self.resource_path}/{segment(baseline_id)}"
         body = {
             "source": source,
             "baselineOriginType": baseline_origin_type,
@@ -107,7 +119,7 @@ class BaselinesAPI:
             "baselineStatusPickListOption": baseline_status_pick_list_option,
         }
         try:
-            response = self.client.put(resource_path, data=json.dumps(body), **kwargs)
+            response = self.client.put(resource_path, json=body, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -117,7 +129,6 @@ class BaselinesAPI:
     def delete_baseline(
         self,
         baseline_id: int,
-        *args,
         **kwargs,
     ):
         """
@@ -127,18 +138,17 @@ class BaselinesAPI:
         Args:
             baseline_id: baseline resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}"
+        resource_path = f"{self.resource_path}/{segment(baseline_id)}"
         try:
             response = self.client.delete(resource_path, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
-            return JamaClient.handle_response_status(response)
+        return JamaClient.handle_response_status(response)
 
     def get_baseline_review_link(
         self,
         baseline_id: int,
-        *args,
         **kwargs,
     ):
         """
@@ -148,7 +158,7 @@ class BaselinesAPI:
         Args:
             baseline_id: baseline resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}/reviewlink"
+        resource_path = f"{self.resource_path}/{segment(baseline_id)}/reviewlink"
         try:
             response = self.client.get(resource_path, **kwargs)
         except CoreException as err:
@@ -160,17 +170,25 @@ class BaselinesAPI:
     def get_baseline_versioned_items(
         self,
         baseline_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
+        categories: bool | None = None,
         **kwargs,
     ):
         """
         Get all baseline items in a baseline with the specified ID
         Args:
+            include: links to include as full objects in the linked map
             baseline_id:  baseline resource id
+            categories: if True, return all categories applied at the time the
+                baseline was created (sent as categories; overrides the same
+                key in params)
         """
-        resource_path = f"baselines/{baseline_id}/versioneditems"
+        params = with_include(params, include)
+        params = with_query(params, categories=categories)
+        resource_path = f"baselines/{segment(baseline_id)}/versioneditems"
         return self.client.get_all(
             resource_path,
             params,
@@ -182,8 +200,9 @@ class BaselinesAPI:
         self,
         baseline_id: int,
         item_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -192,10 +211,12 @@ class BaselinesAPI:
         GET: /baselines/{baselineId}/versioneditems/{itemId}
 
         Args:
+            include: links to include as full objects in the linked map
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
-        resource_path = f"{self.resource_path}/{baseline_id}/versioneditems/{item_id}"
+        params = with_include(params, include)
+        resource_path = f"{self.resource_path}/{segment(baseline_id)}/versioneditems/{segment(item_id)}"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
@@ -208,8 +229,9 @@ class BaselinesAPI:
         self,
         baseline_id: int,
         item_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
         **kwargs,
     ):
@@ -219,12 +241,14 @@ class BaselinesAPI:
          /baselines/{baselineId}/versioneditems/{itemId}/versionedrelationships
 
         Args:
+            include: links to include as full objects in the linked map
             baseline_id: baseline resource id
             item_id: baseline item resource id
         """
+        params = with_include(params, include)
         resource_path = (
-            f"{self.resource_path}/{baseline_id}/versioneditems/"
-            f"{item_id}/versionedrelationships"
+            f"{self.resource_path}/{segment(baseline_id)}/versioneditems/"
+            f"{segment(item_id)}/versionedrelationships"
         )
         return self.client.get_all(
             resource_path, params, allowed_results_per_page, **kwargs

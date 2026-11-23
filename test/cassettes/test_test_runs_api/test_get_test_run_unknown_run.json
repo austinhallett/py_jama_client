@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_test_runs_api.py::test_get_test_run_unknown_run",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120221151",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testruns/2147483647",
+        "query": []
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:11:59 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "Test Run with ID \"2147483647\" does not exist"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

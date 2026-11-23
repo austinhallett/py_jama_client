@@ -1,0 +1,552 @@
+{
+  "version": 1,
+  "test": "test/test_filters_api.py::test_get_filter_results",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120174829",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters/3235/results",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:48:31 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 9
+              }
+            },
+            "links": {
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.release": {
+                "type": "releases",
+                "href": "https://jama.example.com/rest/v1/releases/{data.fields.release}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.childItemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.childItemType}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743398,
+                "documentKey": "MOCK-REQ-3080",
+                "globalId": "1020624",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T21:07:14.000+0000",
+                "modifiedDate": "2026-11-18T23:25:25.000+0000",
+                "lastActivityDate": "2026-11-18T23:25:25.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "EU Regulatory",
+                  "documentKey": "MOCK-REQ-3080",
+                  "globalId": "1020624",
+                  "description": "<p>&nbsp;</p>\n\n<p>EU Wallmount &amp; Tabletop Hardware shall meet all EU regulatory requirements.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939543610,
+                  "sequence": "1.1.2.2",
+                  "parent": {
+                    "item": 743395
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743409,
+                "documentKey": "MOCK-TC-1479",
+                "globalId": "1020640",
+                "itemType": 26,
+                "project": 375,
+                "createdDate": "2026-11-18T21:20:41.000+0000",
+                "modifiedDate": "2026-11-18T21:29:29.000+0000",
+                "lastActivityDate": "2026-11-18T21:29:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "EU Regulatory",
+                  "documentKey": "MOCK-TC-1479",
+                  "globalId": "1020640",
+                  "priority": 281,
+                  "status": 561,
+                  "description": "<p><span style=\"color:#3498db\">EU Wallmount &amp; Tabletop Hardware shall meet all EU regulatory requirements.</span></p>\n",
+                  "testCaseSteps": [
+                    {
+                      "action": "<p>Execute test plans for all EU regulatory requirements</p>\n",
+                      "expectedResult": "<p>Pass</p>\n",
+                      "notes": ""
+                    }
+                  ],
+                  "testCaseStatus": "NOT_SCHEDULED",
+                  "testRunResults": {
+                    "id": 0,
+                    "numPassed": 0,
+                    "numNotRun": 0,
+                    "numInProgress": 0,
+                    "numFailed": 0,
+                    "numBlocked": 0,
+                    "numNotApplicable": 0,
+                    "numTotalRuns": 0
+                  }
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 4,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939551121,
+                  "sequence": "1.2.2.2",
+                  "parent": {
+                    "item": 743411
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:29:30.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743333,
+                "documentKey": "MOCK-SET-342",
+                "globalId": "1020592",
+                "itemType": 31,
+                "project": 375,
+                "createdDate": "2026-11-18T19:34:53.000+0000",
+                "modifiedDate": "2026-11-18T19:34:53.000+0000",
+                "lastActivityDate": "2026-11-18T19:34:54.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-SET-342",
+                  "globalId": "1020592",
+                  "setKey": "PVAR",
+                  "name": "EU Product Variants"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 3,
+                  "globalSortOrder": 939561851,
+                  "sequence": "1.4",
+                  "parent": {
+                    "item": 743328
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 63,
+                "type": "items"
+              },
+              {
+                "id": 743359,
+                "documentKey": "MOCK-PVAR-310",
+                "globalId": "1020604",
+                "itemType": 63,
+                "project": 375,
+                "createdDate": "2026-11-18T20:12:37.000+0000",
+                "modifiedDate": "2026-11-18T20:13:36.000+0000",
+                "lastActivityDate": "2026-11-19T01:32:03.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-PVAR-310",
+                  "globalId": "1020604",
+                  "name": "Large Wallmount EU Hardware Plaque"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939563997,
+                  "sequence": "1.4.1.1",
+                  "parent": {
+                    "item": 743358
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T20:13:37.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743360,
+                "documentKey": "MOCK-PVAR-311",
+                "globalId": "1020605",
+                "itemType": 63,
+                "project": 375,
+                "createdDate": "2026-11-18T20:12:38.000+0000",
+                "modifiedDate": "2026-11-18T20:13:49.000+0000",
+                "lastActivityDate": "2026-11-19T01:32:04.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-PVAR-311",
+                  "globalId": "1020605",
+                  "name": "Medium Wallmount EU Hardware Plaque"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939565070,
+                  "sequence": "1.4.1.2",
+                  "parent": {
+                    "item": 743358
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T20:13:50.000+0000"
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters/3235/results",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:48:31 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 4,
+                "totalResults": 9
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743361,
+                "documentKey": "MOCK-PVAR-312",
+                "globalId": "1020606",
+                "itemType": 63,
+                "project": 375,
+                "createdDate": "2026-11-18T20:12:38.000+0000",
+                "modifiedDate": "2026-11-18T20:14:00.000+0000",
+                "lastActivityDate": "2026-11-19T01:32:04.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-PVAR-312",
+                  "globalId": "1020606",
+                  "name": "Small Wallmount EU Hardware Plaque"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 2,
+                  "globalSortOrder": 939566143,
+                  "sequence": "1.4.1.3",
+                  "parent": {
+                    "item": 743358
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T20:14:01.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743363,
+                "documentKey": "MOCK-PVAR-313",
+                "globalId": "1020608",
+                "itemType": 63,
+                "project": 375,
+                "createdDate": "2026-11-18T20:13:06.000+0000",
+                "modifiedDate": "2026-11-18T20:14:13.000+0000",
+                "lastActivityDate": "2026-11-19T01:32:05.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-PVAR-313",
+                  "globalId": "1020608",
+                  "name": "Large Tabletop EU Hardware Box"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939568289,
+                  "sequence": "1.4.2.1",
+                  "parent": {
+                    "item": 743362
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T20:14:13.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743364,
+                "documentKey": "MOCK-PVAR-314",
+                "globalId": "1020609",
+                "itemType": 63,
+                "project": 375,
+                "createdDate": "2026-11-18T20:13:06.000+0000",
+                "modifiedDate": "2026-11-18T20:14:23.000+0000",
+                "lastActivityDate": "2026-11-19T01:32:06.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-PVAR-314",
+                  "globalId": "1020609",
+                  "name": "Medium Tabletop EU Hardware Box"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939569362,
+                  "sequence": "1.4.2.2",
+                  "parent": {
+                    "item": 743362
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T20:14:24.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743365,
+                "documentKey": "MOCK-PVAR-315",
+                "globalId": "1020610",
+                "itemType": 63,
+                "project": 375,
+                "createdDate": "2026-11-18T20:13:06.000+0000",
+                "modifiedDate": "2026-11-18T20:14:33.000+0000",
+                "lastActivityDate": "2026-11-19T01:32:07.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-PVAR-315",
+                  "globalId": "1020610",
+                  "name": "Small Tabletop EU Hardware Box"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 2,
+                  "globalSortOrder": 939570435,
+                  "sequence": "1.4.2.3",
+                  "parent": {
+                    "item": 743362
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T20:14:34.000+0000"
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

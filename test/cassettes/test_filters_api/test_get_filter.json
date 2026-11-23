@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "test": "test/test_filters_api.py::test_get_filter",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120174522",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/filters/3235",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Fri, 20 Nov 2026 23:45:23 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.specifiedProject": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.specifiedProject}"
+              },
+              "data.filterQuery.rule.rules.rules.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.filterQuery.rule.rules.rules.itemType}"
+              },
+              "data.author": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.author}"
+              }
+            },
+            "data": {
+              "id": 3235,
+              "name": "EU Filter",
+              "author": 21,
+              "projectScope": "SPECIFIED",
+              "specifiedProject": 375,
+              "filterQuery": {
+                "rule": {
+                  "operator": "GROUP_AND",
+                  "values": [],
+                  "rules": [
+                    {
+                      "operator": "GROUP_OR",
+                      "values": [],
+                      "rules": [
+                        {
+                          "operator": "GROUP_OR",
+                          "values": [],
+                          "itemType": 0,
+                          "rules": [
+                            {
+                              "field": {
+                                "id": 256,
+                                "name": "name",
+                                "display": "Name",
+                                "fieldDataType": "TEXT_FIELD"
+                              },
+                              "operator": "CONTAINS_WORD",
+                              "values": [
+                                "EU"
+                              ],
+                              "rules": []
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "field": {
+                        "id": 0,
+                        "name": "modifiedDate"
+                      },
+                      "operator": "IS_WITHIN_LAST",
+                      "values": [],
+                      "rules": []
+                    }
+                  ]
+                },
+                "orderRules": [
+                  {
+                    "direction": "ASC",
+                    "field": {
+                      "id": 251,
+                      "name": "sequence",
+                      "display": "Heading",
+                      "fieldDataType": "TEXT_FIELD"
+                    }
+                  }
+                ]
+              },
+              "type": "filters",
+              "public": false
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -11,6 +11,8 @@ Example usage:
 
 import logging
 
+from py_jama_client.apis._include import with_include
+from py_jama_client.apis._path import segment
 from py_jama_client.client import JamaClient
 from py_jama_client.constants import DEFAULT_ALLOWED_RESULTS_PER_PAGE
 from py_jama_client.exceptions import APIException, CoreException
@@ -29,18 +31,20 @@ class AbstractItemsAPI:
 
     def get_abstract_items(
         self,
-        project: list[int] | None = None,
-        item_type: list[int] | None = None,
-        document_key: list[str] | None = None,
-        release: list[int] | None = None,
-        created_date: list[str] | None = None,
-        modified_date: list[str] | None = None,
-        last_activity_date: list[str] | None = None,
-        contains: list[str] | None = None,
-        sort_by: list[str] | None = None,
+        project: int | list[int] | None = None,
+        item_type: int | list[int] | None = None,
+        document_key: str | list[str] | None = None,
+        release: int | list[int] | None = None,
+        created_date: str | list[str] | None = None,
+        modified_date: str | list[str] | None = None,
+        last_activity_date: str | list[str] | None = None,
+        contains: str | list[str] | None = None,
+        sort_by: str | list[str] | None = None,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        *args,
+        *,
         params: dict | None = None,
+        include_wildcard: bool | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -48,6 +52,7 @@ class AbstractItemsAPI:
         GET: /abstractitems/
 
         Args:
+            include: links to include as full objects in the linked map
             project: list of project resource ids
             item_type: list of item type resource ids
             document_key: list of document keys
@@ -66,11 +71,15 @@ class AbstractItemsAPI:
             sort_by: Sort orders can be added with the name of the field by which to sort, followed by .asc
                 or .desc (e.g. 'name.asc' or 'modifiedDate.desc'). If not set, this defaults to sorting
                 by sequence.asc and then documentKey.asc
+            include_wildcard: Filter the search results with the specific
+                'contains' value, maximizing the results based on variations of
+                the word (sent as includeWildcard; overrides the same key in
+                params)
         """
+        params = with_include(params, include)
 
         # Add each parameter that is not null to the request.
-        if params is None:
-            params = {}
+        params = dict(params or {})
 
         if project is not None:
             params.update({"project": project})
@@ -99,6 +108,9 @@ class AbstractItemsAPI:
         if sort_by is not None:
             params.update({"sortBy": sort_by})
 
+        if include_wildcard is not None:
+            params.update({"includeWildcard": include_wildcard})
+
         return self.client.get_all(
             self.resource_path,
             params,
@@ -109,8 +121,9 @@ class AbstractItemsAPI:
     def get_abstract_item(
         self,
         item_id: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -118,9 +131,11 @@ class AbstractItemsAPI:
         GET: /abstractitems/{item_id}
 
         Args:
+            include: links to include as full objects in the linked map
             item_id: the item id of the item to fetch
         """
-        resource_path = f"abstractitems/{item_id}"
+        params = with_include(params, include)
+        resource_path = f"abstractitems/{segment(item_id)}"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
@@ -134,8 +149,9 @@ class AbstractItemsAPI:
         item_id: int,
         timestamp: str,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -143,17 +159,17 @@ class AbstractItemsAPI:
         GET: /abstractitems/{item_id}/versionedrelationships
 
         Args:
+            include: links to include as full objects in the linked map
             item_id: item resource id
             timestamp: Get relationships for the specified item at this date and time.
                 Requires ISO8601 formatting (milliseconds or seconds) - "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
                 or "yyyy-MM-dd'T'HH:mm:ssZ"
         """
-        resource_path = f"{self.resource_path}/{item_id}/versionedrelationships"
-        req_params = {"timestamp": timestamp}
-        if params is None:
-            params = req_params
-        else:
-            params.update(req_params)
+        params = with_include(params, include)
+        resource_path = (
+            f"{self.resource_path}/{segment(item_id)}/versionedrelationships"
+        )
+        params = {**(params or {}), "timestamp": timestamp}
         return self.client.get_all(
             resource_path,
             params,
@@ -165,8 +181,9 @@ class AbstractItemsAPI:
         self,
         item_id: int,
         allowed_results_per_page: int = DEFAULT_ALLOWED_RESULTS_PER_PAGE,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -174,11 +191,13 @@ class AbstractItemsAPI:
         GET: /abstractitems/{item_id}/versions
 
         Args:
+            include: links to include as full objects in the linked map
             item_id: the item id of the item to fetch
 
         Returns: JSON array with all versions for the item
         """
-        resource_path = f"{self.resource_path}/{item_id}/versions"
+        params = with_include(params, include)
+        resource_path = f"{self.resource_path}/{segment(item_id)}/versions"
         return self.client.get_all(
             resource_path,
             params,
@@ -190,8 +209,9 @@ class AbstractItemsAPI:
         self,
         item_id: int,
         version_num: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -199,12 +219,16 @@ class AbstractItemsAPI:
         GET: /abstractitems/{item_id}/versions/{version_num}/
 
         Args:
+            include: links to include as full objects in the linked map
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = f"{self.resource_path}/{item_id}/versions/{version_num}"
+        params = with_include(params, include)
+        resource_path = (
+            f"{self.resource_path}/{segment(item_id)}/versions/{segment(version_num)}"
+        )
         try:
-            response = self.client.get(resource_path, params)
+            response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:
             py_jama_client_logger.error(err)
             raise APIException(str(err))
@@ -215,8 +239,9 @@ class AbstractItemsAPI:
         self,
         item_id: int,
         version_num: int,
-        *args,
+        *,
         params: dict | None = None,
+        include: list[str] | None = None,
         **kwargs,
     ):
         """
@@ -224,12 +249,12 @@ class AbstractItemsAPI:
         GET: /abstractitems/{item_id}/versions/{version_num}/versioneditem/
 
         Args:
+            include: links to include as full objects in the linked map
             item_id: the item id of the item to fetch
             version_num: the version number for the item
         """
-        resource_path = (
-            f"{self.resource_path}/{item_id}/versions/{version_num}/versioneditem"
-        )
+        params = with_include(params, include)
+        resource_path = f"{self.resource_path}/{segment(item_id)}/versions/{segment(version_num)}/versioneditem"
         try:
             response = self.client.get(resource_path, params, **kwargs)
         except CoreException as err:

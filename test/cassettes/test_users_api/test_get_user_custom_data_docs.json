@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_get_user_custom_data_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users/5/customData",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": [
+              {
+                "name": "Example name 1",
+                "value": "Example value 1"
+              },
+              {
+                "name": "Example name 2",
+                "value": "Example value 2"
+              }
+            ],
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "test": "test/test_client_init.py::test_client_creation",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": []
+}

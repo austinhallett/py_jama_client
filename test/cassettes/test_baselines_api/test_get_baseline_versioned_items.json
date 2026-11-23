@@ -1,0 +1,294 @@
+{
+  "version": 1,
+  "test": "test/test_baselines_api.py::test_get_baseline_versioned_items",
+  "source": "live",
+  "recorded": "2026-11-22",
+  "run_id": "20261122185530",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/baselines/2653/versioneditems",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Mon, 23 Nov 2026 00:55:36 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 35
+              }
+            },
+            "links": {
+              "data.baseline": {
+                "type": "baselines",
+                "href": "https://jama.example.com/rest/v1/baselines/{data.baseline}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.baselineLocation.parent.item": {
+                "type": "versioneditems",
+                "href": "https://jama.example.com/rest/v1/items/{data.baselineLocation.parent.item[0]}/versions/{data.baselineLocation.parent.item[1]}/versioneditem"
+              },
+              "data.fields.release": {
+                "type": "releases",
+                "href": "https://jama.example.com/rest/v1/releases/{data.fields.release}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.childItemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.childItemType}"
+              },
+              "data.baselineLocation.parent.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.baselineLocation.parent.project}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743328,
+                "documentKey": "MOCK-CMP-124",
+                "globalId": "1020588",
+                "itemType": 30,
+                "project": 375,
+                "createdDate": "2026-11-18T19:20:05.000+0000",
+                "modifiedDate": "2026-11-18T19:20:05.000+0000",
+                "lastActivityDate": "2026-11-18T19:20:05.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-CMP-124",
+                  "globalId": "1020588",
+                  "name": "Hardware Widgets"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET"
+                    ]
+                  }
+                },
+                "version": 1,
+                "currentVersion": 1,
+                "baseline": 2653,
+                "baselineLocation": {
+                  "sequence": "1",
+                  "parent": {
+                    "project": 375
+                  }
+                },
+                "type": "baselineitems"
+              },
+              {
+                "id": 743389,
+                "documentKey": "MOCK-SET-344",
+                "globalId": "1020617",
+                "itemType": 31,
+                "project": 375,
+                "createdDate": "2026-11-18T20:56:30.000+0000",
+                "modifiedDate": "2026-11-18T20:56:30.000+0000",
+                "lastActivityDate": "2026-11-21T02:35:48.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-SET-344",
+                  "globalId": "1020617",
+                  "setKey": "REQ",
+                  "name": "Requirements"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET"
+                    ]
+                  }
+                },
+                "version": 1,
+                "childItemType": 24,
+                "currentVersion": 1,
+                "baseline": 2653,
+                "baselineLocation": {
+                  "sequence": "1.1",
+                  "parent": {
+                    "item": [
+                      743328,
+                      1
+                    ]
+                  }
+                },
+                "type": "baselineitems"
+              },
+              {
+                "id": 743390,
+                "documentKey": "MOCK-FLD-991",
+                "globalId": "1020618",
+                "itemType": 32,
+                "project": 375,
+                "createdDate": "2026-11-18T20:57:07.000+0000",
+                "modifiedDate": "2026-11-18T20:57:07.000+0000",
+                "lastActivityDate": "2026-11-18T20:57:07.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-FLD-991",
+                  "globalId": "1020618",
+                  "name": "Mounting"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET"
+                    ]
+                  }
+                },
+                "version": 1,
+                "childItemType": 24,
+                "currentVersion": 1,
+                "baseline": 2653,
+                "baselineLocation": {
+                  "sequence": "1.1.1",
+                  "parent": {
+                    "item": [
+                      743389,
+                      1
+                    ]
+                  }
+                },
+                "type": "baselineitems"
+              },
+              {
+                "id": 743391,
+                "documentKey": "MOCK-REQ-3076",
+                "globalId": "1020619",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T20:58:26.000+0000",
+                "modifiedDate": "2026-11-18T23:25:22.000+0000",
+                "lastActivityDate": "2026-11-22T01:01:20.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Wallmount Mounting",
+                  "documentKey": "MOCK-REQ-3076",
+                  "globalId": "1020619",
+                  "description": "<p>Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted at a 45 degree downward angle into drywall.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET"
+                    ]
+                  }
+                },
+                "version": 3,
+                "currentVersion": 3,
+                "baseline": 2653,
+                "baselineLocation": {
+                  "sequence": "1.1.1.1",
+                  "parent": {
+                    "item": [
+                      743390,
+                      1
+                    ]
+                  }
+                },
+                "type": "baselineitems"
+              },
+              {
+                "id": 743392,
+                "documentKey": "MOCK-REQ-3077",
+                "globalId": "1020620",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T20:58:42.000+0000",
+                "modifiedDate": "2026-11-18T23:25:23.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting",
+                  "documentKey": "MOCK-REQ-3077",
+                  "globalId": "1020620",
+                  "description": "<p>Tabletop Widgets shall be able to stand firmly on four feet with no wobble.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET"
+                    ]
+                  }
+                },
+                "version": 3,
+                "currentVersion": 3,
+                "baseline": 2653,
+                "baselineLocation": {
+                  "sequence": "1.1.1.2",
+                  "parent": {
+                    "item": [
+                      743390,
+                      1
+                    ]
+                  }
+                },
+                "type": "baselineitems"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

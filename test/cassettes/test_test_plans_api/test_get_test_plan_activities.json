@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_get_test_plan_activities",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204915",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744060/activities",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:49:16 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 10,
+                "totalResults": 10
+              }
+            },
+            "links": {
+              "data.item": {
+                "type": "abstractitems",
+                "href": "https://jama.example.com/rest/v1/abstractitems/{data.item}"
+              },
+              "data.user": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.user}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 1974983,
+                "item": 744060,
+                "date": "2026-11-21T02:29:39.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "created multiple test runs in test cycle",
+                "eventType": "CREATE",
+                "details": "Created \"4\" test runs",
+                "objectType": "TEST_RUN",
+                "itemType": 35,
+                "referenceId": 744060
+              },
+              {
+                "id": 1974982,
+                "item": 744061,
+                "date": "2026-11-21T02:29:39.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Added",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "TEST_CYCLE",
+                "itemType": 36,
+                "referenceId": 744061
+              },
+              {
+                "id": 1974978,
+                "item": 744060,
+                "date": "2026-11-21T02:29:38.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "associated test case",
+                "eventType": "CREATE",
+                "objectType": "TEST_PLAN",
+                "itemType": 35,
+                "referenceId": 744060
+              },
+              {
+                "id": 1974980,
+                "item": 744060,
+                "date": "2026-11-21T02:29:38.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "associated test case",
+                "eventType": "CREATE",
+                "objectType": "TEST_PLAN",
+                "itemType": 35,
+                "referenceId": 744060
+              },
+              {
+                "id": 1974977,
+                "item": 744060,
+                "date": "2026-11-21T02:29:37.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "created test group",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "itemType": 35
+              },
+              {
+                "id": 1974973,
+                "item": 744060,
+                "date": "2026-11-21T02:29:37.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "associated test case",
+                "eventType": "CREATE",
+                "objectType": "TEST_PLAN",
+                "itemType": 35,
+                "referenceId": 744060
+              },
+              {
+                "id": 1974975,
+                "item": 744060,
+                "date": "2026-11-21T02:29:37.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "associated test case",
+                "eventType": "CREATE",
+                "objectType": "TEST_PLAN",
+                "itemType": 35,
+                "referenceId": 744060
+              },
+              {
+                "id": 1974972,
+                "item": 744060,
+                "date": "2026-11-21T02:29:36.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "created test group",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "itemType": 35
+              },
+              {
+                "id": 1974971,
+                "item": 744060,
+                "date": "2026-11-21T02:29:35.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "created test group",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "itemType": 35
+              },
+              {
+                "id": 1974970,
+                "item": 744060,
+                "date": "2026-11-21T02:29:35.000+0000",
+                "user": 21,
+                "userName": "user",
+                "action": "Test Plan created",
+                "eventType": "CREATE",
+                "details": "Initial Creation",
+                "objectType": "TEST_PLAN",
+                "itemType": 35,
+                "referenceId": 744060
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

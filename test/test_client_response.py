@@ -62,6 +62,7 @@ def test_too_many_requests_exception_includes_response_headers():
     with pytest.raises(TooManyRequestsException) as exc_info:
         JamaClient.handle_response_status(response)
 
+    assert exc_info.value.headers
     assert exc_info.value.headers["Retry-After"] == "17"
     assert exc_info.value.retry_after == 17.0
 
@@ -80,9 +81,10 @@ def test_too_many_requests_exception_retry_after_parses_header():
     ).retry_after
     assert future_wait is not None
     assert 50 < future_wait <= 60
-    assert throttled(
-        {"Retry-After": format_datetime(retried_at, usegmt=True)}
-    ).retry_after == 0.0
+    assert (
+        throttled({"Retry-After": format_datetime(retried_at, usegmt=True)}).retry_after
+        == 0.0
+    )
 
 
 def test_too_many_requests_exception_retry_after_is_fixed_when_raised(monkeypatch):
@@ -104,15 +106,28 @@ def test_too_many_requests_exception_retry_after_is_fixed_when_raised(monkeypatc
     assert 50 < retry_after <= 60
 
 
+def test_too_many_requests_exception_retry_after_ignores_later_header_changes():
+    headers = {"Retry-After": "17"}
+    throttled = TooManyRequestsException("throttled", headers=headers)
+    headers["Retry-After"] = "99"
+    throttled.headers = {"Retry-After": "42"}
+
+    assert throttled.retry_after == 17.0
+
+
+def test_too_many_requests_exception_retry_after_is_assignable():
+    throttled = TooManyRequestsException("throttled", headers={"Retry-After": "17"})
+    throttled.retry_after = 3.0
+    assert throttled.retry_after == 3.0
+
+
 def test_too_many_requests_exception_measures_retry_after_from_server_date(
     monkeypatch,
 ):
     server_now = datetime(2026, 1, 1, tzinfo=UTC)
     headers = {
         "Date": format_datetime(server_now, usegmt=True),
-        "Retry-After": format_datetime(
-            server_now + timedelta(seconds=20), usegmt=True
-        ),
+        "Retry-After": format_datetime(server_now + timedelta(seconds=20), usegmt=True),
     }
 
     class SkewedDatetime:
@@ -155,12 +170,18 @@ def test_bound_retry_after_defaults_without_retry_after():
 def test_too_many_requests_exception_retry_after_is_none_without_usable_header():
     assert TooManyRequestsException("throttled").retry_after is None
     assert TooManyRequestsException("throttled", headers={}).retry_after is None
-    assert TooManyRequestsException(
-        "throttled", headers={"Retry-After": "invalid"}
-    ).retry_after is None
-    assert TooManyRequestsException(
-        "throttled", headers={"Retry-After": "nan"}
-    ).retry_after is None
+    assert (
+        TooManyRequestsException(
+            "throttled", headers={"Retry-After": "invalid"}
+        ).retry_after
+        is None
+    )
+    assert (
+        TooManyRequestsException(
+            "throttled", headers={"Retry-After": "nan"}
+        ).retry_after
+        is None
+    )
 
 
 def test_get_all_honors_retry_after(monkeypatch, caplog):
@@ -171,33 +192,31 @@ def test_get_all_honors_retry_after(monkeypatch, caplog):
     throttled = TooManyRequestsException(
         "throttled", headers={"Retry-After": format_datetime(retry_at, usegmt=True)}
     )
-    client.get_page = Mock(side_effect=[
-        ClientResponse(
-            {"pageInfo": {"startIndex": 0, "totalResults": 3}},
-            {},
-            {},
-            [{"id": 1}, {"id": 2}],
-        ),
-        throttled,
-        ClientResponse(
-            {"pageInfo": {"startIndex": 2, "totalResults": 3}},
-            {},
-            {},
-            [{"id": 3}],
-        ),
-    ])
+    client.get_page = Mock(
+        side_effect=[
+            ClientResponse(
+                {"pageInfo": {"startIndex": 0, "totalResults": 3}},
+                {},
+                {},
+                [{"id": 1}, {"id": 2}],
+            ),
+            throttled,
+            ClientResponse(
+                {"pageInfo": {"startIndex": 2, "totalResults": 3}},
+                {},
+                {},
+                [{"id": 3}],
+            ),
+        ]
+    )
     sleep = Mock()
     monkeypatch.setattr("time.sleep", sleep)
 
     caplog.set_level(logging.INFO, logger="py_jama_client")
-    response = client.get_all(
-        "items", params={}, allowed_results_per_page=2
-    )
+    response = client.get_all("items", params={}, allowed_results_per_page=2)
 
     assert response.data == [{"id": 1}, {"id": 2}, {"id": 3}]
-    assert [call.args[1] for call in client.get_page.call_args_list] == [
-        0, 2, 2
-    ]
+    assert [call.args[1] for call in client.get_page.call_args_list] == [0, 2, 2]
     sleep.assert_called_once()
     assert expected_wait - 10 < sleep.call_args.args[0] <= expected_wait
     assert "Throttled" in caplog.text
@@ -205,10 +224,11 @@ def test_get_all_honors_retry_after(monkeypatch, caplog):
 
 def test_get_all_stops_after_max_consecutive_throttles(monkeypatch):
     client = JamaClient.__new__(JamaClient)
-    client.get_page = Mock(side_effect=[
-        TooManyRequestsException("throttled")
-        for _ in range(MAX_THROTTLE_WAITS + 1)
-    ])
+    client.get_page = Mock(
+        side_effect=[
+            TooManyRequestsException("throttled") for _ in range(MAX_THROTTLE_WAITS + 1)
+        ]
+    )
     sleep = Mock()
     monkeypatch.setattr("time.sleep", sleep)
 
@@ -221,22 +241,22 @@ def test_get_all_stops_after_max_consecutive_throttles(monkeypatch):
 
 def test_get_all_merges_linked_data_across_pages():
     client = JamaClient.__new__(JamaClient)
-    client.get_page = Mock(side_effect=[
-        ClientResponse(
-            {"pageInfo": {"startIndex": 0, "totalResults": 2}},
-            {},
-            {"items": {1: {"id": 1, "name": "first"},
-                       2: {"id": 2}}},
-            [{"id": 1}],
-        ),
-        ClientResponse(
-            {"pageInfo": {"startIndex": 1, "totalResults": 2}},
-            {},
-            {"items": {1: {"id": 1, "name": "updated"},
-                       3: {"id": 3}}},
-            [{"id": 2}],
-        ),
-    ])
+    client.get_page = Mock(
+        side_effect=[
+            ClientResponse(
+                {"pageInfo": {"startIndex": 0, "totalResults": 2}},
+                {},
+                {"items": {1: {"id": 1, "name": "first"}, 2: {"id": 2}}},
+                [{"id": 1}],
+            ),
+            ClientResponse(
+                {"pageInfo": {"startIndex": 1, "totalResults": 2}},
+                {},
+                {"items": {1: {"id": 1, "name": "updated"}, 3: {"id": 3}}},
+                [{"id": 2}],
+            ),
+        ]
+    )
 
     response = client.get_all("items", allowed_results_per_page=1)
 
@@ -252,8 +272,7 @@ def test_get_all_merges_linked_data_across_pages():
 def test_get_page_does_not_mutate_params():
     client = JamaClient.__new__(JamaClient)
     response = Mock(status_code=200)
-    response.json.return_value = {"meta": {}, "links": {}, "linked": {},
-                                  "data": []}
+    response.json.return_value = {"meta": {}, "links": {}, "linked": {}, "data": []}
     client.get = Mock(return_value=response)
     params = {"project": 1}
 
@@ -261,5 +280,7 @@ def test_get_page_does_not_mutate_params():
 
     assert params == {"project": 1}
     assert client.get.call_args.kwargs["params"] == {
-        "project": 1, "startAt": 10, "maxResults": 5
+        "project": 1,
+        "startAt": 10,
+        "maxResults": 5,
     }

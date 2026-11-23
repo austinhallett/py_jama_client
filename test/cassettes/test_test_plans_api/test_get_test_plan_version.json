@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "test": "test/test_test_plans_api.py::test_get_test_plan_version",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120204747",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/testplans/744060/versions/1",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 02:47:51 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.item": {
+                "type": "testplans",
+                "href": "https://jama.example.com/rest/v1/testplans/{data.item}"
+              },
+              "data.versionedItem": {
+                "type": "versionedtestplans",
+                "href": "https://jama.example.com/rest/v1/testplans/{data.versionedItem[0]}/versions/{data.versionedItem[1]}/versioneditem"
+              }
+            },
+            "data": {
+              "item": 744060,
+              "versionNumber": 1,
+              "versionedItem": [
+                744060,
+                1
+              ],
+              "changeDetails": "Initial Creation",
+              "createdDate": "2026-11-21T02:29:35.000+0000",
+              "createdBy": 21,
+              "userName": "user21",
+              "type": "version"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

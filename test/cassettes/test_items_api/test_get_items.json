@@ -1,0 +1,947 @@
+{
+  "version": 1,
+  "test": "test/test_items_api.py::test_get_items",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:49 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 40
+              }
+            },
+            "links": {
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.release": {
+                "type": "releases",
+                "href": "https://jama.example.com/rest/v1/releases/{data.fields.release}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.childItemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.childItemType}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              },
+              "data.location.parent.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.location.parent.project}"
+              }
+            },
+            "data": [
+              {
+                "id": 743328,
+                "documentKey": "MOCK-CMP-124",
+                "globalId": "1020588",
+                "itemType": 30,
+                "project": 375,
+                "createdDate": "2026-11-18T19:20:05.000+0000",
+                "modifiedDate": "2026-11-18T19:20:05.000+0000",
+                "lastActivityDate": "2026-11-18T19:20:05.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-CMP-124",
+                  "globalId": "1020588",
+                  "name": "Hardware Widgets"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 1073,
+                  "sequence": "1",
+                  "parent": {
+                    "project": 375
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743389,
+                "documentKey": "MOCK-SET-344",
+                "globalId": "1020617",
+                "itemType": 31,
+                "project": 375,
+                "createdDate": "2026-11-18T20:56:30.000+0000",
+                "modifiedDate": "2026-11-18T20:56:30.000+0000",
+                "lastActivityDate": "2026-11-18T20:56:37.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-SET-344",
+                  "globalId": "1020617",
+                  "setKey": "REQ",
+                  "name": "Requirements"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939537172,
+                  "sequence": "1.1",
+                  "parent": {
+                    "item": 743328
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 24,
+                "type": "items"
+              },
+              {
+                "id": 743390,
+                "documentKey": "MOCK-FLD-991",
+                "globalId": "1020618",
+                "itemType": 32,
+                "project": 375,
+                "createdDate": "2026-11-18T20:57:07.000+0000",
+                "modifiedDate": "2026-11-18T20:57:07.000+0000",
+                "lastActivityDate": "2026-11-18T20:57:07.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-FLD-991",
+                  "globalId": "1020618",
+                  "name": "Mounting"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939538245,
+                  "sequence": "1.1.1",
+                  "parent": {
+                    "item": 743389
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 24,
+                "type": "items"
+              },
+              {
+                "id": 743391,
+                "documentKey": "MOCK-REQ-3076",
+                "globalId": "1020619",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T20:58:26.000+0000",
+                "modifiedDate": "2026-11-18T23:25:22.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Wallmount Mounting",
+                  "documentKey": "MOCK-REQ-3076",
+                  "globalId": "1020619",
+                  "description": "<p>Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted at a 45 degree downward angle into drywall.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 3,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939539318,
+                  "sequence": "1.1.1.1",
+                  "parent": {
+                    "item": 743390
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:04:36.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743392,
+                "documentKey": "MOCK-REQ-3077",
+                "globalId": "1020620",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T20:58:42.000+0000",
+                "modifiedDate": "2026-11-18T23:25:23.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting",
+                  "documentKey": "MOCK-REQ-3077",
+                  "globalId": "1020620",
+                  "description": "<p>Tabletop Widgets shall be able to stand firmly on four feet with no wobble.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 3,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939540391,
+                  "sequence": "1.1.1.2",
+                  "parent": {
+                    "item": 743390
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:01:41.000+0000"
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:49 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 40
+              }
+            },
+            "links": {
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.release": {
+                "type": "releases",
+                "href": "https://jama.example.com/rest/v1/releases/{data.fields.release}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.childItemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.childItemType}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743498,
+                "documentKey": "MOCK-REQ-3085",
+                "globalId": "1020620",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T23:25:26.000+0000",
+                "modifiedDate": "2026-11-18T23:25:28.000+0000",
+                "lastActivityDate": "2026-11-18T23:25:28.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting (synced copy)",
+                  "documentKey": "MOCK-REQ-3085",
+                  "globalId": "1020620",
+                  "description": "<p>Copy of the tabletop mounting requirement, kept in sync.</p>",
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 2,
+                  "globalSortOrder": 939540927,
+                  "sequence": "1.1.1.3",
+                  "parent": {
+                    "item": 743390
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743395,
+                "documentKey": "MOCK-FLD-992",
+                "globalId": "1020622",
+                "itemType": 32,
+                "project": 375,
+                "createdDate": "2026-11-18T21:05:23.000+0000",
+                "modifiedDate": "2026-11-18T21:05:33.000+0000",
+                "lastActivityDate": "2026-11-18T21:05:33.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-FLD-992",
+                  "globalId": "1020622",
+                  "name": "Regulatory",
+                  "description": ""
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939541464,
+                  "sequence": "1.1.2",
+                  "parent": {
+                    "item": 743389
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 24,
+                "type": "items"
+              },
+              {
+                "id": 743397,
+                "documentKey": "MOCK-REQ-3079",
+                "globalId": "1020623",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T21:06:18.000+0000",
+                "modifiedDate": "2026-11-18T23:25:24.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:30.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "US Regulatory",
+                  "documentKey": "MOCK-REQ-3079",
+                  "globalId": "1020623",
+                  "description": "<p>US Wallmount &amp; Tabletop Hardware shall meet all US regulatory requirements.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939542537,
+                  "sequence": "1.1.2.1",
+                  "parent": {
+                    "item": 743395
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743398,
+                "documentKey": "MOCK-REQ-3080",
+                "globalId": "1020624",
+                "itemType": 24,
+                "project": 375,
+                "createdDate": "2026-11-18T21:07:14.000+0000",
+                "modifiedDate": "2026-11-18T23:25:25.000+0000",
+                "lastActivityDate": "2026-11-18T23:25:25.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "EU Regulatory",
+                  "documentKey": "MOCK-REQ-3080",
+                  "globalId": "1020624",
+                  "description": "<p>&nbsp;</p>\n\n<p>EU Wallmount &amp; Tabletop Hardware shall meet all EU regulatory requirements.</p>\n",
+                  "release": 1200,
+                  "priority": 281,
+                  "status": 561,
+                  "createdDate": "2026-11-18"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 2,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939543610,
+                  "sequence": "1.1.2.2",
+                  "parent": {
+                    "item": 743395
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              },
+              {
+                "id": 743489,
+                "documentKey": "MOCK-TXT-234",
+                "globalId": "1020642",
+                "itemType": 33,
+                "project": 375,
+                "createdDate": "2026-11-18T23:25:09.000+0000",
+                "modifiedDate": "2026-11-18T23:25:09.000+0000",
+                "lastActivityDate": "2026-11-18T23:43:45.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-TXT-234",
+                  "globalId": "1020642",
+                  "name": "About Hardware Widgets",
+                  "description": "<p>Overview of the requirements for hardware widgets.</p>"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 2,
+                  "globalSortOrder": 939544146,
+                  "sequence": "1.1.3",
+                  "parent": {
+                    "item": 743389
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/items",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:19:50 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 40
+              }
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.childItemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.childItemType}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.status": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.status}"
+              },
+              "data.fields.priority": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.priority}"
+              },
+              "data.location.parent.item": {
+                "type": "items",
+                "href": "https://jama.example.com/rest/v1/items/{data.location.parent.item}"
+              },
+              "data.project": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.project}"
+              },
+              "data.itemType": {
+                "type": "itemtypes",
+                "href": "https://jama.example.com/rest/v1/itemtypes/{data.itemType}"
+              }
+            },
+            "data": [
+              {
+                "id": 743401,
+                "documentKey": "MOCK-SET-347",
+                "globalId": "1020627",
+                "itemType": 31,
+                "project": 375,
+                "createdDate": "2026-11-18T21:19:43.000+0000",
+                "modifiedDate": "2026-11-18T21:19:43.000+0000",
+                "lastActivityDate": "2026-11-18T21:25:55.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-SET-347",
+                  "globalId": "1020627",
+                  "setKey": "TC",
+                  "name": "Test Cases"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939544683,
+                  "sequence": "1.2",
+                  "parent": {
+                    "item": 743328
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 26,
+                "type": "items"
+              },
+              {
+                "id": 743410,
+                "documentKey": "MOCK-FLD-995",
+                "globalId": "1020635",
+                "itemType": 32,
+                "project": 375,
+                "createdDate": "2026-11-18T21:21:19.000+0000",
+                "modifiedDate": "2026-11-18T21:21:19.000+0000",
+                "lastActivityDate": "2026-11-18T21:25:55.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-FLD-995",
+                  "globalId": "1020635",
+                  "name": "Mounting"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939545756,
+                  "sequence": "1.2.1",
+                  "parent": {
+                    "item": 743401
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 26,
+                "type": "items"
+              },
+              {
+                "id": 743405,
+                "documentKey": "MOCK-TC-1476",
+                "globalId": "1020637",
+                "itemType": 26,
+                "project": 375,
+                "createdDate": "2026-11-18T21:20:40.000+0000",
+                "modifiedDate": "2026-11-18T21:33:04.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Wallmount Mounting",
+                  "documentKey": "MOCK-TC-1476",
+                  "globalId": "1020637",
+                  "priority": 281,
+                  "status": 561,
+                  "description": "<p><span style=\"color:#3498db\">Wallmount Widgets shall hang on a single 50 &times; 2.0 mm nail inserted 1.5 mm into 12.5 mm drywall at a 45 degree downward angle.</span></p>\n",
+                  "testCaseSteps": [
+                    {
+                      "action": "<p>Hang wallmount widget on test drywall with nail as described</p>\n",
+                      "expectedResult": "<p>It stays.</p>\n",
+                      "notes": ""
+                    }
+                  ],
+                  "testCaseStatus": "NOT_SCHEDULED",
+                  "testRunResults": {
+                    "id": 0,
+                    "numPassed": 0,
+                    "numNotRun": 0,
+                    "numInProgress": 0,
+                    "numFailed": 0,
+                    "numBlocked": 0,
+                    "numNotApplicable": 0,
+                    "numTotalRuns": 0
+                  }
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 4,
+                "location": {
+                  "sortOrder": 0,
+                  "globalSortOrder": 939546829,
+                  "sequence": "1.2.1.1",
+                  "parent": {
+                    "item": 743410
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:33:05.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743406,
+                "documentKey": "MOCK-TC-1477",
+                "globalId": "1020638",
+                "itemType": 26,
+                "project": 375,
+                "createdDate": "2026-11-18T21:20:41.000+0000",
+                "modifiedDate": "2026-11-18T21:30:19.000+0000",
+                "lastActivityDate": "2026-11-18T23:48:29.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "name": "Tabletop Mounting",
+                  "documentKey": "MOCK-TC-1477",
+                  "globalId": "1020638",
+                  "priority": 281,
+                  "status": 561,
+                  "description": "<p><span style=\"color:#3498db\">Tabletop Widgets shall be able to stand firmly on four feet with no wobble.</span></p>\n",
+                  "testCaseSteps": [
+                    {
+                      "action": "<p>Set widget onto planar tabletop and attempt to make it wobble</p>\n",
+                      "expectedResult": "<p>No wobble</p>\n",
+                      "notes": ""
+                    }
+                  ],
+                  "testCaseStatus": "NOT_SCHEDULED",
+                  "testRunResults": {
+                    "id": 0,
+                    "numPassed": 0,
+                    "numNotRun": 0,
+                    "numInProgress": 0,
+                    "numFailed": 0,
+                    "numBlocked": 0,
+                    "numNotApplicable": 0,
+                    "numTotalRuns": 0
+                  }
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 4,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939547902,
+                  "sequence": "1.2.1.2",
+                  "parent": {
+                    "item": 743410
+                  }
+                },
+                "lock": {
+                  "locked": false,
+                  "lastLockedDate": "2026-11-18T21:30:20.000+0000"
+                },
+                "type": "items"
+              },
+              {
+                "id": 743411,
+                "documentKey": "MOCK-FLD-996",
+                "globalId": "1020636",
+                "itemType": 32,
+                "project": 375,
+                "createdDate": "2026-11-18T21:21:35.000+0000",
+                "modifiedDate": "2026-11-18T21:21:35.000+0000",
+                "lastActivityDate": "2026-11-18T21:25:55.000+0000",
+                "createdBy": 21,
+                "modifiedBy": 21,
+                "fields": {
+                  "documentKey": "MOCK-FLD-996",
+                  "globalId": "1020636",
+                  "name": "Regulatory"
+                },
+                "resources": {
+                  "self": {
+                    "allowed": [
+                      "GET",
+                      "PUT",
+                      "PATCH",
+                      "DELETE"
+                    ]
+                  }
+                },
+                "version": 1,
+                "location": {
+                  "sortOrder": 1,
+                  "globalSortOrder": 939548975,
+                  "sequence": "1.2.2",
+                  "parent": {
+                    "item": 743401
+                  }
+                },
+                "lock": {
+                  "locked": false
+                },
+                "childItemType": 26,
+                "type": "items"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

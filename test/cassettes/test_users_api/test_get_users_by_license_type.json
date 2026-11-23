@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_get_users_by_license_type",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users",
+        "query": [
+          [
+            "licenseType",
+            "NAMED"
+          ],
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:16 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 18,
+                "totalResults": 18
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 128,
+                "username": "user128",
+                "firstName": "user128",
+                "lastName": "user128",
+                "email": "user128",
+                "phone": "user128",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 175,
+                "username": "user175",
+                "firstName": "user175",
+                "lastName": "user175",
+                "email": "user175",
+                "phone": "user175",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 159,
+                "username": "user159",
+                "firstName": "user159",
+                "lastName": "user159",
+                "email": "user159",
+                "phone": "user159",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 505,
+                "username": "user505",
+                "firstName": "user505",
+                "lastName": "user505",
+                "email": "user505",
+                "phone": "user505",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 74,
+                "username": "user74",
+                "firstName": "user74",
+                "lastName": "user74",
+                "email": "user74",
+                "phone": "user74",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 75,
+                "username": "user75",
+                "firstName": "user75",
+                "lastName": "user75",
+                "email": "user75",
+                "phone": "user75",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 556,
+                "username": "user556",
+                "firstName": "user556",
+                "lastName": "user556",
+                "email": "user556",
+                "phone": "user556",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 389,
+                "username": "user389",
+                "firstName": "user389",
+                "lastName": "user389",
+                "email": "user389",
+                "phone": "user389",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 146,
+                "username": "user146",
+                "firstName": "user146",
+                "lastName": "user146",
+                "email": "user146",
+                "phone": "user146",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 32,
+                "username": "user32",
+                "firstName": "user32",
+                "lastName": "user32",
+                "email": "user32",
+                "phone": "user32",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 151,
+                "username": "user151",
+                "firstName": "user151",
+                "lastName": "user151",
+                "email": "user151",
+                "phone": "user151",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 14,
+                "username": "user14",
+                "firstName": "user14",
+                "lastName": "user14",
+                "email": "user14",
+                "phone": "user14",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 285,
+                "username": "user285",
+                "firstName": "user285",
+                "lastName": "user285",
+                "email": "user285",
+                "phone": "user285",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 17,
+                "username": "user17",
+                "firstName": "user17",
+                "lastName": "user17",
+                "email": "user17",
+                "phone": "user17",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 393,
+                "username": "user393",
+                "firstName": "user393",
+                "lastName": "user393",
+                "email": "user393",
+                "phone": "user393",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 386,
+                "username": "user386",
+                "firstName": "user386",
+                "lastName": "user386",
+                "email": "user386",
+                "phone": "user386",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 21,
+                "username": "user21",
+                "firstName": "user21",
+                "lastName": "user21",
+                "email": "user21",
+                "phone": "user21",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 435,
+                "username": "user435",
+                "firstName": "user435",
+                "lastName": "user435",
+                "email": "user435",
+                "phone": "user435",
+                "title": "",
+                "location": "",
+                "licenseType": "NAMED",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

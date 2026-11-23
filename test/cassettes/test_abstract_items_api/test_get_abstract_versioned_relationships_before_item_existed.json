@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "test": "test/test_abstract_items_api.py::test_get_abstract_versioned_relationships_before_item_existed",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120232454",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/abstractitems/743391/versionedrelationships",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ],
+          [
+            "timestamp",
+            "2000-01-01T00:00:00Z"
+          ]
+        ]
+      },
+      "response": {
+        "status": 404,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 05:24:56 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Not Found",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "This resource does not exist"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

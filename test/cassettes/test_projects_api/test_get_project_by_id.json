@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "test": "test/test_projects_api.py::test_get_project_by_id",
+  "source": "live",
+  "recorded": "2026-11-19",
+  "run_id": "20261119171938",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/projects/375",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Thu, 19 Nov 2026 23:20:00 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            },
+            "links": {
+              "data.createdBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.createdBy}"
+              },
+              "data.modifiedBy": {
+                "type": "users",
+                "href": "https://jama.example.com/rest/v1/users/{data.modifiedBy}"
+              },
+              "data.fields.projectGroup": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.projectGroup}"
+              },
+              "data.parent": {
+                "type": "projects",
+                "href": "https://jama.example.com/rest/v1/projects/{data.parent}"
+              },
+              "data.fields.statusId": {
+                "type": "picklistoptions",
+                "href": "https://jama.example.com/rest/v1/picklistoptions/{data.fields.statusId}"
+              }
+            },
+            "data": {
+              "id": 375,
+              "projectKey": "MOCK",
+              "parent": 219,
+              "isFolder": false,
+              "createdDate": "2026-11-09T17:37:59.000+0000",
+              "modifiedDate": "2026-11-18T19:15:31.000+0000",
+              "createdBy": 291,
+              "modifiedBy": 21,
+              "fields": {
+                "projectKey": "MOCK",
+                "statusId": 298,
+                "text1": "",
+                "name": "MOCK_Widgets",
+                "description": "",
+                "projectGroup": 296
+              },
+              "type": "projects"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

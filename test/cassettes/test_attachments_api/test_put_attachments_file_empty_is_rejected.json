@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "test": "test/test_attachments_api.py::test_put_attachments_file_empty_is_rejected",
+  "source": "live",
+  "recorded": "2026-11-21",
+  "run_id": "20261121001357",
+  "interactions": [
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/attachments/744534/file",
+        "query": [],
+        "body": {
+          "multipart": {
+            "content_type": "multipart/form-data",
+            "parts": [
+              {
+                "name": "file",
+                "filename": "MockAttachment2.txt"
+              }
+            ]
+          }
+        }
+      },
+      "response": {
+        "status": 500,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 06:13:58 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "Internal Server Error",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "message": "The security scan for your file has ended with an error and the file has not been saved. Please try another file.",
+              "exception": {
+                "class": "java.lang.RuntimeException",
+                "message": "The security scan for your file has ended with an error and the file has not been saved. Please try another file."
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/attachments/744534/file",
+        "query": []
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 06:13:59 GMT"
+          ],
+          [
+            "content-type",
+            "application/octet-stream"
+          ]
+        ],
+        "body": {
+          "text": "Scratch attachment for API tests.\n"
+        }
+      }
+    }
+  ]
+}

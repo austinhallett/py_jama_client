@@ -1,0 +1,381 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_get_users_by_project",
+  "source": "live",
+  "recorded": "2026-11-20",
+  "run_id": "20261120225849",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:58:51 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 5,
+                "totalResults": 299
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 269,
+                "username": "user269",
+                "firstName": "user269",
+                "lastName": "user269",
+                "email": "user269",
+                "phone": "user269",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 69,
+                "username": "user69",
+                "firstName": "user69",
+                "lastName": "user69",
+                "email": "user69",
+                "phone": "user69",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 490,
+                "username": "user490",
+                "firstName": "user490",
+                "lastName": "user490",
+                "email": "user490",
+                "phone": "user490",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 177,
+                "username": "user177",
+                "firstName": "user177",
+                "lastName": "user177",
+                "email": "user177",
+                "phone": "user177",
+                "title": "",
+                "location": "",
+                "licenseType": "RESERVED_COLLABORATOR",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 501,
+                "username": "user501",
+                "firstName": "user501",
+                "lastName": "user501",
+                "email": "user501",
+                "phone": "user501",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "5"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:58:51 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 5,
+                "resultCount": 5,
+                "totalResults": 299
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 307,
+                "username": "user307",
+                "firstName": "user307",
+                "lastName": "user307",
+                "email": "user307",
+                "phone": "user307",
+                "title": "",
+                "location": "",
+                "licenseType": "RESERVED_COLLABORATOR",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 566,
+                "username": "user566",
+                "firstName": "user566",
+                "lastName": "user566",
+                "email": "user566",
+                "phone": "user566",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 418,
+                "username": "user418",
+                "firstName": "user418",
+                "lastName": "user418",
+                "email": "user418",
+                "phone": "user418",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 345,
+                "username": "user345",
+                "firstName": "user345",
+                "lastName": "user345",
+                "email": "user345",
+                "phone": "user345",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 231,
+                "username": "user231",
+                "firstName": "user231",
+                "lastName": "user231",
+                "email": "user231",
+                "phone": "user231",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/users",
+        "query": [
+          [
+            "maxResults",
+            "5"
+          ],
+          [
+            "project",
+            "375"
+          ],
+          [
+            "startAt",
+            "10"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "date",
+            "Sat, 21 Nov 2026 04:58:52 GMT"
+          ],
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 10,
+                "resultCount": 5,
+                "totalResults": 299
+              }
+            },
+            "links": {},
+            "data": [
+              {
+                "id": 57,
+                "username": "user57",
+                "firstName": "user57",
+                "lastName": "user57",
+                "email": "user57",
+                "phone": "user57",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 172,
+                "username": "user172",
+                "firstName": "user172",
+                "lastName": "user172",
+                "email": "user172",
+                "phone": "user172",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 259,
+                "username": "user259",
+                "firstName": "user259",
+                "lastName": "user259",
+                "email": "user259",
+                "phone": "user259",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 299,
+                "username": "user299",
+                "firstName": "user299",
+                "lastName": "user299",
+                "email": "user299",
+                "phone": "user299",
+                "title": "",
+                "location": "",
+                "licenseType": "RESERVED_COLLABORATOR",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              },
+              {
+                "id": 551,
+                "username": "user551",
+                "firstName": "user551",
+                "lastName": "user551",
+                "email": "user551",
+                "phone": "user551",
+                "title": "",
+                "location": "",
+                "licenseType": "FLOATING",
+                "active": true,
+                "uid": "",
+                "customData": [],
+                "type": "users"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

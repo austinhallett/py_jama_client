@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "test": "test/test_categories_api.py::test_move_category_path_docs",
+  "source": "docs",
+  "recorded": "2026-11-21",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/categorypaths/2/move",
+        "query": [
+          [
+            "destinationParentCategoryPathId",
+            "3"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

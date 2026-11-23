@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "test": "test/test_users_api.py::test_put_user_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "PUT",
+        "path": "/rest/v1/users/5",
+        "query": [],
+        "body": {
+          "json": {
+            "username": "example",
+            "password": "Example password 2",
+            "firstName": "Example",
+            "lastName": "User",
+            "email": "example-email",
+            "phone": "555-0100",
+            "title": "Engineer",
+            "location": "Remote"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

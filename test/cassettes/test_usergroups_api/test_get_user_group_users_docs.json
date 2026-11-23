@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "test": "test/test_usergroups_api.py::test_get_user_group_users_docs",
+  "source": "docs",
+  "recorded": "2026-11-20",
+  "run_id": "handwritten",
+  "interactions": [
+    {
+      "request": {
+        "method": "GET",
+        "path": "/rest/v1/usergroups/11/users",
+        "query": [
+          [
+            "maxResults",
+            "50"
+          ],
+          [
+            "startAt",
+            "0"
+          ]
+        ]
+      },
+      "response": {
+        "status": 200,
+        "headers": [
+          [
+            "content-type",
+            "application/json"
+          ]
+        ],
+        "body": {
+          "json": {
+            "data": [
+              {
+                "lastName": "user1",
+                "active": true,
+                "customData": [
+                  {
+                    "name": "Example name 1",
+                    "value": "Example value 1"
+                  },
+                  {
+                    "name": "Example name 2",
+                    "value": "Example value 2"
+                  }
+                ],
+                "title": "user1 title",
+                "type": "users",
+                "firstName": "user1",
+                "licenseType": "NAMED",
+                "uid": "user1-uid",
+                "phone": "user1 phone",
+                "location": "user1 location",
+                "id": 9,
+                "authenticationType": {
+                  "name": "Example authentication",
+                  "id": 3
+                },
+                "email": "user1 email",
+                "username": "user1"
+              },
+              {
+                "lastName": "user2",
+                "active": true,
+                "customData": [
+                  {
+                    "name": "Example name 1",
+                    "value": "Example value 1"
+                  },
+                  {
+                    "name": "Example name 2",
+                    "value": "Example value 2"
+                  }
+                ],
+                "title": "user2 title",
+                "type": "users",
+                "firstName": "user2",
+                "licenseType": "NAMED",
+                "uid": "user2-uid",
+                "phone": "user2 phone",
+                "location": "user2 location",
+                "id": 10,
+                "authenticationType": {
+                  "name": "Example authentication",
+                  "id": 3
+                },
+                "email": "user2 email",
+                "username": "user2"
+              }
+            ],
+            "meta": {
+              "status": "OK",
+              "timestamp": "2026-01-01T00:00:00.000+0000",
+              "pageInfo": {
+                "startIndex": 0,
+                "resultCount": 2,
+                "totalResults": 2
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
